@@ -82,8 +82,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-999
-                <div class="links">YES！221
+888                <div class="links">YES！221
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
