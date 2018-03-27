@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/dt', function () {
+    return date("Y-m-d H:i:s");
+});
