@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<? session_start(); ?>
+<?php session_start(); ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;"/>
-<?
+<?php
 $curl = "https://tw.rter.info/capi.php";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $curl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);				
 $result = json_decode($result);
+//print_r($result);
 curl_close($ch);
 ?>
 <script type="text/javascript">
@@ -83,50 +84,56 @@ function lang_dollar_2(a)
 
 function lang_dollar_3()
 {
-   var w = document.getElementById("window_1");
-   var money_1 = 90;
-   var money_2 = 150;
-   var twd='<? echo $result->USDTWD->Exrate;?>'
-   var cny='<? echo $result->USDCNY->Exrate;?>'
-   var usd='<? echo $result->USD->Exrate;?>'
-   var jpy='<? echo $result->USDJPY->Exrate;?>'
-   var dollar=1;
+   // var w = document.getElementById("window_1");
+   // var money_1 = 90;
+   // var money_2 = 150;
+   // var twd='<? echo $result->USDTWD->Exrate;?>'
+   // var cny='<? echo $result->USDCNY->Exrate;?>'
+   // var usd='<? echo $result->USD->Exrate;?>'
+   // var jpy='<? echo $result->USDJPY->Exrate;?>'
+   // var eur='<? echo $result->USDEUR->Exrate;?>'
+   // var idr='<? echo $result->USDIRD->Exrate;?>'
+   // var dollar=1;
   
-   money_1=money_1/twd;
-   money_2=money_2/twd;
+   // money_1=money_1/twd;
+   // money_2=money_2/twd;
    
-   if(dollar_word=="zh-TW")
-   {dollar=twd;}    
-   else if(dollar_word=="zh-CN")
-   {dollar=cny;}
-   else if(dollar_word=="en")
-   {dollar=usd;}
-   else if(dollar_word=="ja")
-   {dollar=jpy;}
+   // if(dollar_word=="zh-TW")
+   // {dollar=twd;}    
+   // else if(dollar_word=="zh-CN")
+   // {dollar=cny;}
+   // else if(dollar_word=="en")
+   // {dollar=usd;}
+   // else if(dollar_word=="ja")
+   // {dollar=jpy;}
+   // else if(dollar_word=="eur")
+   // {dollar=eur;}
+   // else if(dollar_word=="idr")
+   // {dollar=idr;}
    
-   money_1=Math.round(money_1*dollar);
-   money_2=Math.round(money_2*dollar);
+   // money_1=Math.round(money_1*dollar);
+   // money_2=Math.round(money_2*dollar);
    
    
-   w.style.display = "none";
-   document.getElementById("money_1").innerHTML = "佛"+money_1+"元";
-   document.getElementById("money_2").innerHTML = "故事"+money_2+"元";   
-   change_lang(lang_word);
+   // w.style.display = "none";
+   // document.getElementById("money_1").innerHTML = "佛"+money_1+"元";
+   // document.getElementById("money_2").innerHTML = "故事"+money_2+"元";   
+   // change_lang(lang_word);
    
-   var form = document.getElementById("form");
-   with(form)
-   {
+   // var form = document.getElementById("form");
+   // with(form)
+   // {
       $.ajax({
          type: "POST",
          url: "c_1.php",
          data: {dollar:dollar_word}
       }).done(function(msg) {         
       });
-   }
+   // }
 }
 </script>
 <link href="menu.css" rel="stylesheet"/>
-<title>ttt</title>
+<title>旅遊網</title>
 </head>
 <body style="margin:0;background-color:#ccffcc;">
     
@@ -149,6 +156,8 @@ function lang_dollar_3()
                      <li style="width:200px;"><a onClick="change_lang('中文(簡體)')" href="#" style="width:200px;">中文(簡體)</a></li>
                      <li style="width:200px;"><a onClick="change_lang('英文')" href="#" style="width:200px;">英文</a></li>
                      <li style="width:200px;"><a onClick="change_lang('日文')" href="#" style="width:200px;">日文</a></li>
+                     <li style="width:200px;"><a onClick="change_lang('韓文')" href="#" style="width:200px;">韓文</a></li>
+                     <li style="width:200px;"><a onClick="change_lang('瑞典文')" href="#" style="width:200px;">瑞典文</a></li>
                   </ul>
                </li>  
                <li style="width:200px;">
@@ -158,6 +167,8 @@ function lang_dollar_3()
                      <li style="width:200px;"><a href="c.php?dollar=zh-CN">人民幣</a></li>
                      <li style="width:200px;"><a href="c.php?dollar=en">美幣</a></li>
                      <li style="width:200px;"><a href="c.php?dollar=ja">日幣</a></li>
+                     <li style="width:200px;"><a href="c.php?dollar=eur">歐元</a></li>
+                     <li style="width:200px;"><a href="c.php?dollar=idr">印尼盾</a></li>
                   </ul>
                </li>
                <li style="width:200px;">
@@ -195,13 +206,13 @@ body { top: 0px!important; }
 <script>
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
-		    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+		    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
         }, 'google_translate_element');
     }
     googleTranslateElementInit()
 </script>
 <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-<?
+<?php
 $money_1=90;
 $money_2=150;
 $money_1=$money_1/($result->USDTWD->Exrate);
@@ -219,15 +230,18 @@ else if($dollar=="en")
 {$dollar=$result->USD->Exrate;}
 else if($dollar=="ja")
 {$dollar=$result->USDJPY->Exrate;}
+else if($dollar=="eur")
+{$dollar=$result->USDEUR->Exrate;}
+else if($dollar=="idr")
+{$dollar=$result->USDIDR->Exrate;}
 
 $money_1=$money_1*$dollar;
 $money_2=$money_2*$dollar;
 
-//echo "佛".round($money_1)."元<br/>";
-//echo "故事".round($money_2)."元<br/>";
+echo "佛".round($money_1)."元<br/>";
+echo "故事".round($money_2)."元<br/>";
 ?>
-<p id="money_1">佛90元</p><br/>
-<p id="money_2">故事150元</p><br/>
+
  
  
 <div id="window_1" style="text-align: center;width:100%;display:none;">
