@@ -3,3 +3,4 @@
 session_start();
 $_SESSION['dollar']=$_POST['dollar']; 
 ?>
+html:5
