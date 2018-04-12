@@ -17,17 +17,24 @@ class ManagerController extends Controller
     }
     // 登入處理
     public function login_post(){
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
     	$input = request()->all();
         // 加密密碼用於比對
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
-        $Manager =Managers::where('id',$input['inputID'])->firstOrFail();
-        $aa =Hash::check($input['inputPassword'], $Manager->passwd);
+        $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();
+        //判斷是否為管理者
+        $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
         // 比對加密密碼
         //echo Hash::make($input['inputPassword']);
-        var_dump($aa);
+        // var_dump($Manager);
+        // exit;
         //var_dump(DB::getQueryLog());
-    	exit;
+        $binding =[
+            'Title' => '主頁',
+            'Nav_ID' => 4,  //功能按鈕編號  
+            'Manager' => $Manager,
+        ];
+    	return view('auth.main', $binding);
     	// return var_dump(DB::getQueryLog());
     }
     // 登出口

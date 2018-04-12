@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'IndexController@main');
-// 管理區路由
+// 總管理區路由
 Route::group(['prefix'=>'auth'], function(){
     Route::get('login', 'ManagerController@login');
 	Route::post('login', 'ManagerController@login_post');

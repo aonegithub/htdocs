@@ -7,7 +7,11 @@
         <title>Awugo總管理後台_登入</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/signin.css">
-
+        <style type="text/css">
+          body{
+            font-family: Microsoft JhengHei;
+          }
+        </style>
         
     </head>
  
@@ -15,7 +19,7 @@
         <div class="container">
             <form class="form-signin" method="POST" role="form" action="./login">
                 {{ csrf_field() }}
-              <img src="../pic/auth_logo.png" alt="">
+              <img src="../pic/auth_sign_logo.png" alt="">
               <h1 class="h3 mb-3 font-weight-normal">總管理後台</h1>
               <label for="inputID" class="sr-only">請輸入帳號</label>
               <input type="text" id="inputID" name="inputID" class="form-control" placeholder="輸入帳號" required autofocus>
