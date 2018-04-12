@@ -25,6 +25,7 @@ function change_lang(b)
 
 function window_1()
 {   
+   // alert(1);
    var w = document.getElementById("window_1");
    if (w.style.display == "none") {
         w.style.display = "block";
@@ -84,41 +85,42 @@ function lang_dollar_2(a)
 
 function lang_dollar_3()
 {
-   // var w = document.getElementById("window_1");
-   // var money_1 = 90;
-   // var money_2 = 150;
-   // var twd='<? echo $result->USDTWD->Exrate;?>'
-   // var cny='<? echo $result->USDCNY->Exrate;?>'
-   // var usd='<? echo $result->USD->Exrate;?>'
-   // var jpy='<? echo $result->USDJPY->Exrate;?>'
-   // var eur='<? echo $result->USDEUR->Exrate;?>'
-   // var idr='<? echo $result->USDIRD->Exrate;?>'
-   // var dollar=1;
+   var w = document.getElementById("window_1");
+   var money_1 = 90;
+   var money_2 = 150;
+   var twd='<?php echo $result->USDTWD->Exrate;?>'
+   var cny='<?php echo $result->USDCNY->Exrate;?>'
+   var usd='<?php echo $result->USD->Exrate;?>'
+   var jpy='<?php echo $result->USDJPY->Exrate;?>'
+   var eur='<?php echo $result->USDEUR->Exrate;?>'
+   var idr='<?php echo $result->USDIDR->Exrate;?>'
+   var dollar=1;
+   // alert(dollar_word);
   
-   // money_1=money_1/twd;
-   // money_2=money_2/twd;
+   money_1=money_1/twd;
+   money_2=money_2/twd;
    
-   // if(dollar_word=="zh-TW")
-   // {dollar=twd;}    
-   // else if(dollar_word=="zh-CN")
-   // {dollar=cny;}
-   // else if(dollar_word=="en")
-   // {dollar=usd;}
-   // else if(dollar_word=="ja")
-   // {dollar=jpy;}
-   // else if(dollar_word=="eur")
-   // {dollar=eur;}
-   // else if(dollar_word=="idr")
-   // {dollar=idr;}
+   if(dollar_word=="zh-TW")
+   {dollar=twd;}    
+   else if(dollar_word=="zh-CN")
+   {dollar=cny;}
+   else if(dollar_word=="en")
+   {dollar=usd;}
+   else if(dollar_word=="ja")
+   {dollar=jpy;}
+   else if(dollar_word=="eur")
+   {dollar=eur;}
+   else if(dollar_word=="idr")
+   {dollar=idr;}
    
-   // money_1=Math.round(money_1*dollar);
-   // money_2=Math.round(money_2*dollar);
+   money_1=Math.round(money_1*dollar);
+   money_2=Math.round(money_2*dollar);
    
    
    // w.style.display = "none";
    // document.getElementById("money_1").innerHTML = "佛"+money_1+"元";
    // document.getElementById("money_2").innerHTML = "故事"+money_2+"元";   
-   // change_lang(lang_word);
+   change_lang(lang_word);
    
    // var form = document.getElementById("form");
    // with(form)
@@ -127,9 +129,10 @@ function lang_dollar_3()
          type: "POST",
          url: "c_1.php",
          data: {dollar:dollar_word}
-      }).done(function(msg) {         
       });
    // }
+   window.location.href="c.php?dollar="+dollar_word;
+
 }
 </script>
 <link href="menu.css" rel="stylesheet"/>
@@ -163,7 +166,7 @@ function lang_dollar_3()
                <li style="width:200px;">
                   <a href="#">貨幣</a>
                   <ul style="width:200px;">
-	             <li style="width:200px;"><a href="c.php?dollar=zh-TW">台幣</a></li>
+	  <li style="width:200px;"><a href="c.php?dollar=zh-TW">台幣</a></li>
                      <li style="width:200px;"><a href="c.php?dollar=zh-CN">人民幣</a></li>
                      <li style="width:200px;"><a href="c.php?dollar=en">美幣</a></li>
                      <li style="width:200px;"><a href="c.php?dollar=ja">日幣</a></li>
@@ -172,7 +175,7 @@ function lang_dollar_3()
                   </ul>
                </li>
                <li style="width:200px;">
-                  <a href="#" onClick="window_1()">視窗</a>                  
+                  <a href="#" onclick="window_1()">視窗</a>                  
                </li> 
             </ul> 
          </div>
@@ -218,9 +221,12 @@ $money_2=150;
 $money_1=$money_1/($result->USDTWD->Exrate);
 $money_2=$money_2/($result->USDTWD->Exrate);
 
-if($_GET['dollar']!=null)
-{$_SESSION['dollar']=$_GET['dollar'];}  
-$dollar=$_SESSION['dollar'];
+$dollar="zh-TW";
+if(isset($_GET['dollar']) and !empty($_GET['dollar']))
+{
+   $_SESSION['dollar']=($_GET['dollar'])?"zh-TW":$_GET['dollar'];  
+   $dollar=$_GET['dollar'];
+}
 
 if($dollar=="zh-TW" or $dollar==null)
 {$dollar=$result->USDTWD->Exrate;} 
@@ -241,7 +247,8 @@ $money_2=$money_2*$dollar;
 echo "佛".round($money_1)."元<br/>";
 echo "故事".round($money_2)."元<br/>";
 ?>
-
+<div id="money_1"></div>
+<div id="money_2"></div>
  
  
 <div id="window_1" style="text-align: center;width:100%;display:none;">
