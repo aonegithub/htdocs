@@ -15,7 +15,7 @@
 @section('nav_id', $Nav_ID)
 <!-- 內容 -->
 @section('content')
-	<p>lorem</p>
+	<p>lorem123</p>
 	<p>lorem</p>
 	<p>lorem</p>
 	<p>lorem</p>
