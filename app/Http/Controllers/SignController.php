@@ -9,7 +9,7 @@ use Image;
 use View;
 use DB;
 
-class ManagerController extends Controller
+class SignController extends Controller
 {
 	// 登入口
     public function login(){
@@ -24,21 +24,27 @@ class ManagerController extends Controller
         $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();
         //判斷是否為管理者
         $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
+        if($Manager['if_manager']){
+            session()->put('manager_id', $input['inputID']);
+            session()->put('manager_name', $Manager['name']);
+        }
+        //session()->flush();
         // 比對加密密碼
         //echo Hash::make($input['inputPassword']);
         // var_dump($Manager);
         // exit;
         //var_dump(DB::getQueryLog());
-        $binding =[
-            'Title' => '主頁',
-            'Nav_ID' => 4,  //功能按鈕編號  
-            'Manager' => $Manager,
-        ];
-    	return view('auth.main', $binding);
+        // $binding =[
+        //     'Title' => '主頁',
+        //     'Nav_ID' => 4,  //功能按鈕編號  
+        //     'Manager' => $Manager,
+        // ];
+    	return redirect()->to('/auth/manager/main');
     	// return var_dump(DB::getQueryLog());
     }
     // 登出口
     public function logout(){
-    	return "logout";
+        session()->flush();
+    	return redirect()->to('/auth/manager/main');
     }
 }

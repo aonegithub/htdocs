@@ -13,11 +13,18 @@
 
 Route::get('/', 'IndexController@main');
 // 總管理區路由
-Route::group(['prefix'=>'auth'], function(){
-    Route::get('login', 'ManagerController@login');
-	Route::post('login', 'ManagerController@login_post');
-	Route::get('logout', 'ManagerController@logout');
+// 中介層驗證登入資訊
+Route::group(['prefix'=>'auth/manager'], function(){
+	Route::group(['middleware'=>'auth.manager.login'], function(){
+		Route::get('main', 'Auth\ManagerController@main');
+	});
 });
+Route::group(['prefix'=>'auth'], function(){
+	Route::post('login', 'SignController@login_post');
+	Route::get('login', 'SignController@login');
+	Route::get('logout', 'SignController@logout');
+});
+
 
 
 Route::get('/dt', function () {
