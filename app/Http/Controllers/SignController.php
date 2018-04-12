@@ -8,6 +8,7 @@ use App\Awugo\Auth\Managers;
 use Image;
 use View;
 use DB;
+use Validator;
 
 class SignController extends Controller
 {
@@ -19,6 +20,25 @@ class SignController extends Controller
     public function login_post(){
         // DB::enableQueryLog();
     	$input = request()->all();
+        // 驗證規則
+        $rules =[
+            //帳號
+            'inputID'=>[
+                'required',
+                'min:3',
+            ],
+            //密碼
+            'inputPassword'=>[
+                'required',
+                'min:3',
+            ],
+        ];
+        // 驗證登入資料
+        $validator =Validator::make($input, $rules);
+        //驗證失敗
+        if($validator->fails()){
+            return redirect('/auth/login')->withErrors($validator);
+        }
         // 加密密碼用於比對
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
         $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();

@@ -33,6 +33,8 @@
               <button class="btn btn-lg btn-primary btn-block" type="submit">登　入</button>
               <p class="mt-5 mb-3 text-center text-muted">&copy; 2017-2018 長龍科技股份有限公司</p>
             </form>
+            <!-- 錯誤訊息 -->
+            @include('error_msg')
         </div>
 
     <!-- jQuery331 -->

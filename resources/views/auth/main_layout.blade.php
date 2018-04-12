@@ -52,7 +52,7 @@
 		<nav class="navbar navbar-default fixed-top" style="padding:0">
 			<div id="top">
 				<div id="top_container" class="container_width">
-					<div id="top_container_logo" style="float:left;"><img src="../pic/auth_layout_logo.png" alt=""></div>
+					<div id="top_container_logo" style="float:left;"><img src="../../pic/auth_layout_logo.png" alt=""></div>
 					<div id="top_container_title" style="float:left;">訂房總管理系統</div>
 					<div id="nav_logout" class="align-middle">
 						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#"> {{ session()->get('manager_name') }} 您好！</span>
@@ -101,6 +101,9 @@
 		</nav>
 	</header>
 	<div class="container">
+		<!-- 錯誤訊息 -->
+		@include('error_msg')
+
 		@yield('content')
 	</div>
 		<footer>
