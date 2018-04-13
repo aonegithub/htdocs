@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Managers;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Image;
 use View;
 use DB;
@@ -37,17 +38,25 @@ class SignController extends Controller
         $validator =Validator::make($input, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/login')->withErrors($validator);
+            return redirect('/auth/login')->withErrors($validator)->withInput();
         }
         // 加密密碼用於比對
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
-        $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();
-        //判斷是否為管理者
-        $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
-        if($Manager['if_manager']){
-            session()->put('manager_id', $input['inputID']);
-            session()->put('manager_name', $Manager['name']);
+        try {
+          $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();
+            //判斷是否為管理者
+            $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
+            if($Manager['if_manager']){
+                session()->put('manager_id', $input['inputID']);
+                session()->put('manager_name', $Manager['name']);
+            }else{
+                throw (new ModelNotFoundException);
+            }
+        } catch (ModelNotFoundException $ex) {
+            $validator =['無此帳號或帳號密碼錯誤'];
+            return redirect('/auth/login')->withErrors($validator)->withInput();;
         }
+        
         //session()->flush();
         // 比對加密密碼
         //echo Hash::make($input['inputPassword']);

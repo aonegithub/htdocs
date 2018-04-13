@@ -49,14 +49,14 @@
     </head>
 <body style="margin-top:140px">
 	<header>
-		<nav class="navbar navbar-default fixed-top" style="padding:0">
+		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #dfdfdf;">
 			<div id="top">
 				<div id="top_container" class="container_width">
 					<div id="top_container_logo" style="float:left;"><img src="../../pic/auth_layout_logo.png" alt=""></div>
 					<div id="top_container_title" style="float:left;">訂房總管理系統</div>
 					<div id="nav_logout" class="align-middle">
 						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#"> {{ session()->get('manager_name') }} 您好！</span>
-						<a class="btn btn-outline-secondary btn-no-border btn-smalign-middle" role="button" aria-pressed="true" id="top-nav-36" href="/auth/logout">登出</a>
+						<a id="logout" class="btn btn-outline-secondary btn-no-border btn-smalign-middle" role="button" aria-pressed="true" id="top-nav-36">登出</a>
 					</div>
 				</div>
 			</div>
@@ -107,15 +107,38 @@
 		@yield('content')
 	</div>
 		<footer>
-			頁腳
+			<p class="mt-5 mb-3 text-center text-muted">© 2017-2018 長龍科技股份有限公司</p>
 		</footer>
-	
+	<!-- Modal -->
+	<div class="modal fade" id="logoutAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">警告！</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        此動作即將登出，資料儲存好了嗎？
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">按錯</button>
+	        <button type="button" class="btn btn-secondary" onclick="window.location.href='/auth/logout'">確定登出</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<!-- jQuery331 -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
     	$(function(){
     		//判斷頁面導航紐按下樣式
     		$("#top-nav-@yield('nav_id')").addClass("active");
+    		// 浮動確認視窗
+    		$('#logout').click(function () {
+  				$('#logoutAlert').modal("toggle");
+			});
     	})
     </script>
     <!-- <script type="text/javascript">$(function(){alert(1);});</script> -->

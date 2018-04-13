@@ -22,19 +22,19 @@
               <img src="../pic/auth_sign_logo.png" alt="">
               <h1 class="h3 mb-3 font-weight-normal">總管理後台</h1>
               <label for="inputID" class="sr-only">請輸入帳號</label>
-              <input type="text" id="inputID" name="inputID" class="form-control" placeholder="輸入帳號" required autofocus>
+              <input type="text" id="inputID" name="inputID" class="form-control" placeholder="輸入帳號" value="{{ old('inputID') }}" required autofocus>
               <label for="inputPassword" class="sr-only">請輸入密碼</label>
-              <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="輸入密碼" required>
+              <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="輸入密碼" style="margin-top: 5px;" required>
               <div class="checkbox mb-3 d-none">
                 <label>
                   <input type="checkbox" value="remember-me"> Remember me
                 </label>
               </div>
               <button class="btn btn-lg btn-primary btn-block" type="submit">登　入</button>
+              <!-- 錯誤訊息 -->
+              @include('error_msg')
               <p class="mt-5 mb-3 text-center text-muted">&copy; 2017-2018 長龍科技股份有限公司</p>
             </form>
-            <!-- 錯誤訊息 -->
-            @include('error_msg')
         </div>
 
     <!-- jQuery331 -->
