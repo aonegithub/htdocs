@@ -21,8 +21,4 @@ class ManagerController extends Controller
         ];
     	return view('auth.main', $binding);
     }
-    // 登出口
-    public function logout(){
-    	return "logout";
-    }
 }

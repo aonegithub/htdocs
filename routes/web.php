@@ -16,7 +16,11 @@ Route::get('/', 'IndexController@main');
 // 中介層驗證登入資訊
 Route::group(['prefix'=>'auth/manager'], function(){
 	Route::group(['middleware'=>'auth.manager.login'], function(){
+		// 儀表板(最新消息)
 		Route::get('main', 'Auth\ManagerController@main');
+		// 權限管理
+		Route::get('authority', 'Auth\AuthorityController@main');
+		Route::post('authority', 'Auth\AuthorityController@editAuth');
 	});
 });
 Route::group(['prefix'=>'auth'], function(){

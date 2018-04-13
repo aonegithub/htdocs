@@ -49,6 +49,7 @@ class SignController extends Controller
             if($Manager['if_manager']){
                 session()->put('manager_id', $input['inputID']);
                 session()->put('manager_name', $Manager['name']);
+                session()->put('manager_auth', $Manager['auth']);
             }else{
                 throw (new ModelNotFoundException);
             }
