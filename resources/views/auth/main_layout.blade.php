@@ -48,7 +48,7 @@
 		</style>
         
     </head>
-<body style="margin-top:140px">
+<body style="margin-top:150px">
 	<header>
 		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #dfdfdf;">
 			<div id="top">
@@ -61,7 +61,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="nav_item" class="nav container_width">
+			<div id="nav_item" class="nav container_width" style="margin-bottom: 5px;">
 			  	<a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-1" href="#">飯店管理</a>
 			  	<a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-2" href="#">費用管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-3" href="#">訂房成功</a>

@@ -19,7 +19,17 @@ class AuthorityController extends Controller
     }
 // 權限管理員新增頁
     public function add(){
-        return "管理員新增";
+        //取上層權限
+        $Authority_root =Authority::where('auth_parent','-1')->get();
+        //取下層權限
+        $Authority_sub =Authority::where('auth_parent','<>',"-1")->get();
+        $binding =[
+            'Title' => '權限管理',
+            'Nav_ID' => 29,  //功能按鈕編號  
+            'Auth_root' => $Authority_root,
+            'Auth_sub' => $Authority_sub,
+        ];
+        return view('auth.authority_add', $binding);
     }
 // 權限管理員新增POST
     public function addAuth(){
