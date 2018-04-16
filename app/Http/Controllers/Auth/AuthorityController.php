@@ -13,7 +13,19 @@ use Validator;
 
 class AuthorityController extends Controller
 {
-	// 權限管理
+// 權限管理員清單
+    public function main(){
+        return "管理員清單";
+    }
+// 權限管理員新增頁
+    public function add(){
+        return "管理員新增";
+    }
+// 權限管理員新增POST
+    public function addAuth(){
+        return "管理員新增POST";
+    }
+// 權限管理編輯頁
     public function edit(){
         // DB::enableQueryLog();
         //取上層權限
@@ -35,9 +47,9 @@ class AuthorityController extends Controller
             'Manager_auth' => $Manager_auth,
             'Manager' => $Manager,
         ];
-    	return view('auth.authority', $binding);
+    	return view('auth.authority_edit', $binding);
     }
-    // 權限管理修改
+// 權限管理修改
     public function editAuth(){
         // DB::enableQueryLog();
         $request =request()->all();
@@ -73,7 +85,7 @@ class AuthorityController extends Controller
         $validator =Validator::make($request, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/manager/authority')->withErrors($validator)->withInput();
+            return redirect('/auth/manager/authority_edit')->withErrors($validator)->withInput();
         }
         $Manager =Managers::where('nokey',session()->get('manager_nokey'))->firstOrFail();
 
@@ -92,6 +104,11 @@ class AuthorityController extends Controller
         $Manager->enable = $mEnable;   
         $Manager->save();
         // exit;
-        return redirect()->to('/auth/manager/authority')->with('controll_back_msg', 'ok');;
+        return redirect()->to('/auth/manager/authority_edit')->with('controll_back_msg', 'ok');
+    }
+
+// 權限管理員刪除
+    public function del(){
+        return "管理員刪除";
     }
 }
