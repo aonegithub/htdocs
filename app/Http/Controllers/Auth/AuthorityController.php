@@ -9,11 +9,12 @@ use App\Awugo\Auth\Managers;
 use Image;
 use View;
 use DB;
+use Validator;
 
 class AuthorityController extends Controller
 {
 	// 權限管理
-    public function main(){
+    public function edit(){
         // DB::enableQueryLog();
         //取上層權限
         $Authority_root =Authority::where('auth_parent','-1')->get();
@@ -32,16 +33,65 @@ class AuthorityController extends Controller
             'Auth_root' => $Authority_root,
             'Auth_sub' => $Authority_sub,
             'Manager_auth' => $Manager_auth,
+            'Manager' => $Manager,
         ];
     	return view('auth.authority', $binding);
     }
     // 權限管理修改
     public function editAuth(){
-        $Manager =Managers::findOrFail(session()->get('manager_id'));
+        // DB::enableQueryLog();
         $request =request()->all();
+        //修改規則驗證
+        $rules =[
+            //登入帳號
+            'inputID'=>[
+                'required',
+                'min:3',
+            ],
+            //密碼
+            'exampleInputPassword1'=>[
+                'required',
+                'same:exampleInputPassword2',
+                'min:3',
+            ],
+            //使用人
+            'inputUserID'=>[
+                'required',
+                'min:3',
+            ],
+            //部門
+            'inputDepartment'=>[
+                'required',
+                'min:3',
+            ],
+        ];
+        // 無勾選密碼則不驗證密碼
+        if(!isset($request['editPW'])){
+            unset($rules['exampleInputPassword1']);
+        }
+        // 驗證修改資料
+        $validator =Validator::make($request, $rules);
+        //驗證失敗
+        if($validator->fails()){
+            return redirect('/auth/manager/authority')->withErrors($validator)->withInput();
+        }
+        $Manager =Managers::where('nokey',session()->get('manager_nokey'))->firstOrFail();
+
         $Manager->auth =implode(',',$request['auth_chk']);
+        // 勾選修改密碼才動密碼
+        if(isset($request['editPW'])){
+            $Manager->passwd = Hash::make($request['exampleInputPassword1']);
+        }
+        // $Manager->id = $request['inputID'];
+        $Manager->name = $request['inputUserID'];
+        $Manager->department = $request['inputDepartment'];
+        $mEnable=0;
+        if(isset($request['enableAccount'])){
+            $mEnable=1;
+        }
+        $Manager->enable = $mEnable;   
         $Manager->save();
-        return redirect()->to('/auth/manager/authority')->with('controll_back_msg', '完成');
-        // return redirect('/auth/manager/authority');
+        // exit;
+        return redirect()->to('/auth/manager/authority')->with('controll_back_msg', 'ok');;
     }
 }

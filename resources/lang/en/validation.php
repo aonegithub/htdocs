@@ -142,5 +142,8 @@ return [
         'year' => '年',
         'inputID' => '帳號',
         'inputPassword' => '密碼',
+        'exampleInputPassword1' => '密碼',
+        'inputUserID' => '帳號使用人',
+        'inputDepartment' => '部門名稱',
     ],
 ];

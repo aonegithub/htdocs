@@ -10,13 +10,14 @@ class Managers extends Model
     protected $table ='manager_list';
     //主鍵
     protected $primarykey='nokey';
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      * 可大量異動的欄位
      * @var array
      */
     protected $fillable = [
-        'id', 'passwd', 'name', 'department', 'auth' ,
+        'id','passwd', 'name', 'department', 'auth' ,
     ];
 
     // *

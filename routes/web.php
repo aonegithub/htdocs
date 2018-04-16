@@ -18,9 +18,17 @@ Route::group(['prefix'=>'auth/manager'], function(){
 	Route::group(['middleware'=>'auth.manager.login'], function(){
 		// 儀表板(最新消息)
 		Route::get('main', 'Auth\ManagerController@main');
-		// 權限管理
-		Route::get('authority', 'Auth\AuthorityController@main');
-		Route::post('authority', 'Auth\AuthorityController@editAuth');
+		// 管理員與權限管理
+		// 清單
+		Route::get('authority_list', 'Auth\AuthorityController@main');
+		// 新增
+		Route::get('authority_add', 'Auth\AuthorityController@add');
+		Route::post('authority_add', 'Auth\AuthorityController@addAuth');
+		// 編輯
+		Route::get('authority_edit', 'Auth\AuthorityController@edit');
+		Route::post('authority_edit', 'Auth\AuthorityController@editAuth');
+		// 刪除
+		Route::get('authority_del', 'Auth\AuthorityController@del');
 	});
 });
 Route::group(['prefix'=>'auth'], function(){
