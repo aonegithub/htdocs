@@ -25,10 +25,10 @@ Route::group(['prefix'=>'auth/manager'], function(){
 			Route::get('authority_add', 'Auth\AuthorityController@add');
 			Route::post('authority_add', 'Auth\AuthorityController@addAuth');
 			// 編輯
-			Route::get('authority_edit', 'Auth\AuthorityController@edit');
-			Route::post('authority_edit', 'Auth\AuthorityController@editAuth');
+			Route::get('authority_edit/{managerkey}', 'Auth\AuthorityController@edit');
+			Route::post('authority_edit/{managerkey}', 'Auth\AuthorityController@editAuth');
 			// 刪除
-			Route::get('authority_del', 'Auth\AuthorityController@del');
+			Route::get('authority_del/{managerkey}', 'Auth\AuthorityController@del');
 	});
 });
 Route::group(['prefix'=>'auth'], function(){

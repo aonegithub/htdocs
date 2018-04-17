@@ -30,6 +30,7 @@
 <div style="text-align:right;">
 	<a href="/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
 </div>
+
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
@@ -38,20 +39,50 @@
       <th scope="col">部門</th>
       <th scope="col">最新登入</th>
       <th scope="col">建立日期</th>
+      <th scope="col">啟用狀態</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
+  	@foreach($Managers as $key => $Manager)
+    <tr style="cursor: pointer;">
+      <th scope="row" onclick="window.location.href='./authority_list?serial={{$Manager->nokey}}'">{{$Manager->id}}</th>
+      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->name}}</td>
+      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->department}}</td>
+      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->updated_at}}</td>
+      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->created_at}}</td>
+      <td>
+      	<label class="custom-control custom-checkbox">
+      		@if($Manager->enable ==1)
+		    	<input type="checkbox" class="custom-control-input" value="" checked="checked">
+		    @else
+				<input type="checkbox" class="custom-control-input" value="">
+		    @endif
+		    <span class="custom-control-indicator"></span>
+		</label>
+      </td>
     </tr>
+    @endforeach
   </tbody>
 </table>
+<!-- 分頁 -->
+<div id="nav_pagerow">
+{{ $Managers->links('vendor.pagination.bootstrap-4') }}
+</div>
 @endsection
-
+<!-- style內置區塊 -->
+@section('instyle')
+/** 分頁樣式 */
+#nav_pagerow{
+	float: right;
+	left: -50%;
+	position: relative;
+}
+#nav_pagerow > ul{
+	float:left;
+	left: 50%;
+	position: relative;
+}
+@endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
 @endsection

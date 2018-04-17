@@ -45,6 +45,7 @@
 			    	-moz-box-sizing: content-box;
 			    padding: 10px;
 			}
+			@yield('instyle')
 		</style>
         
     </head>
@@ -108,7 +109,7 @@
 		@yield('content')
 	</div>
 		<footer>
-			<p class="mt-5 mb-3 text-center text-muted">© 2017-2018 長龍科技股份有限公司</p>
+			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司</p>
 		</footer>
 	<!-- Modal -->
 	<div class="modal fade" id="logoutAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -15,9 +15,14 @@ class AuthorityController extends Controller
 {
 // 權限管理員清單
     public function main(){
+        // 每頁筆數
+        $page_row =2;
+        $Manager_pagerow =Managers::OrderBy('nokey','asc')->paginate($page_row);
+
         $binding =[
             'Title' => '權限管理',
             'Nav_ID' => 29,  //功能按鈕編號  
+            'Managers' => $Manager_pagerow,
         ];
         return view('auth.authority_list', $binding);
     }
@@ -86,14 +91,14 @@ class AuthorityController extends Controller
         return redirect()->to('/auth/manager/authority_add')->with('controll_back_msg', 'ok');
     }
 // 權限管理編輯頁
-    public function edit(){
+    public function edit($manager_nokey){
         // DB::enableQueryLog();
         //取上層權限
         $Authority_root =Authority::where('auth_parent','-1')->get();
         //取下層權限
         $Authority_sub =Authority::where('auth_parent','<>',"-1")->get();
         //取管理者權限資料
-        $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail();
+        $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
         $Manager_auth =explode(',', $Manager->auth);
         // var_dump(DB::getQueryLog());
         // print_r($Authority_sub);
@@ -110,7 +115,7 @@ class AuthorityController extends Controller
     	return view('auth.authority_edit', $binding);
     }
 // 權限管理修改
-    public function editAuth(){
+    public function editAuth($manager_nokey){
         // DB::enableQueryLog();
         $request =request()->all();
         //修改規則驗證
@@ -140,9 +145,9 @@ class AuthorityController extends Controller
         $validator =Validator::make($request, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/manager/authority_edit')->withErrors($validator)->withInput();
+            return redirect('/auth/manager/authority_edit/$manager_nokey')->withErrors($validator)->withInput();
         }
-        $Manager =Managers::where('nokey',session()->get('manager_nokey'))->firstOrFail();
+        $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
 
         $Manager->auth =implode(',',$request['auth_chk']);
         // 勾選修改密碼才動密碼
@@ -159,7 +164,7 @@ class AuthorityController extends Controller
         $Manager->enable = $mEnable;   
         $Manager->save();
         // exit;
-        return redirect()->to('/auth/manager/authority_edit')->with('controll_back_msg', 'ok');
+        return redirect()->to('/auth/manager/authority_edit/'.$manager_nokey)->with('controll_back_msg', 'ok');
     }
 
 // 權限管理員刪除
