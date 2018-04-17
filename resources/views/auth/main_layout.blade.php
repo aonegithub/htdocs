@@ -50,7 +50,7 @@
     </head>
 <body style="margin-top:150px">
 	<header>
-		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #dfdfdf;">
+		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #cacaca;background-color: white;">
 			<div id="top">
 				<div id="top_container" class="container_width">
 					<div id="top_container_logo" style="float:left;"><img src="../../pic/auth_layout_logo.png" alt=""></div>

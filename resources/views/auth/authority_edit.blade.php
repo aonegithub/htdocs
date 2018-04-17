@@ -64,19 +64,26 @@
 		    <input name="enableAccount" id="enableAccount" type="checkbox" class="custom-control-input" value="enableAccount">
 		    <span class="custom-control-indicator"></span>啟動帳號
 		</label>
+		<!-- 全選權限 -->
+		<div style="">
+			<label class="custom-control custom-checkbox">
+			    <input name="auth_all" id="auth_all" type="checkbox" class="custom-control-input" value="" >
+			    <span class="custom-control-indicator"></span>權限全選
+			</label>
+		</div>
 		<!-- 權限表 -->
 		<div class="row">
 			@foreach($Auth_root as $key => $root)
 				<div class="col-md-6">
 					<label class="custom-control custom-checkbox">
-					    <input name="auth_chk[]" id="auth_chk[]" type="checkbox" class="custom-control-input auth_chk_{{ $root->nokey }}" value="{{ $root->nokey }}">
+					    <input data-all="auth" data-type="root" name="auth_chk[]" id="auth_chk[]" type="checkbox" class="custom-control-input auth_chk_{{ $root->nokey }}" value="{{ $root->nokey }}">
 					    <span class="custom-control-indicator"></span>{{ $root->auth_name }}
 					</label>
 					@foreach($Auth_sub as $sub)
 						@if($sub->auth_parent == $root->nokey)
 							<div style="padding-left: 80px;">
 								<label class="custom-control custom-checkbox">
-								    <input name="auth_chk[]" id="auth_chk[]" type="checkbox" class="custom-control-input auth_chk_{{ $sub->nokey }}" value="{{ $sub->nokey }}" >
+								    <input data-all="auth" data-group="auth_{{ $root->nokey }}" name="auth_chk[]" id="auth_chk[]" type="checkbox" class="custom-control-input auth_chk_{{ $sub->nokey }}" value="{{ $sub->nokey }}" >
 								    <span class="custom-control-indicator"></span>{{ $sub->auth_name }}
 								</label>
 							</div>
@@ -101,6 +108,21 @@ function togglePwd(){
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//小群組全選
+	$("input[data-type='root']").change(function(){
+		//alert(0);
+		root_id ="input[data-group='auth_"+ $(this).val() +"']";
+		//alert(root_id);
+		$(root_id).prop("checked", true);
+	});
+	//全選權限
+	$("#auth_all").change(function(){
+		if($(this).prop("checked")){
+			$("input[data-all=auth]").prop("checked", true);
+		}else{
+			$("input[data-all=auth]").prop("checked", false);
+		}
+	});
 	@foreach($Manager_auth as $auth_id)
 		//修改完成跳出確認
 		@if(!is_null(session()->get('controll_back_msg')))

@@ -15,7 +15,11 @@ class AuthorityController extends Controller
 {
 // 權限管理員清單
     public function main(){
-        return "管理員清單";
+        $binding =[
+            'Title' => '權限管理',
+            'Nav_ID' => 29,  //功能按鈕編號  
+        ];
+        return view('auth.authority_list', $binding);
     }
 // 權限管理員新增頁
     public function add(){
@@ -33,7 +37,53 @@ class AuthorityController extends Controller
     }
 // 權限管理員新增POST
     public function addAuth(){
-        return "管理員新增POST";
+        // DB::enableQueryLog();
+        $request =request()->all();
+        //修改規則驗證
+        $rules =[
+            //登入帳號
+            'inputID'=>[
+                'required',
+                'min:3',
+            ],
+            //密碼
+            'exampleInputPassword1'=>[
+                'required',
+                'same:exampleInputPassword2',
+                'min:3',
+            ],
+            //使用人
+            'inputUserID'=>[
+                'required',
+                'min:3',
+            ],
+            //部門
+            'inputDepartment'=>[
+                'required',
+                'min:3',
+            ],
+        ];
+        // 驗證修改資料
+        $validator =Validator::make($request, $rules);
+        //驗證失敗
+        if($validator->fails()){
+            return redirect('/auth/manager/authority_add')->withErrors($validator)->withInput();
+        }
+        $Manager = new Managers;
+
+        $Manager->auth =implode(',',$request['auth_chk']);
+        $Manager->id = $request['inputID'];
+        $Manager->name = $request['inputUserID'];
+        $Manager->passwd = Hash::make($request['exampleInputPassword1']);
+        $Manager->department = $request['inputDepartment'];
+        $mEnable=0;
+        if(isset($request['enableAccount'])){
+            $mEnable=1;
+        }
+        $Manager->enable = $mEnable;   
+        $Manager->save();
+        // exit;
+        return redirect()->to('/auth/manager/authority_add')->with('controll_back_msg', 'ok');
     }
 // 權限管理編輯頁
     public function edit(){
@@ -65,11 +115,6 @@ class AuthorityController extends Controller
         $request =request()->all();
         //修改規則驗證
         $rules =[
-            //登入帳號
-            'inputID'=>[
-                'required',
-                'min:3',
-            ],
             //密碼
             'exampleInputPassword1'=>[
                 'required',
