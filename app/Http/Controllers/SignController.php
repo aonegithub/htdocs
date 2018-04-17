@@ -15,6 +15,7 @@ class SignController extends Controller
 {
 	// 登入口
     public function login(){
+        // abort(404);
     	return view('auth/login');
     }
     // 登入處理

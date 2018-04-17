@@ -66,6 +66,7 @@
     </head>
  
     <body>
+        {{ phpinfo() }}
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -82,6 +83,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+        }
 777888999000111222333                    <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
