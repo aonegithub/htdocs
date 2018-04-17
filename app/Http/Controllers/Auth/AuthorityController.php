@@ -13,28 +13,59 @@ use Validator;
 
 class AuthorityController extends Controller
 {
+    private $menu_item_code =29;
+    private $menu_item_text ='權限管理';
+    // private $auth_array =explode(',', session()->get('manager_auth'));
 // 權限管理員清單
     public function main(){
+        $auth_key ='33'; //管理員瀏覽權限碼
+        //var_dump($auth_array);
+        $auth_array =explode(',', session()->get('manager_auth'));
+        if(!in_array($auth_key,$auth_array)){
+            $errors =['權限不足返回'];
+            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+            $binding =[
+                'Title' => $this->menu_item_text,
+                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Manager' => $Manager,
+            ];
+            return view('auth.main',$binding)->withErrors($errors);
+            //exit;
+        }
         // 每頁筆數
         $page_row =2;
-        $Manager_pagerow =Managers::OrderBy('nokey','asc')->paginate($page_row);
+        $Manager_pagerow =Managers::OrderBy('enable','desc')->OrderBy('nokey','asc')->paginate($page_row);
 
         $binding =[
-            'Title' => '權限管理',
-            'Nav_ID' => 29,  //功能按鈕編號  
+            'Title' => $this->menu_item_text,
+            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
             'Managers' => $Manager_pagerow,
         ];
         return view('auth.authority_list', $binding);
     }
 // 權限管理員新增頁
     public function add(){
+        $auth_key ='34'; //新增管理員權限碼
+        //var_dump($auth_array);
+        $auth_array =explode(',', session()->get('manager_auth'));
+        if(!in_array($auth_key,$auth_array)){
+            $errors =['權限不足返回'];
+            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+            $binding =[
+                'Title' => $this->menu_item_text,
+                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Manager' => $Manager,
+            ];
+            return view('auth.main',$binding)->withErrors($errors);
+            //exit;
+        }
         //取上層權限
         $Authority_root =Authority::where('auth_parent','-1')->get();
         //取下層權限
         $Authority_sub =Authority::where('auth_parent','<>',"-1")->get();
         $binding =[
-            'Title' => '權限管理',
-            'Nav_ID' => 29,  //功能按鈕編號  
+            'Title' => $this->menu_item_text,
+            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號 
             'Auth_root' => $Authority_root,
             'Auth_sub' => $Authority_sub,
         ];
@@ -93,6 +124,20 @@ class AuthorityController extends Controller
 // 權限管理編輯頁
     public function edit($manager_nokey){
         // DB::enableQueryLog();
+        $auth_key ='35'; //飯店瀏覽權限碼
+        //var_dump($auth_array);
+        $auth_array =explode(',', session()->get('manager_auth'));
+        if(!in_array($auth_key,$auth_array)){
+            $errors =['權限不足返回'];
+            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+            $binding =[
+                'Title' => $this->menu_item_text,
+                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Manager' => $Manager,
+            ];
+            return view('auth.main',$binding)->withErrors($errors);
+            //exit;
+        }
         //取上層權限
         $Authority_root =Authority::where('auth_parent','-1')->get();
         //取下層權限
@@ -105,8 +150,8 @@ class AuthorityController extends Controller
 
         // exit;
         $binding =[
-            'Title' => '權限管理',
-            'Nav_ID' => 29,  //功能按鈕編號  
+            'Title' => $this->menu_item_text,
+            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
             'Auth_root' => $Authority_root,
             'Auth_sub' => $Authority_sub,
             'Manager_auth' => $Manager_auth,
@@ -167,8 +212,27 @@ class AuthorityController extends Controller
         return redirect()->to('/auth/manager/authority_edit/'.$manager_nokey)->with('controll_back_msg', 'ok');
     }
 
-// 權限管理員刪除
-    public function del(){
-        return "管理員刪除";
+// (清單)權限管理員啟動管理 Ajax
+    public function enable($manager_key){
+        $auth_key ='35'; //管理員編輯權限碼
+        //var_dump($auth_array);
+        $auth_array =explode(',', session()->get('manager_auth'));
+        if(!in_array($auth_key,$auth_array)){
+            $errors =['權限不足返回'];
+            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+            $binding =[
+                'Title' => $this->menu_item_text,
+                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Manager' => $Manager,
+            ];
+            return view('auth.main',$binding)->withErrors($errors);
+            //exit;
+        }
+        $request =request()->all();
+        $enable =$request['enable'];
+        $Manager =Managers::where('nokey',$manager_key)->firstOrFail();
+        $Manager->enable =$enable;
+        $Manager->save();
+        return "管理員啟動管理--".$enable;
     }
 }

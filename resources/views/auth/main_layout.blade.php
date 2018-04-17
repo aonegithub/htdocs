@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Awugo總管理後台 - @yield('title')</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/checkbox.css">
@@ -54,7 +55,7 @@
 		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #cacaca;background-color: white;">
 			<div id="top">
 				<div id="top_container" class="container_width">
-					<div id="top_container_logo" style="float:left;"><img src="../../pic/auth_layout_logo.png" alt=""></div>
+					<div id="top_container_logo" style="float:left;"><img src="/pic/auth_layout_logo.png" alt=""></div>
 					<div id="top_container_title" style="float:left;">訂房總管理系統</div>
 					<div id="nav_logout" class="align-middle">
 						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#"> {{ session()->get('manager_name') }} 您好！</span>
@@ -91,7 +92,7 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-26" href="#">待辦事項</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-27" href="#">合約管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-28" href="#">系統設定</a>
-			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-29" href="./authority_list">權限管理</a>
+			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-29" href="/auth/manager/authority_list">權限管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-30" href="#">廣告刊登</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-31" href="#">團體預約</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-32" href="#">流量分析</a>

@@ -53,9 +53,9 @@
       <td>
       	<label class="custom-control custom-checkbox">
       		@if($Manager->enable ==1)
-		    	<input type="checkbox" class="custom-control-input" value="" checked="checked">
+		    	<input type="checkbox" class="custom-control-input" value="" checked="checked" onchange="chg_enable({{$Manager->nokey}},0)">
 		    @else
-				<input type="checkbox" class="custom-control-input" value="">
+				<input type="checkbox" class="custom-control-input" value="" onchange="chg_enable({{$Manager->nokey}},1)">
 		    @endif
 		    <span class="custom-control-indicator"></span>
 		</label>
@@ -85,6 +85,19 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+	function chg_enable(root_key,val){
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'authority_enable/'+root_key,
+	        data: {enable:val},
+	        success: function(data) {
+				//console.log(data);
+	    	}
+	    });
+	}
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')

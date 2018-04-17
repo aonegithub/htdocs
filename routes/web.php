@@ -27,8 +27,8 @@ Route::group(['prefix'=>'auth/manager'], function(){
 			// 編輯
 			Route::get('authority_edit/{managerkey}', 'Auth\AuthorityController@edit');
 			Route::post('authority_edit/{managerkey}', 'Auth\AuthorityController@editAuth');
-			// 刪除
-			Route::get('authority_del/{managerkey}', 'Auth\AuthorityController@del');
+			// 啟動帳號與關閉
+			Route::post('authority_enable/{managerkey}', 'Auth\AuthorityController@enable');
 	});
 });
 Route::group(['prefix'=>'auth'], function(){

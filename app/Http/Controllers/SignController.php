@@ -46,7 +46,12 @@ class SignController extends Controller
           $Manager =Managers::where('id',$input['inputID'])->firstOrFail()->toArray();
             //判斷是否為管理者
             $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
-            if($Manager['if_manager']){
+            if($Manager['if_manager'] && $Manager['enable']=='1'){
+                // 更新最後登入時間
+                $Manager_update =Managers::where('id',$input['inputID'])->firstOrFail();
+                $Manager_update->updated_at =date ("Y-m-d H:i:s");
+                $Manager_update->save();
+                //寫入登入資訊
                 session()->put('manager_id', $input['inputID']);
                 session()->put('manager_nokey', $Manager['nokey']);
                 session()->put('manager_name', $Manager['name']);
@@ -56,7 +61,7 @@ class SignController extends Controller
             }
         } catch (ModelNotFoundException $ex) {
             $validator =['無此帳號或帳號密碼錯誤'];
-            return redirect('/auth/login')->withErrors($validator)->withInput();;
+            return redirect('/auth/login')->withErrors($validator)->withInput();
         }
         
         //session()->flush();
