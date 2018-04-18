@@ -40,6 +40,7 @@ class AuthorityController extends Controller
             'Title' => $this->menu_item_text,
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
             'Managers' => $Manager_pagerow,
+            'Auths' => $auth_array,
         ];
         return view('auth.authority_list', $binding);
     }
@@ -74,6 +75,7 @@ class AuthorityController extends Controller
 // 權限管理員新增POST
     public function addAuth(){
         // DB::enableQueryLog();
+
         $request =request()->all();
         //修改規則驗證
         $rules =[
@@ -105,9 +107,16 @@ class AuthorityController extends Controller
         if($validator->fails()){
             return redirect('/auth/manager/authority_add')->withErrors($validator)->withInput();
         }
+
         $Manager = new Managers;
 
-        $Manager->auth =implode(',',$request['auth_chk']);
+        //判斷權限都沒勾選的狀態下給予空值，避免判斷失常
+        if(!isset($request['auth_chk'])){
+            $request['auth_chk'] ="";
+            $Manager->auth =$request['auth_chk'];
+        }else{
+            $Manager->auth =implode(',',$request['auth_chk']);
+        }
         $Manager->id = $request['inputID'];
         $Manager->name = $request['inputUserID'];
         $Manager->passwd = Hash::make($request['exampleInputPassword1']);
@@ -117,6 +126,7 @@ class AuthorityController extends Controller
             $mEnable=1;
         }
         $Manager->enable = $mEnable;   
+
         $Manager->save();
         // exit;
         return redirect()->to('/auth/manager/authority_add')->with('controll_back_msg', 'ok');
@@ -156,6 +166,7 @@ class AuthorityController extends Controller
             'Auth_sub' => $Authority_sub,
             'Manager_auth' => $Manager_auth,
             'Manager' => $Manager,
+            'Auths' => $auth_array,
         ];
     	return view('auth.authority_edit', $binding);
     }
@@ -193,8 +204,13 @@ class AuthorityController extends Controller
             return redirect('/auth/manager/authority_edit/$manager_nokey')->withErrors($validator)->withInput();
         }
         $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
-
-        $Manager->auth =implode(',',$request['auth_chk']);
+        //判斷權限都沒勾選的狀態下給予空值，避免判斷失常
+        if(!isset($request['auth_chk'])){
+            $request['auth_chk'] ="";
+            $Manager->auth =$request['auth_chk'];
+        }else{
+            $Manager->auth =implode(',',$request['auth_chk']);
+        }
         // 勾選修改密碼才動密碼
         if(isset($request['editPW'])){
             $Manager->passwd = Hash::make($request['exampleInputPassword1']);
@@ -216,18 +232,18 @@ class AuthorityController extends Controller
     public function enable($manager_key){
         $auth_key ='35'; //管理員編輯權限碼
         //var_dump($auth_array);
-        $auth_array =explode(',', session()->get('manager_auth'));
-        if(!in_array($auth_key,$auth_array)){
-            $errors =['權限不足返回'];
-            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
-            $binding =[
-                'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
-                'Manager' => $Manager,
-            ];
-            return view('auth.main',$binding)->withErrors($errors);
-            //exit;
-        }
+        // $auth_array =explode(',', session()->get('manager_auth'));
+        // if(!in_array($auth_key,$auth_array)){
+        //     $errors =['權限不足返回'];
+        //     $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+        //     $binding =[
+        //         'Title' => $this->menu_item_text,
+        //         'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+        //         'Manager' => $Manager,
+        //     ];
+        //     // return view('auth.main',$binding)->withErrors($errors);
+        //     //exit;
+        // }
         $request =request()->all();
         $enable =$request['enable'];
         $Manager =Managers::where('nokey',$manager_key)->firstOrFail();

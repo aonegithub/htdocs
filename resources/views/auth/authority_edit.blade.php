@@ -28,7 +28,9 @@
 	</div>
 @endif
 <div style="text-align:right;">
+	@if(!in_array('34',$Auths))
 	<a href="/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
+	@endif
 	<a href="/auth/manager/authority_list" class="btn btn-secondary">返回清單</a>
 </div>
 	<form method="POST" role="form" action="/auth/manager/authority_edit/{{$Manager->nokey}}">
