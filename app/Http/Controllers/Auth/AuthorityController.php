@@ -29,7 +29,7 @@ class AuthorityController extends Controller
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
             ];
-            return view('auth.main',$binding)->withErrors($errors);
+            return redirect('/auth/manager/main')->withErrors($errors)->withInput();
             //exit;
         }
         // 每頁筆數
@@ -57,7 +57,7 @@ class AuthorityController extends Controller
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
             ];
-            return view('auth.main',$binding)->withErrors($errors);
+            return redirect('/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
         //取上層權限
@@ -145,7 +145,7 @@ class AuthorityController extends Controller
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
             ];
-            return view('auth.main',$binding)->withErrors($errors);
+            return redirect('/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
         //取上層權限

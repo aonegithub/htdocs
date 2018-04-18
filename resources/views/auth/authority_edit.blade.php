@@ -21,7 +21,7 @@
 	        修改完成
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href='/auth/manager/authority_list'">OK！</button>
 	      </div>
 	    </div>
 	  </div>
@@ -110,6 +110,10 @@ function togglePwd(){
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//隱藏權限不符的系統按鈕
+	@if(!in_array('33',$Auths))
+    	$("#top-nav-29").hide();
+    @endif
 	//小群組全選
 	$("input[data-type='root']").change(function(){
 		//alert(0);

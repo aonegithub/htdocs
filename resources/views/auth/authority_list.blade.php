@@ -27,7 +27,7 @@
 	  </div>
 	</div>
 @endif
-@if(!in_array('34',$Auths))
+@if(in_array('34',$Auths))
 <div style="text-align:right;">
 	<a href="/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
 </div>
