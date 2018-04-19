@@ -93,12 +93,12 @@ class AuthorityController extends Controller
             //使用人
             'inputUserID'=>[
                 'required',
-                'min:3',
+                'min:2',
             ],
             //部門
             'inputDepartment'=>[
                 'required',
-                'min:3',
+                'min:2',
             ],
         ];
         // 驗證修改資料
@@ -185,12 +185,12 @@ class AuthorityController extends Controller
             //使用人
             'inputUserID'=>[
                 'required',
-                'min:3',
+                'min:2',
             ],
             //部門
             'inputDepartment'=>[
                 'required',
-                'min:3',
+                'min:2',
             ],
         ];
         // 無勾選密碼則不驗證密碼

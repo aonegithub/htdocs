@@ -10,14 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// app('debugbar')->disable();
 Route::get('/', 'IndexController@main');
 // 總管理區路由
 // 中介層驗證登入資訊
 Route::group(['prefix'=>'auth/manager'], function(){
 	Route::group(['middleware'=>'auth.manager.login'], function(){
 		// 儀表板(最新消息)
-		Route::get('main', 'Auth\ManagerController@main');
+			Route::get('main', 'Auth\ManagerController@main');
 		// 管理員與權限管理
 			// 清單
 			Route::get('authority_list', 'Auth\AuthorityController@main');
@@ -29,6 +29,15 @@ Route::group(['prefix'=>'auth/manager'], function(){
 			Route::post('authority_edit/{managerkey}', 'Auth\AuthorityController@editAuth');
 			// 啟動帳號與關閉
 			Route::post('authority_enable/{managerkey}', 'Auth\AuthorityController@enable');
+		//景點設定
+		//地區設定
+			Route::get('area_list', 'Auth\AreaController@main');
+			Route::get('area_add', 'Auth\AreaController@add');
+			Route::post('area_add', 'Auth\AreaController@addArea');
+			Route::get('area_edit', 'Auth\AreaController@edit');
+			Route::post('area_edit', 'Auth\AreaController@editArea');
+			Route::post('area_edit/{areakey}', 'Auth\AreaController@editArea');
+			Route::post('area_del', 'Auth\AreaController@delArea');
 	});
 });
 Route::group(['prefix'=>'auth'], function(){

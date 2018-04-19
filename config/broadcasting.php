@@ -14,9 +14,9 @@ return [
     | Supported: "pusher", "redis", "log", "null"
     |
     */
-
+    'enabled' => null,
     'default' => env('BROADCAST_DRIVER', 'null'),
-
+    'inject' => false,
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections

@@ -66,7 +66,7 @@
     </head>
  
     <body>
-        {{ phpinfo() }}
+        <a href="/auth/login" class="title m-b-md">進入總後臺</a>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
