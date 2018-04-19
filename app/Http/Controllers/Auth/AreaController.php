@@ -24,18 +24,14 @@ class AreaController extends Controller
         //管理者基本資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         //地區清單
-        $Area_country =Areas::where('area_parent','0')->get(); //國家
-        $Area_parent =Areas::where('area_parent','-1')->get(); //縣市區
-        $Area_level =Areas::where('area_parent','>','0')->get();  //地方區
+        $Areas =Areas::where('area_parent','0')->get(); //國家
 
         $binding =[
             'Title' => $this->menu_item_text,
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
             'Manager' => $Manager,
             'Auths' => $auth_array,
-            'Area_country' => $Area_country,
-            'Area_parent' => $Area_parent,
-            'Area_level' => $Area_level,
+            'Areas' => $Areas,
         ];
         return view('auth.area_list', $binding);
     }

@@ -18,7 +18,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        已停用此帳號
+	        已刪除此區
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
@@ -30,6 +30,8 @@
 @if(in_array('34',$Auths))
 <div style="text-align:right;">
 	<a href="/auth/manager/area_add" class="btn btn-secondary">新增地區</a>
+	<a href="/auth/manager/area_list" class="btn btn-secondary">地區清單</a>
+	<a href="/auth/manager/attractions_list" class="btn btn-secondary">景點管理</a>
 </div>
 @endif
 
@@ -39,16 +41,16 @@
       <th scope="col">國家</th>
       <th scope="col">縣市</th>
       <th scope="col">地區</th>
-      <th scope="col">刪除</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   	@foreach($Area_parent as $key => $parent)
     <tr style="cursor: pointer;">
       <th scope="row" onclick="window.location.href='./area_edit/'">{{ $parent->area_name }}</th>
-      <td onclick="window.location.href='./area_edit/'">台南市</td>
+      <td onclick="window.location.href='./area_edit/'">{{ $parent->area_name }}</td>
       <td onclick="window.location.href='./area_edit/'">永康區</td>
-      <td onclick="window.location.href='./area_del/'">刪除</td>
+      <td><a href="./area_del/" class="btn btn-secondary">刪除</a></td>
     </tr>
     @endforeach
   </tbody>
