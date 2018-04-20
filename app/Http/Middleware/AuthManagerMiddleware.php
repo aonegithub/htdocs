@@ -14,7 +14,7 @@ class AuthManagerMiddleware
     public function handle($request, Closure $next)
     {
         if(is_null(session()->get('manager_id'))){
-            return redirect()->to('/auth/login');
+            return redirect()->to('tw/auth/login');
         }
         return $next($request);
     }

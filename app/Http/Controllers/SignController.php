@@ -14,12 +14,12 @@ use Validator;
 class SignController extends Controller
 {
 	// 登入口
-    public function login(){
+    public function login($country){
         // abort(404);
     	return view('auth/login');
     }
     // 登入處理
-    public function login_post(){
+    public function login_post($country){
         // DB::enableQueryLog();
     	$input = request()->all();
         // 驗證規則
@@ -39,7 +39,7 @@ class SignController extends Controller
         $validator =Validator::make($input, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/login')->withErrors($validator)->withInput();
+            return redirect('/'. $country .'/auth/login')->withErrors($validator)->withInput();
         }
         // 加密密碼用於比對
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
@@ -57,12 +57,13 @@ class SignController extends Controller
                 session()->put('manager_nokey', $Manager['nokey']);
                 session()->put('manager_name', $Manager['name']);
                 session()->put('manager_auth', $Manager['auth']);
+                session()->put('manager_country', $country);
             }else{
                 throw (new ModelNotFoundException);
             }
         } catch (ModelNotFoundException $ex) {
             $validator =['無此帳號或帳號密碼錯誤'];
-            return redirect('/auth/login')->withErrors($validator)->withInput();
+            return redirect('/'. $country .'/auth/login')->withErrors($validator)->withInput();
         }
         
         //session()->flush();
@@ -76,12 +77,12 @@ class SignController extends Controller
         //     'Nav_ID' => 4,  //功能按鈕編號  
         //     'Manager' => $Manager,
         // ];
-    	return redirect()->to('/auth/manager/main');
+    	return redirect()->to('/'. session()->get('manager_country') .'/auth/manager/main');
     	// return var_dump(DB::getQueryLog());
     }
     // 登出口
-    public function logout(){
+    public function logout($country){
         session()->flush();
-    	return redirect()->to('/auth/manager/main');
+    	return redirect()->to('/'. $country .'/auth/manager/main');
     }
 }

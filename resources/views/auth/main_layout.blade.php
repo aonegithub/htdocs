@@ -13,7 +13,7 @@
 				font-family: Microsoft JhengHei;
 			}
 			.container_width{
-				width:90%;
+				width:98%;
 			}
 			.btn-no-border{
 				border-color:#FFF;
@@ -46,6 +46,12 @@
 			    	-moz-box-sizing: content-box;
 			    padding: 10px;
 			}
+			.btn-outline-secondary{
+				color:#000000;
+			}
+			.containet{
+				max-width: 98%;
+			}
 			@yield('instyle')
 		</style>
         
@@ -60,6 +66,9 @@
 					<div id="nav_logout" class="align-middle">
 						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#"> {{ session()->get('manager_name') }} 您好！</span>
 						<a id="logout" class="btn btn-outline-secondary btn-no-border btn-smalign-middle" role="button" aria-pressed="true" id="top-nav-36">登出</a>
+					</div>
+					<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);">
+						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">瀏覽數:00001／本日：00001／今日：00001</span>
 					</div>
 				</div>
 			</div>
@@ -77,7 +86,7 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-11" href="#">公司發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-12" href="#">飯店發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-13" href="#">紅利點數</a>
-			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/auth/manager/area_list">景點設定</a>
+			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/area_list">景點設定</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-15" href="#">電子報　</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-16" href="#">熱門地點</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-17" href="#">設施服務</a>
@@ -92,7 +101,7 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-26" href="#">待辦事項</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-27" href="#">合約管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-28" href="#">系統設定</a>
-			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-29" href="/auth/manager/authority_list">權限管理</a>
+			    <a data-nokey='33' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-29" href="/{{$Country}}/auth/manager/authority_list">權限管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-30" href="#">廣告刊登</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-31" href="#">團體預約</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-32" href="#">流量分析</a>
@@ -103,7 +112,7 @@
 			</div>
 		</nav>
 	</header>
-	<div class="container">
+	<div class="container" style="max-width: 98%">
 		<!-- 錯誤訊息 -->
 		@include('error_msg')
 
@@ -127,13 +136,15 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">按錯</button>
-	        <button type="button" class="btn btn-secondary" onclick="window.location.href='/auth/logout'">確定登出</button>
+	        <button type="button" class="btn btn-secondary" onclick="window.location.href='/{{$Country}}/auth/logout'">確定登出</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	<!-- jQuery331 -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	@yield('custom_script')
     	$(function(){
@@ -144,10 +155,19 @@
     		$('#logout').click(function () {
   				$('#logoutAlert').modal("toggle");
 			});
-    	})
+			//隱藏無權限按鈕
+			var auth_str = "{{implode(",",$Auths)}}";
+			var auth_array = auth_str.split(",");
+			// alert(auth_str);
+			$("a[data-nokey]").each(function(){
+				// alert(jQuery.inArray('33', auth_array ));
+				if(auth_array.indexOf($(this).data('nokey')+'') <0){
+					$(this).hide();
+					// alert($(this).data('nokey'));
+				}
+			});
+			
+    	});
     </script>
-    <!-- <script type="text/javascript">$(function(){alert(1);});</script> -->
-    <!-- Bootstrap4.1 -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </body>
 </html>

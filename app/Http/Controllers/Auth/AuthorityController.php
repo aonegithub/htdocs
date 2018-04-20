@@ -17,7 +17,7 @@ class AuthorityController extends Controller
     private $menu_item_text ='權限管理';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 權限管理員清單
-    public function main(){
+    public function main($country){
         $auth_key ='33'; //管理員瀏覽權限碼
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -29,23 +29,24 @@ class AuthorityController extends Controller
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
             ];
-            return redirect('/auth/manager/main')->withErrors($errors)->withInput();
+            return redirect('/'. $country .'/auth/manager/main')->withErrors($errors)->withInput();
             //exit;
         }
         // 每頁筆數
-        $page_row =2;
-        $Manager_pagerow =Managers::OrderBy('enable','desc')->OrderBy('nokey','asc')->paginate($page_row);
+        $page_row =3;
+        $Manager_pagerow =Managers::OrderBy('enable','desc')->OrderBy('nokey','desc')->paginate($page_row);
 
         $binding =[
             'Title' => $this->menu_item_text,
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
             'Managers' => $Manager_pagerow,
             'Auths' => $auth_array,
+            'Country' => $country,
         ];
         return view('auth.authority_list', $binding);
     }
 // 權限管理員新增頁
-    public function add(){
+    public function add($country){
         $auth_key ='34'; //新增管理員權限碼
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -57,7 +58,7 @@ class AuthorityController extends Controller
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
             ];
-            return redirect('/auth/manager/authority_list')->withErrors($errors)->withInput();
+            return redirect('/'. $country .'/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
         //取上層權限
@@ -69,11 +70,13 @@ class AuthorityController extends Controller
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號 
             'Auth_root' => $Authority_root,
             'Auth_sub' => $Authority_sub,
+            'Auths' => $auth_array,
+            'Country' => $country,
         ];
         return view('auth.authority_add', $binding);
     }
 // 權限管理員新增POST
-    public function addAuth(){
+    public function addAuth($country){
         // DB::enableQueryLog();
 
         $request =request()->all();
@@ -105,7 +108,7 @@ class AuthorityController extends Controller
         $validator =Validator::make($request, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/manager/authority_add')->withErrors($validator)->withInput();
+            return redirect('/'. $country .'/auth/manager/authority_add')->withErrors($validator)->withInput();
         }
 
         $Manager = new Managers;
@@ -129,10 +132,10 @@ class AuthorityController extends Controller
 
         $Manager->save();
         // exit;
-        return redirect()->to('/auth/manager/authority_add')->with('controll_back_msg', 'ok');
+        return redirect()->to('/'. $country .'/auth/manager/authority_add')->with('controll_back_msg', 'ok');
     }
 // 權限管理編輯頁
-    public function edit($manager_nokey){
+    public function edit($country, $manager_nokey){
         // DB::enableQueryLog();
         $auth_key ='35'; //飯店瀏覽權限碼
         //var_dump($auth_array);
@@ -144,8 +147,9 @@ class AuthorityController extends Controller
                 'Title' => $this->menu_item_text,
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
+                'Country' => $country,
             ];
-            return redirect('/auth/manager/authority_list')->withErrors($errors)->withInput();
+            return redirect('/'. $country .'/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
         //取上層權限
@@ -167,11 +171,12 @@ class AuthorityController extends Controller
             'Manager_auth' => $Manager_auth,
             'Manager' => $Manager,
             'Auths' => $auth_array,
+            'Country' => $country,
         ];
     	return view('auth.authority_edit', $binding);
     }
 // 權限管理修改
-    public function editAuth($manager_nokey){
+    public function editAuth($country, $manager_nokey){
         // DB::enableQueryLog();
         $request =request()->all();
         //修改規則驗證
@@ -201,7 +206,7 @@ class AuthorityController extends Controller
         $validator =Validator::make($request, $rules);
         //驗證失敗
         if($validator->fails()){
-            return redirect('/auth/manager/authority_edit/$manager_nokey')->withErrors($validator)->withInput();
+            return redirect('/'. $country .'/auth/manager/authority_edit/$manager_nokey')->withErrors($validator)->withInput();
         }
         $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
         //判斷權限都沒勾選的狀態下給予空值，避免判斷失常
@@ -225,7 +230,7 @@ class AuthorityController extends Controller
         $Manager->enable = $mEnable;   
         $Manager->save();
         // exit;
-        return redirect()->to('/auth/manager/authority_edit/'.$manager_nokey)->with('controll_back_msg', 'ok');
+        return redirect()->to('/'. $country .'/auth/manager/authority_edit/'.$manager_nokey)->with('controll_back_msg', 'ok');
     }
 
 // (清單)權限管理員啟動管理 Ajax

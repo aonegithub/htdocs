@@ -29,7 +29,7 @@
 @endif
 @if(in_array('34',$Auths))
 <div style="text-align:right;">
-	<a href="/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
+	<a href="/{{$Country}}/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
 </div>
 @endif
 
@@ -40,7 +40,6 @@
       <th scope="col">使用者</th>
       <th scope="col">部門</th>
       <th scope="col">最後登入</th>
-      <th scope="col">建立日期</th>
       @if(in_array('35',$Auths))
       <th scope="col">啟用狀態</th>
       @endif
@@ -52,8 +51,7 @@
       <th scope="row" onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->id}}</th>
       <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->name}}</td>
       <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->department}}</td>
-      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->updated_at}}</td>
-      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->created_at}}</td>
+      <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->updated_at->format('Y-m-d H:i')}}</td>
       @if(in_array('35',$Auths))
       <td>
       	<!-- 預設啟動狀態 -->

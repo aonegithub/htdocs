@@ -14,7 +14,7 @@
 Route::get('/', 'IndexController@main');
 // 總管理區路由
 // 中介層驗證登入資訊
-Route::group(['prefix'=>'auth/manager'], function(){
+Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 	Route::group(['middleware'=>'auth.manager.login'], function(){
 		// 儀表板(最新消息)
 			Route::get('main', 'Auth\ManagerController@main');
@@ -40,7 +40,7 @@ Route::group(['prefix'=>'auth/manager'], function(){
 			Route::post('area_del', 'Auth\AreaController@delArea');
 	});
 });
-Route::group(['prefix'=>'auth'], function(){
+Route::group(['prefix'=>'/{country}/auth'], function(){
 	Route::post('login', 'SignController@login_post');
 	Route::get('login', 'SignController@login');
 	Route::get('logout', 'SignController@logout');

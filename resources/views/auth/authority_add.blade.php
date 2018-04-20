@@ -28,33 +28,43 @@
 	</div>
 @endif
 <div style="text-align:right;">
-	<a href="/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
-	<a href="/auth/manager/authority_list" class="btn btn-secondary">返回清單</a>
+	<a href="/{{$Country}}/auth/manager/authority_add" class="btn btn-secondary">新增帳號</a>
+	<a href="/{{$Country}}/auth/manager/authority_list" class="btn btn-secondary">返回清單</a>
 </div>
-	<form method="POST" role="form" action="./authority_add">
+	<form method="POST" role="form" action="/{{$Country}}/auth/manager/authority_add">
 		{{ csrf_field() }}
 		<!-- 會員資料 -->
-		<div class="form-group">
-		    <label for="inputID">登入帳號</label>
-		    <input type="text" class="form-control" id="inputID" name="inputID" placeholder="登入帳號" value="">
+		<div class="form-group row">
+		    <label for="inputID" class="col-sm-1 col-form-label">登入帳號</label>
+		    <div class="col-sm-11">
+		    	<input type="text" class="form-control" id="inputID" name="inputID" placeholder="登入帳號" value="">
+		    </div>
 	  	</div>
-		<div class="form-group">
-		    <label for="inputUserID">使用人</label>
-		    <input type="text" class="form-control" id="inputUserID" name="inputUserID" placeholder="使用者姓名" value="">
+		<div class="form-group row">
+		    <label for="inputUserID" class="col-sm-1 col-form-label">使用人</label>
+		    <div class="col-sm-11">
+		    	<input type="text" class="form-control" id="inputUserID" name="inputUserID" placeholder="使用者姓名" value="">
+			</div>
 	  	</div>
 	  	<div class="pwdChg">
-			<div class="form-group">
-			    <label for="exampleInputPassword1">輸入密碼</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" placeholder="輸入密碼">
+			<div class="form-group row">
+			    <label for="exampleInputPassword1" class="col-sm-1 col-form-label">輸入密碼</label>
+			    <div class="col-sm-11">
+			    	<input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" placeholder="輸入密碼">
+			    </div>
 			</div>
-			<div class="form-group">
-			    <label for="exampleInputPassword2">確認密碼</label>
-			    <input type="password" class="form-control" name="exampleInputPassword2" id="exampleInputPassword2" placeholder="請重複密碼">
+			<div class="form-group row">
+			    <label for="exampleInputPassword2" class="col-sm-1 col-form-label">確認密碼</label>
+			    <div class="col-sm-11">
+			    	<input type="password" class="form-control" name="exampleInputPassword2" id="exampleInputPassword2" placeholder="請重複密碼">
+			    </div>
 			</div>
 		</div>
-	  	<div class="form-group">
-		    <label for="inputDepartment">部門</label>
-		    <input type="text" class="form-control" id="inputDepartment" name="inputDepartment" placeholder="所屬部門" value="">
+	  	<div class="form-group row">
+		    <label for="inputDepartment" class="col-sm-1 col-form-label">部門</label>
+		    <div class="col-sm-11">
+		    	<input type="text" class="form-control" id="inputDepartment" name="inputDepartment" placeholder="所屬部門" value="">
+		    </div>
 	  	</div>
 	  	<label class="custom-control custom-checkbox" style="text-align: right;">
 		    <input name="enableAccount" id="enableAccount" type="checkbox" class="custom-control-input" value="enableAccount" checked="checked">
@@ -106,7 +116,11 @@
 		//alert(0);
 		root_id ="input[data-group='auth_"+ $(this).val() +"']";
 		//alert(root_id);
-		$(root_id).prop("checked", true);
+		if($(this).prop("checked")){
+			$(root_id).prop("checked", true);
+		}else{
+			$(root_id).prop("checked", false);
+		}
 	});
 	//全選權限
 	$("#auth_all").change(function(){
