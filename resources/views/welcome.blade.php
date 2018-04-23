@@ -66,7 +66,7 @@
     </head>
  
     <body>
-        <a href="/auth/login" class="title m-b-md">進入總後臺</a>
+        網站建置中...敬請期待
         
     </body>
 </html>

@@ -23,12 +23,15 @@
 			}
 			#nav_logout{
 				position: relative;
-  top: 50%;
-  float: right;
-  transform: translateY(30%);
+				top: 50%;
+				float: right;
+				transform: translateY(30%);
 			}
 			#nav_item{
 				background: #FFF;
+			}
+			.nav_item_new_active{
+				color: #ED1A23;background-color: #ffffff;border-color: #ffffff;
 			}
 			#top{
 				width:100%;
@@ -52,6 +55,15 @@
 			.containet{
 				max-width: 98%;
 			}
+			#top_container_system{
+				float: left;
+			    height: 60px;
+			    padding: 16px;
+			}
+			#top_container_system > ul >li{
+				float:left;
+				width: 60px;
+			}
 			@yield('instyle')
 		</style>
         
@@ -62,13 +74,19 @@
 			<div id="top">
 				<div id="top_container" class="container_width">
 					<div id="top_container_logo" style="float:left;"><img src="/pic/auth_layout_logo.png" alt=""></div>
-					<div id="top_container_title" style="float:left;">訂房總管理系統</div>
+					<div id="top_container_title" style="float:left;">訂房總管理系統>台灣</div>
+					<div id="top_container_system" style="float:left;" class="text-center">
+						<ul class="list-inline">
+							<li>訂房</li>
+							<li>景點</li>
+							<li>旅遊</li>
+							<li>租車</li>
+							<li>美食</li>
+						</ul>
+					</div>
 					<div id="nav_logout" class="align-middle">
 						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#"> {{ session()->get('manager_name') }} 您好！</span>
 						<a id="logout" class="btn btn-outline-secondary btn-no-border btn-smalign-middle" role="button" aria-pressed="true" id="top-nav-36">登出</a>
-					</div>
-					<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);">
-						<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">瀏覽數:00001／本日：00001／今日：00001</span>
 					</div>
 				</div>
 			</div>
@@ -119,6 +137,9 @@
 		@yield('content')
 	</div>
 		<footer>
+				<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);">
+					<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">瀏覽數:00001／本日：00001／昨日：00001</span>
+				</div>
 			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司</p>
 		</footer>
 	<!-- Modal -->
@@ -150,7 +171,8 @@
     	$(function(){
     		@yield('custom_ready_script')
     		//判斷頁面導航紐按下樣式
-    		$("#top-nav-@yield('nav_id')").addClass("active");
+    		//color: #ED1A23;background-color: #ffffff;border-color: #ffffff;
+    		$("#top-nav-@yield('nav_id')").addClass("active").css("color","#ED1A23").css("background-color","#FFF").css("border-color","#FFF");
     		// 浮動確認視窗
     		$('#logout').click(function () {
   				$('#logoutAlert').modal("toggle");

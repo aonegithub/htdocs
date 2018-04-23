@@ -23,12 +23,11 @@
         <div class="container" style="max-width:100%;">
             <form class="form-signin" method="POST" role="form" action="./login">
                 {{ csrf_field() }}
-              <img src="/pic/auth_sign_logo.png" alt="">
-              <h1 class="h3 mb-3 font-weight-normal">總管理後台</h1>
+              <h1 class="h3 mb-3 font-weight-normal">awugo/tw 總管理後台</h1>
               <label for="inputID" class="sr-only">請輸入帳號</label>
               <input type="text" id="inputID" name="inputID" class="form-control" placeholder="輸入帳號" value="{{ old('inputID') }}" required autofocus>
               <label for="inputPassword" class="sr-only">請輸入密碼</label>
-              <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="輸入密碼" style="margin-top: 5px;" required>
+              <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="輸入密碼" style="margin-top: 13px;" required>
               <div class="checkbox mb-3 d-none">
                 <label>
                   <input type="checkbox" value="remember-me"> Remember me
