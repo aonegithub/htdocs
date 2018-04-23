@@ -77,7 +77,7 @@
 					<div id="top_container_title" style="float:left;">訂房總管理系統>台灣</div>
 					<div id="top_container_system" style="float:left;" class="text-center">
 						<ul class="list-inline">
-							<li>訂房</li>
+							<li><span style="color:#ED1A23;">訂房</span></li>
 							<li>景點</li>
 							<li>旅遊</li>
 							<li>租車</li>
@@ -104,7 +104,8 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-11" href="#">公司發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-12" href="#">飯店發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-13" href="#">紅利點數</a>
-			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/area_list">景點設定</a>
+			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/attraction_list">景點設定</a>
+			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-15" href="#">電子報　</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-16" href="#">熱門地點</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-17" href="#">設施服務</a>

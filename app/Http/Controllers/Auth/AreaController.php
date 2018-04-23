@@ -18,7 +18,7 @@ class AreaController extends Controller
     private $menu_item_text ='景點地區設定';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 地區管理清單
-    public function main(){
+    public function main($country){
         //切分帳號權限
         $auth_array =explode(',', session()->get('manager_auth'));
         //管理者基本資訊
@@ -32,6 +32,7 @@ class AreaController extends Controller
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Areas' => $Areas,
+            'Country' => $country,
         ];
         return view('auth.area_list', $binding);
     }
@@ -47,6 +48,7 @@ class AreaController extends Controller
                 'Title' => $this->menu_item_text,
                 'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
                 'Manager' => $Manager,
+                'Country' => $country,
             ];
             return redirect('/auth/manager/area_list')->withErrors($errors)->withInput();
             //exit;

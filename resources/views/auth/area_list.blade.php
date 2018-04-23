@@ -27,29 +27,56 @@
 	  </div>
 	</div>
 @endif
-@if(in_array('34',$Auths))
-<div style="text-align:right;">
-	<a href="/auth/manager/area_add" class="btn btn-secondary">新增地區</a>
-	<a href="/auth/manager/area_list" class="btn btn-secondary">地區清單</a>
-	<a href="/auth/manager/attractions_list" class="btn btn-secondary">景點管理</a>
+
+<div class="row">
+	<div class="col-md-2">
+		<select class="form-control">
+		  <option>台灣</option>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<select class="form-control">
+		  <option>-</option>
+		  <option>台南市</option>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<select class="form-control">
+		  <option>-</option>
+		  <option>新化區</option>
+		  <option>永康區</option>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<select class="form-control">
+		  <option>-</option>
+		</select>
+	</div>
+	<div class="col-md-4">
+		<div style="text-align:right;" >
+			@if(in_array('40',$Auths))
+			<a href="javascript:alert('開發中，尚未開放')"date-href="/{{@Country}}/auth/manager/area_add" class="btn btn-secondary">新增地區</a>
+			@endif
+			<a href="/{{@Country}}/auth/manager/area_list" class="btn btn-secondary">地區清單</a>
+		</div>
+	</div>
 </div>
-@endif
+
+
 
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
-      <th scope="col">國家</th>
-      <th scope="col">縣市</th>
-      <th scope="col">地區</th>
+      <th scope="col">地區名稱</th>
+      <th scope="col">飯店數量</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-  	@foreach($Area_parent as $key => $parent)
+  	@foreach($Areas as $key => $parent)
     <tr style="cursor: pointer;">
       <th scope="row" onclick="window.location.href='./area_edit/'">{{ $parent->area_name }}</th>
-      <td onclick="window.location.href='./area_edit/'">{{ $parent->area_name }}</td>
-      <td onclick="window.location.href='./area_edit/'">永康區</td>
+      <td>8268</td>
       <td><a href="./area_del/" class="btn btn-secondary">刪除</a></td>
     </tr>
     @endforeach
