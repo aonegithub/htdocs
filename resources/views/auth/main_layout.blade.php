@@ -64,6 +64,9 @@
 				float:left;
 				width: 60px;
 			}
+			.center {
+			    margin: auto;
+			}
 			@yield('instyle')
 		</style>
         
@@ -105,7 +108,7 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-12" href="#">飯店發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-13" href="#">紅利點數</a>
 			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/attraction_list">景點設定</a>
-			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
+			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-36" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-15" href="#">電子報　</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-16" href="#">熱門地點</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-17" href="#">設施服務</a>

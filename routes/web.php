@@ -32,6 +32,7 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 		//景點設定
 		//地區設定
 			Route::get('area_list', 'Auth\AreaController@main');
+			Route::post('area_get', 'Auth\AreaController@getSubArea');  //取得子區域(ajax)
 			Route::get('area_add', 'Auth\AreaController@add');
 			Route::post('area_add', 'Auth\AreaController@addArea');
 			Route::get('area_edit', 'Auth\AreaController@edit');
