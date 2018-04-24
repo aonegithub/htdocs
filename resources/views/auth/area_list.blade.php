@@ -63,12 +63,8 @@
 		</div>
 	</div>
 </div>
-<!-- 隱藏讀取圖 -->
-<div id="loading" class="row text-center" style="display:none">
-	<img src="/pic/loading.gif" class="text-right center">
-</div>
 <!-- 隱藏新增地區欄 -->
-<div id="addAreaPanel" class="row" style="margin:20px;display: none;">
+<div id="addAreaPanel" name="addAreaPanel" class="row" style="margin:20px;display: none;">
 	<div class="col-md-1 text-center">
 		<span class="align-middle">地區名稱</span>
 	</div>
@@ -79,7 +75,11 @@
 		<span class="btn btn-secondary" onclick="addArea()">新增</span>
 	</div>
 </div>
-
+<!-- 隱藏讀取圖 -->
+<div id="loading" name="loading" class="row text-center" style="display:none">
+	<img src="/pic/loading.gif" class="text-right center">
+</div>
+<!-- 清單內容 -->
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
@@ -88,14 +88,14 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
-  	@foreach($Countries as $key => $area)
-    <tr>
-      <th style="cursor: pointer;" scope="row" onclick="editArea({{ $area->nokey }})">{{ $area->area_name }}</th>
-      <td>0</td>
-      <td><a href="./area_del/" class="btn btn-secondary">刪除</a></td>
-    </tr>
-    @endforeach
+  <tbody class="list_tr">
+	  	@foreach($Areas_level2 as $key => $area)
+	    <tr>
+	      <th style="cursor: pointer;" scope="row" onclick="editArea({{ $area->nokey }})">{{ $area->area_name }}</th>
+	      <td>0</td>
+	      <td><a href="./area_del/" class="btn btn-secondary">刪除</a></td>
+	    </tr>
+	    @endforeach
   </tbody>
 </table>
 
@@ -126,32 +126,91 @@
 	}
 	// 新增地區
 	function addArea(){
-		alert('add_area');
+		level1 =$("#area_level1").val();
+		level2 =$("#area_level2").val();
+		level3 =$("#area_level3").val();
+		level4 =$("#area_level4").val();
+		area_name =$("#area_name").val();
+
+		//欲新增層級判斷 and 判斷父層
+		level =1;
+		if(level1 <0){
+			level =1;
+		}else if(level2 <0){
+			level =2;
+		}else if(level3 <0){
+			level =3
+		}else{
+			level =4;
+		}
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_add',
+	        data: {level_no:level,parent_no:$("#area_level"+(level-1)).val(),area_string:area_name},
+	        success: function(data) {
+	        	refresh_area(level);
+	        	$("#area_name").val("");
+	    	},
+	    	error: function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.responseText);
+			}
+	    });
+	}
+	//更新地區下拉式選單
+	function refresh_area(level){
+		$("#loading").slideDown();
+		parent_val =$("#area_level"+(level-1)).val();
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_get',
+	        data: {level:parent_val},
+	        success: function(data) {
+	        	//填入下一級選項，參數2為上一層級別
+	        	fill_area(data,(level-1));
+	        	//填入清單
+	        	fill_list(data);
+	    	}
+	    });
 	}
 	// 切換選項時，level為該選項之級別值
 	function chg_area(sel_obj, level){
+		//清除新增地區填寫內容在隱藏
+		$("#area_name").val("");
+		$("#addAreaPanel").hide();
+		//開啟讀取模式
 		$("#loading").slideDown();
 		sel_val =$(sel_obj).val();
-		if(sel_val != '-1'){
-			$.ajax({
-		        headers: {
-		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		        },
-		        type: "POST",
-		        url: 'area_get',
-		        data: {level:sel_val},
-		        success: function(data) {
-		        	//填入下一級選項
-		        	fill_area(data,level);
-		    	}
-		    });
-		}else{
-			for(i=level; i<=4; i++){
-				$("#area_level"+(i+1)+" option[value!='-1']").remove();
-			}
-			$("#loading").slideUp();
+
+		if(sel_val == '-1'){
+			sel_val =$("#area_level"+(level-1)).val()
 		}
-		
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_get',
+	        data: {level:sel_val},
+	        success: function(data) {
+	        	//填入下一級選項
+	        	fill_area(data,level);
+		        //填入清單
+	        	fill_list(data);
+	    	}
+	    });
+	}
+	//更新填入清單
+	function fill_list(data){
+		$(".list_tr").empty();
+		for(i=0; i< data.length; i++){
+			$("<tr><th scope=\"row\">"+ data[i]['area_name'] +"</th><td>0</td><td>刪除</td></tr>").appendTo(".list_tr");
+		}
 	}
 	//填入下級選項
 	function fill_area(data, level){
@@ -163,11 +222,12 @@
 				    value: data[i]['nokey'],
 				    text: data[i]['area_name']
 				}));
+
 			}
-			$("#loading").slideUp();
 			//alert(data['1']['area_name']);
 			//$("#area_level"+level+" option[value!='-1']").remove();
 		}
+		$("#loading").slideUp();
 	}
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->

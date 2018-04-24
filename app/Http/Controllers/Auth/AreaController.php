@@ -69,10 +69,16 @@ class AreaController extends Controller
     }
 // 地區新增POST
     public function addArea(){
-        // DB::enableQueryLog();
-
-        // exit;
-        return "新增地區POST";
+        $request =request()->all();
+        $area_level =$request['level_no'];
+        $area_parent =$request['parent_no'];
+        $area_name =$request['area_string'];
+        $area =new Areas;
+        $area->area_name =$area_name;
+        $area->area_parent =$area_parent;
+        $area->area_level =$area_level;
+        $area->save();
+        return "ok";
     }
 // 地區修改介面
     public function edit($area_nokey){
