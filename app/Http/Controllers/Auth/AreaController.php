@@ -103,15 +103,23 @@ class AreaController extends Controller
 // 地區修改POST
     public function editArea($area_nokey){
         // DB::enableQueryLog();
-        
+        $request =request()->all();
+        $area_nokey1 =$request['req_nokey'];
+        $area_name =$request['req_name'];
+        $area =Areas::where('nokey',$area_nokey1)->first();
+        $area->area_name =$area_name;
+        $area->save();
         // exit;
-        return "地區編輯POST";
+        return "編輯完成";
     }
 
 // (清單)刪除地區 Ajax
     public function delArea($area_key){
-        $auth_key ='42'; //刪除權限碼
-
-        return "地區刪除";
+        $request =request()->all();
+        $area_nokey =$request['req_nokey'];
+        $area =Areas::where('nokey',$area_nokey)->first();
+        $area->delete();
+        // exit;
+        return "刪除完成";
     }
 }

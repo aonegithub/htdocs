@@ -9,7 +9,7 @@ class Areas extends Model
     //資料表
     protected $table ='area_list';
     //主鍵
-    protected $primarykey='nokey';
+    protected $primaryKey = 'nokey';
     /**
      * The attributes that are mass assignable.
      * 可大量異動的欄位
@@ -27,4 +27,5 @@ class Areas extends Model
     // protected $hidden = [
     //     'password', 'remember_token',
     // ];
+    // 
 }

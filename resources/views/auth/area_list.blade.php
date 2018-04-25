@@ -84,18 +84,12 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">地區名稱</th>
-      <th scope="col">飯店數量</th>
+      <th scope="col">飯店數量／訂單數</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody class="list_tr">
-	  	@foreach($Areas_level2 as $key => $area)
-	    <tr>
-	      <th style="cursor: pointer;" scope="row" onclick="editArea({{ $area->nokey }})">{{ $area->area_name }}</th>
-	      <td>0</td>
-	      <td><a href="./area_del/" class="btn btn-secondary">刪除</a></td>
-	    </tr>
-	    @endforeach
+
   </tbody>
 </table>
 
@@ -116,9 +110,59 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+//現存級別
+var level_global=1;
+	// 刪除地區
+	function delArea(nokey){
+		//開啟讀取模式
+		$("#loading").slideDown();
+		//
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_del',
+	        data: {req_nokey:nokey},
+	        success: function(data) {
+	        	$(".edit_field"+nokey).val("");
+	        	refresh_area(level_global);
+	    	},
+	    	error: function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.responseText);
+				$("#loading").slideUp();
+			}
+	    });
+		//alert(level_global+','+nokey+','+$(".edit_field"+nokey).val());
+	}
 	// 編輯地區
 	function editArea(nokey){
-		alert(nokey);
+		//開啟讀取模式
+		$("#loading").slideDown();
+		//
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_edit',
+	        data: {req_nokey:nokey,req_name:$(".edit_field"+nokey).val()},
+	        success: function(data) {
+	        	$(".edit_field"+nokey).val("");
+	        	$("#loading").slideUp();
+	        	refresh_area(level_global);
+	    	},
+	    	error: function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.responseText);
+				$("#loading").slideUp();
+			}
+	    });
+		//alert(level_global+','+nokey+','+$(".edit_field"+nokey).val());
+	}
+	//項目風琴開合效果
+	function editAreaToggle(nokey){
+		$('.edit_area').slideUp();
+		$('.edit_area_row'+nokey).slideDown();
 	}
 	// 新增地區打開選項
 	function openAddArea(){
@@ -175,6 +219,9 @@
 	        	fill_area(data,(level-1));
 	        	//填入清單
 	        	fill_list(data);
+	        	//更新級別
+	        	refresh_level();
+	        	$("#loading").slideUp();
 	    	}
 	    });
 	}
@@ -202,6 +249,8 @@
 	        	fill_area(data,level);
 		        //填入清單
 	        	fill_list(data);
+	        	//更新級別
+	        	refresh_level();
 	    	}
 	    });
 	}
@@ -209,7 +258,16 @@
 	function fill_list(data){
 		$(".list_tr").empty();
 		for(i=0; i< data.length; i++){
-			$("<tr><th scope=\"row\">"+ data[i]['area_name'] +"</th><td>0</td><td>刪除</td></tr>").appendTo(".list_tr");
+			$("<tr><th scope=\"row\"><div class=\"row area_text_span"+ data[i]['nokey'] +"\" style=\"cursor: pointer;height: 38px;padding: 10px;\" onclick=\"editAreaToggle("+ data[i]['nokey'] +")\">"+ data[i]['area_name'] +"</div><div class=\"row edit_area edit_area_row"+ data[i]['nokey'] +"\" style=\"display:none\"><div class=\"col-md-10\"><input type=\"text\" class=\"form-control edit_field"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['area_name'] +"\"></div><div class=\"col-md-2\"><a href=\"javascript:editArea("+ data[i]['nokey'] +");\" class=\"btn btn-secondary\">更名</a></div></div></th><td>8268／123</td><td><a href=\"javascript:delArea("+ data[i]['nokey'] +")\" class=\"btn btn-secondary\">刪除</a></td></tr>").appendTo(".list_tr");
+		}
+	}
+	//更新級別
+	function refresh_level(){
+		for(i=1; i<=4; i++){
+			if($("#area_level"+i).val() !='-1'){
+				//要修改的地區級別，通常為當局級別的下層
+				level_global =(i+1);
+			}
 		}
 	}
 	//填入下級選項
@@ -232,6 +290,8 @@
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//觸發縣市選單
+	$('#area_level2').val(-1).change();
 	//停用完成跳出確認
 	@if(!is_null(session()->get('controll_back_msg')))
 		$('#okAlert').modal("toggle");
