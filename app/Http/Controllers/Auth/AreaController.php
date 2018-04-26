@@ -14,8 +14,8 @@ use Validator;
 
 class AreaController extends Controller
 {
-    private $menu_item_code =14;
-    private $menu_item_text ='景點地區設定';
+    private $menu_item_code =43;
+    private $menu_item_text ='地區管理設定';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 地區管理預設清單
     public function main($country){

@@ -3,17 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Awugo總管理後台 - @yield('title')</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/checkbox.css">
 		<style type="text/css">
+			html{
+				min-width: 1440px;
+			}
 			body{
 				font-family: Microsoft JhengHei;
+				min-width: 1440px;
 			}
 			.container_width{
 				width:98%;
+			}
+			.container{
+				min-width: 1440px;
 			}
 			.btn-no-border{
 				border-color:#FFF;
@@ -73,7 +79,7 @@
     </head>
 <body style="margin-top:150px">
 	<header>
-		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #cacaca;background-color: white;">
+		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #cacaca;background-color: white;min-width: 1440px;">
 			<div id="top">
 				<div id="top_container" class="container_width">
 					<div id="top_container_logo" style="float:left;"><img src="/pic/auth_layout_logo.png" alt=""></div>
@@ -108,7 +114,7 @@
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-12" href="#">飯店發票</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-13" href="#">紅利點數</a>
 			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-14" href="/{{$Country}}/auth/manager/attraction_list">景點設定</a>
-			    <a data-nokey='36' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-36" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
+			    <a data-nokey='43' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-43" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-15" href="#">電子報　</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-16" href="#">熱門地點</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-17" href="#">設施服務</a>

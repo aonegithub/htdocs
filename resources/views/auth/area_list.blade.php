@@ -84,7 +84,6 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">地區名稱</th>
-      <th scope="col">飯店數量／訂單數</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -114,25 +113,27 @@
 var level_global=1;
 	// 刪除地區
 	function delArea(nokey){
-		//開啟讀取模式
-		$("#loading").slideDown();
-		//
-		$.ajax({
-	        headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-	        type: "POST",
-	        url: 'area_del',
-	        data: {req_nokey:nokey},
-	        success: function(data) {
-	        	$(".edit_field"+nokey).val("");
-	        	refresh_area(level_global);
-	    	},
-	    	error: function(xhr, ajaxOptions, thrownError) {
-				alert(xhr.responseText);
-				$("#loading").slideUp();
-			}
-	    });
+		if(confirm('確定要刪除')){
+			//開啟讀取模式
+			$("#loading").slideDown();
+			//
+			$.ajax({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        },
+		        type: "POST",
+		        url: 'area_del',
+		        data: {req_nokey:nokey},
+		        success: function(data) {
+		        	$(".edit_field"+nokey).val("");
+		        	refresh_area(level_global);
+		    	},
+		    	error: function(xhr, ajaxOptions, thrownError) {
+					alert(xhr.responseText);
+					$("#loading").slideUp();
+				}
+		    });
+		}
 		//alert(level_global+','+nokey+','+$(".edit_field"+nokey).val());
 	}
 	// 編輯地區
@@ -258,7 +259,7 @@ var level_global=1;
 	function fill_list(data){
 		$(".list_tr").empty();
 		for(i=0; i< data.length; i++){
-			$("<tr><th scope=\"row\"><div class=\"row area_text_span"+ data[i]['nokey'] +"\" style=\"cursor: pointer;height: 38px;padding: 10px;\" onclick=\"editAreaToggle("+ data[i]['nokey'] +")\">"+ data[i]['area_name'] +"</div><div class=\"row edit_area edit_area_row"+ data[i]['nokey'] +"\" style=\"display:none\"><div class=\"col-md-10\"><input type=\"text\" class=\"form-control edit_field"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['area_name'] +"\"></div><div class=\"col-md-2\"><a href=\"javascript:editArea("+ data[i]['nokey'] +");\" class=\"btn btn-secondary\">更名</a></div></div></th><td>8268／123</td><td><a href=\"javascript:delArea("+ data[i]['nokey'] +")\" class=\"btn btn-secondary\">刪除</a></td></tr>").appendTo(".list_tr");
+			$("<tr><th scope=\"row\"><div class=\"row area_text_span"+ data[i]['nokey'] +"\" style=\"cursor: pointer;height: 38px;padding: 10px;\" onclick=\"editAreaToggle("+ data[i]['nokey'] +")\">"+ data[i]['area_name'] +"</div><div class=\"row edit_area edit_area_row"+ data[i]['nokey'] +"\" style=\"display:none\"><div class=\"col-md-10\"><input type=\"text\" class=\"form-control edit_field"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['area_name'] +"\"></div><div class=\"col-md-2\"><a href=\"javascript:editArea("+ data[i]['nokey'] +");\" class=\"btn btn-secondary\">更名</a></div></div></th><td><a href=\"javascript:delArea("+ data[i]['nokey'] +")\" class=\"btn btn-secondary\">刪除</a></td></tr>").appendTo(".list_tr");
 		}
 	}
 	//更新級別
@@ -287,9 +288,13 @@ var level_global=1;
 		}
 		$("#loading").slideUp();
 	}
+$(window).resize(function(){
+	$("body").css("margin-top",$("nav").height()+20);
+});
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	$("body").css("margin-top",$("nav").height()+20);
 	//觸發縣市選單
 	$('#area_level2').val(-1).change();
 	//停用完成跳出確認

@@ -9,7 +9,7 @@ class Managers extends Model
     //資料表
     protected $table ='manager_list';
     //主鍵
-    protected $primarykey='nokey';
+    protected $primaryKey = 'nokey';
     public $incrementing = false;
     /**
      * The attributes that are mass assignable.
