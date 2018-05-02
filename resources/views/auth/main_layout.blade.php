@@ -100,7 +100,7 @@
 				</div>
 			</div>
 			<div id="nav_item" class="nav container_width" style="margin-bottom: 5px;">
-			  	<a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-1" href="#">飯店管理</a>
+			  	<a data-nokey='1' href="/{{$Country}}/auth/manager/hotel_list" class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-1" href="#">飯店管理</a>
 			  	<a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-2" href="#">費用管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-3" href="#">訂房成功</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-4" href="#">訂房查詢</a>

@@ -39,6 +39,10 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('area_edit', 'Auth\AreaController@editArea');
 			Route::post('area_edit/{areakey}', 'Auth\AreaController@editArea');
 			Route::post('area_del', 'Auth\AreaController@delArea');
+		//飯店管理
+			Route::get('hotel_list', 'Auth\HotelController@main');
+			Route::get('hotel_add', 'Auth\HotelController@add');
+			Route::post('hotel_add', 'Auth\HotelController@addPost');
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){
