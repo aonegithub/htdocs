@@ -112,12 +112,37 @@
 				  </select>
 				  <select class="form-control" id="level3" name="level3">
 					  <option value='4'>新化區</option>
-				  </select>
-				  <input type="text" id="address" name="address" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="那拔林87-7號" style="width: 100%;">
+				  </select><br/>
+				  	<div class="input-group input-group-sm col-md-2"> 
+					  <input id="zip_code" name="zip_code" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="郵遞區號">
+					</div>
+					<!-- ** -->
+				  	<div class="input-group input-group-sm col-md-4">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text" id="inputGroup-sizing-sm">地址</span>
+					  </div>
+					  <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址">
+					</div>
 			</div>
 	    </th>
 	    <th rowspan="4" style="background-color: #E9ECEF;width: 5%;text-align: center;">手續費</th>
-	    <th>c版</th>
+	    <td>
+	    	<div class="row" style="padding-left: 15px;">
+				<div class="input-group input-group-sm col-md-4">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">C版</span>
+				  </div>
+				  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+				<!-- ** -->
+				<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
+				  </div>
+				  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+			</div>
+	    </td>
 	  </tr>
 	  <tr>
 	    <td>
@@ -137,7 +162,25 @@
 				</div>
 			</div>
 	    </td>
-	    <td>ab版</td>
+	    <td>
+	    	<!-- ** -->
+	    	<div class="row" style="padding-left: 15px;">
+				<div class="input-group input-group-sm col-md-4">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">AB版</span>
+				  </div>
+				  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+				<!-- ** -->
+				<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
+				  </div>
+				  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+			</div>
+			<!-- ** -->
+	    </td>
 	  </tr>
 	  <tr>
 	    <td rowspan="2">
@@ -157,10 +200,56 @@
 				</div>
 			</div>
 	    </td>
-	    <td>d版</td>
+	    <td>
+	    	<!-- ** -->
+	    	<div class="row" style="padding-left: 15px;">
+				<div class="input-group input-group-sm col-md-4">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">D版</span>
+				  </div>
+				  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+				<!-- ** -->
+				<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
+				  </div>
+				  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+			</div>
+			<!-- ** -->
+	    </td>
 	  </tr>
 	  <tr>
-	    <td >經銷</td>
+	    <td>
+	    	<!-- ** -->
+	    	<div class="row" style="padding-left: 15px;">
+	    		<div class="checkbox checkbox-primary">
+                    <input id="fees_sale_state" name="fees_sale_state" type="checkbox" value="1">
+                    <label for="fees_sale_state">
+                    </label>
+                </div>
+				<div class="input-group input-group-sm col-md-4">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">經銷紅利</span>
+				  </div>
+				  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+				<!-- ** -->
+				<div class="checkbox checkbox-primary">
+                    <input id="fees_roll_state" name="fees_roll_state" type="checkbox" value="1">
+                    <label for="fees_roll_state">
+                    </label>
+                </div>
+				<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">住宿紅利</span>
+				  </div>
+				  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">%
+				</div>
+			</div>
+			<!-- ** -->
+	    </td>
 	  </tr>
 	</table>
 </div>

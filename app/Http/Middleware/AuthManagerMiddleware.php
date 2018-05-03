@@ -13,6 +13,10 @@ class AuthManagerMiddleware
      */
     public function handle($request, Closure $next)
     {
+        //預防國籍資訊丟失session
+        if(is_null(session()->get('manager_country'))){
+            session()->put('manager_country','tw');
+        }
         if(is_null(session()->get('manager_id'))){
             return redirect()->to(session()->get('manager_country').'/auth/login');
         }
