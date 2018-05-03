@@ -32,9 +32,10 @@ class HotelController extends Controller
         return view('auth.hotel_list', $binding);
     }
 // 飯店管理新增介面View
-    public function add(){
-        $auth_key ='1'; //新增管理員權限碼
-        //var_dump($auth_array);
+    public function add($country){
+        $auth_key ='2'; //新增管理員權限碼
+        //讀取管理者資訊
+        $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
@@ -45,11 +46,18 @@ class HotelController extends Controller
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
-            return redirect('/auth/manager/area_list')->withErrors($errors)->withInput();
+            return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
             //exit;
         }
-        
-        return "新增飯店";
+
+        $binding =[
+            'Title' => $this->menu_item_text,
+            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+            'Manager' => $Manager,
+            'Auths' => $auth_array,
+            'Country' => $country,
+        ];
+        return view('auth.hotel_add', $binding);
     }
 // 飯店新增POST
     public function addPost(){
