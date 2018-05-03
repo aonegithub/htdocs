@@ -88,6 +88,7 @@ class SignController extends Controller
          * 再次寫入國家代碼，主要原因是會導致少了代碼登入路徑導回會漏參數 
          * 2018-05-03 
          * by A-One
+         * test2
          */
         session()->put('manager_country', $country);
     	return redirect()->to('/'. $country .'/auth/manager/main');
