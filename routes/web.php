@@ -41,13 +41,14 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('area_del', 'Auth\AreaController@delArea');
 		//飯店管理
 			Route::get('hotel_list', 'Auth\HotelController@main');
+			Route::post('hotel_list/{search_str}', 'Auth\HotelController@search');
 			Route::get('hotel_add', 'Auth\HotelController@add');
 			Route::post('hotel_add', 'Auth\HotelController@addPost');
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){
 	Route::post('login', 'SignController@login_post');
-	Route::get('login', 'SignController@login');
+	Route::get('login', 'SignController@login')->name('login');
 	Route::get('logout', 'SignController@logout');
 });
 
