@@ -33,7 +33,7 @@ class HotelController extends Controller
     }
 // 飯店管理新增介面View
     public function add(){
-        $auth_key ='1'; //新增管理員權限碼1
+        $auth_key ='1'; //新增管理員權限碼1rrr
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
