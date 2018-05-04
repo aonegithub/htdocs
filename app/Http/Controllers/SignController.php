@@ -6,15 +6,21 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Managers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cookie;
 use Image;
 use View;
 use DB;
 use Validator;
 
+
 class SignController extends Controller
 {
 	// 登入口
     public function login($country){
+        // $request =request()->all();
+        // Cookie::forever('country', 'tw');
+        // $cookies = $request->cookie();
+        // dump($cookies) ;
         // abort(404);
     	return view('auth/login');
     }

@@ -74,6 +74,9 @@
 			.center {
 			    margin: auto;
 			}
+			.input-group-text{
+				color:#000;
+			}
 			@yield('instyle')
 		</style>
         

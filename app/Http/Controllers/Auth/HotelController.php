@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
+use App\Awugo\Auth\Areas;
 use Image;
 use View;
 use DB;
@@ -49,6 +50,9 @@ class HotelController extends Controller
             return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
             //exit;
         }
+        //帶入縣市
+        //二級清單
+        $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //二級區域
 
         $binding =[
             'Title' => $this->menu_item_text,
@@ -56,6 +60,7 @@ class HotelController extends Controller
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Country' => $country,
+            'Areas_level2' => $Areas_level2,
         ];
         return view('auth.hotel_add', $binding);
     }
