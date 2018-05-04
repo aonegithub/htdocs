@@ -14,7 +14,7 @@
 			}
 			body{
 				font-family: Microsoft JhengHei;
-				min-width: 1440px;
+				min-width: 1440px;color:#000;
 			}
 			.container_width{
 				width:98%;
@@ -81,7 +81,7 @@
 		</style>
         
     </head>
-<body style="margin-top:150px">
+<body style="margin-top:150px;color: #000;">
 	<header>
 		<nav class="navbar navbar-default fixed-top" style="padding:0;box-shadow: 0 6px 6px -2px #cacaca;background-color: white;min-width: 1440px;">
 			<div id="top">
