@@ -101,28 +101,78 @@
 	    </tr>
 	  </thead>
 	  <tbody class="list_tr">
-		<tr>
-		      <th scope="row">1234</th>
-		      <td>高雄民宿-不老溫泉長青溫泉渡假山莊</td>
-		      <td>正常</td>
-		      <td>甲</td>
-		      <td>CA</td>
-		      <td>16-09</td>
-		      <td>10/15</td>
-		      <td>10%</td>
-		      <td>16-12</td>
-		      <td>150</td>
-		      <td>住宿卷</td>
-		      <td>立即訂房</td>
-		      <td>權限</td>
+	  	@foreach($Hotels as $key => $hotel)
+		  	@if($hotel->state==2)
+				<tr style="color:#aeaeae!important">
+	      	@elseif($hotel->state==1)
+				<tr>
+			@else
+				<tr style="color:blue">
+	      	@endif
+		      <th scope="row">{{ sprintf("%05d",$hotel->nokey) }}</th>
+		      <td>{{ $hotel->name }}</td>
+		      <td>
+		      	@if($hotel->state==0)
+					上線
+		      	@elseif($hotel->state==1)
+					下線
+				@else
+					關閉
+		      	@endif
+		      </td>
+		      <td>
+		      	@if($hotel->invoice_type==0)
+					甲
+		      	@elseif($hotel->invoice_type==1)
+					乙
+				@else
+					丙
+		      	@endif
+		      </td>
+		      <td>{{ $hotel->version }}</td>
+		      <td>--</td>
+		      <td>
+		      	@if($hotel->version=='CA')
+					{{$hotel->fees_c}}
+		      	@elseif($hotel->version=='AB')
+					{{$hotel->fees_ab}}
+				@else
+					{{$hotel->fees_d}}
+		      	@endif
+		      </td>
+		      <td>
+		      	@if($hotel->version=='CA')
+					{{$hotel->fees_c_bonus}}
+		      	@elseif($hotel->version=='AB')
+					{{$hotel->fees_ab_bonus}}
+				@else
+					{{$hotel->fees_d_bonus}}
+		      	@endif
+		      </td>
+		      <td>--</td>
+		      <td>{{$hotel->type_room}}</td>
+		      <td>--</td>
+		      <td>
+		      	@if($hotel->control==0)
+					立即訂房
+				@else
+					客服訂房
+		      	@endif
+		      </td>
+		      <td>--</td>
 		      <td>
 		      	<span class="btn btn-secondary">修改</span>
-		      	<span class="btn btn-secondary">刪除</span>
+		      	<span class="btn btn-secondary">關閉</span>
 		      </td>
 	    </tr>
+	    @endforeach
 	  </tbody>
 	</table>
 </div>
+<div id="nav_pagerow">
+{{ $Hotels->links('vendor.pagination.bootstrap-4') }}
+</div>
+
 @endsection
 <!-- style內置區塊 -->
 @section('instyle')
