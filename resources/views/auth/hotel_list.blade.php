@@ -185,7 +185,7 @@
 		      <td>--</td>
 		      <td>
 		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-secondary">修改</a>
-		      	<span class="btn btn-secondary">關閉</span>
+		      	<a href="javascript:disableHotel({{ $hotel->nokey }})" class="btn btn-secondary">關閉</a>
 		      </td>
 	    </tr>
 	    @endforeach
@@ -220,6 +220,24 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+//快捷關閉上線
+	function disableHotel(key){
+		<!-- $('#'+target).prop('disabled', true); -->
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'hotel_disable/'+key,
+	        data: {nokey:key},
+	        success: function(data) {
+	        	window.location.reload();
+	        	<!-- $('#'+target).val(""); -->
+	        	<!-- $('#'+target).val(data[0]['zip_code']); -->
+	        	<!-- $('#'+target).prop('disabled', false); -->
+	    	}
+	    });
+	}
 	$(window).resize(function(){
 		$("body").css("margin-top",$("nav").height()+20);
 	});

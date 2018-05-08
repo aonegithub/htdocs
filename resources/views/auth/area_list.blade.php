@@ -84,6 +84,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">地區名稱</th>
+      <th scope="col">郵遞區號</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -259,7 +260,7 @@ var level_global=1;
 	function fill_list(data){
 		$(".list_tr").empty();
 		for(i=0; i< data.length; i++){
-			$("<tr><th scope=\"row\"><div class=\"row area_text_span"+ data[i]['nokey'] +"\" style=\"cursor: pointer;height: 38px;padding: 10px;\" onclick=\"editAreaToggle("+ data[i]['nokey'] +")\">"+ data[i]['area_name'] +"</div><div class=\"row edit_area edit_area_row"+ data[i]['nokey'] +"\" style=\"display:none\"><div class=\"col-md-10\"><input type=\"text\" class=\"form-control edit_field"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['area_name'] +"\">郵遞區號<input type=\"text\" class=\"form-control zip_code"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['zip_code'] +"\"></div><div class=\"col-md-2\"><a href=\"javascript:editArea("+ data[i]['nokey'] +");\" class=\"btn btn-secondary\">更名</a></div></div></th><td><a href=\"javascript:delArea("+ data[i]['nokey'] +")\" class=\"btn btn-secondary\">刪除</a></td></tr>").appendTo(".list_tr");
+			$("<tr><th scope=\"row\"><div class=\"row area_text_span"+ data[i]['nokey'] +"\" style=\"cursor: pointer;height: 38px;padding: 10px;\" onclick=\"editAreaToggle("+ data[i]['nokey'] +")\">"+ data[i]['area_name'] +"</div><div class=\"row edit_area edit_area_row"+ data[i]['nokey'] +"\" style=\"display:none\"><div class=\"col-md-10\"><input type=\"text\" class=\"form-control edit_field"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['area_name'] +"\">郵遞區號<input type=\"text\" class=\"form-control zip_code"+ data[i]['nokey'] +"\" data-nokey=\""+ data[i]['nokey'] +"\" value=\""+ data[i]['zip_code'] +"\"></div><div class=\"col-md-2\"><a href=\"javascript:editArea("+ data[i]['nokey'] +");\" class=\"btn btn-secondary\">更名</a></div></div></th><td>"+ data[i]['zip_code'] +"</td><td><a href=\"javascript:delArea("+ data[i]['nokey'] +")\" class=\"btn btn-secondary\">刪除</a></td></tr>").appendTo(".list_tr");
 		}
 	}
 	//更新級別

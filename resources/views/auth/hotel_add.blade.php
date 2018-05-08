@@ -574,7 +574,7 @@
 		    <th style="background-color: #c9fcb3;height:45px;text-align: center;width:10%;">微信</th>
 		    <th style="background-color: #c9fcb3;height:45px;text-align: center;width:35%;">信箱</th>
 		  </tr>
-		  <tr>
+		  <tr id="contact_row">
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="">
 		    </td>
@@ -585,7 +585,7 @@
 		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="">
+		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="" onkeyup="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
@@ -846,6 +846,13 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//無限增加聯絡人
+	function cloneTr(obj){
+		objClone =$(obj).parent().parent().clone();
+		$(obj).removeAttr('onkeyup');
+		objClone.find('input').val("");
+		objClone.appendTo('.tg');
+	}
 	//切換三級選單取得郵遞區號
 	function chg_zip_code(obj,target){
 		$('#'+target).prop('disabled', true);

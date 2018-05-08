@@ -338,4 +338,11 @@ class HotelController extends Controller
 
         return redirect()->to('/'. $country .'/auth/manager/hotel_list');
     }
+//Ajax 關閉飯店
+    public function disableAjax($country,$hotelKey){
+        $hotel =Hotel::find($hotelKey);
+        $hotel->state =2;
+        $hotel->save();
+        return 'OK';
+    }
 }
