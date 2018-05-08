@@ -33,6 +33,7 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 		//地區設定
 			Route::get('area_list', 'Auth\AreaController@main');
 			Route::post('area_get', 'Auth\AreaController@getSubArea');  //取得子區域(ajax)
+			Route::post('area_get_zipcode', 'Auth\AreaController@getZipCode');  //取得郵遞區號(ajax)
 			Route::get('area_add', 'Auth\AreaController@add');
 			Route::post('area_add', 'Auth\AreaController@addArea');
 			Route::get('area_edit', 'Auth\AreaController@edit');
@@ -44,6 +45,8 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('hotel_list/{search_str}', 'Auth\HotelController@search');
 			Route::get('hotel_add', 'Auth\HotelController@add');
 			Route::post('hotel_add', 'Auth\HotelController@addPost');
+			Route::get('hotel_edit/{hotelkey}', 'Auth\HotelController@edit');
+			Route::post('hotel_edit/{hotelkey}', 'Auth\HotelController@editPost');
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){

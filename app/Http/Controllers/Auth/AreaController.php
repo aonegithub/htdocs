@@ -40,6 +40,13 @@ class AreaController extends Controller
         ];
         return view('auth.area_list', $binding);
     }
+// 取得郵遞區號
+    public function getZipCode(){
+        $request =request()->all();
+        $nokey =$request['nokey'];
+        //傳入索引
+        return Areas::where('nokey',$nokey)->get(['zip_code'])->toArray();
+    }
 // 取得子區域
     public function getSubArea(){
         $request =request()->all();
@@ -106,8 +113,10 @@ class AreaController extends Controller
         $request =request()->all();
         $area_nokey1 =$request['req_nokey'];
         $area_name =$request['req_name'];
+        $zip_code=$request['zip_code'];
         $area =Areas::where('nokey',$area_nokey1)->first();
         $area->area_name =$area_name;
+        $area->zip_code =$zip_code;
         $area->save();
         // exit;
         return "編輯完成";

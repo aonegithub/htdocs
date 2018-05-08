@@ -32,16 +32,34 @@
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="state" name="state">
 		  <option value='-1'>狀態</option>
+		  <option value='0'>上線</option>
+		  <option value='1'>下線</option>
+		  <option value='2'>關閉</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="ver" name="ver">
 		  <option value='-1'>版本</option>
+		  <option value='A'>A</option>
+		  <option value='B'>B</option>
+		  <option value='C'>C</option>
+		  <option value='D'>D</option>
+		  <option value='G'>G</option>
+		  <option value='A,CA'>A,CA</option>
+		  <option value='B,C'>B,C</option>
+		  <option value='BG,G'>BG,G</option>
+		  <option value='D,C'>D,C</option>
+		  <option value='DG,G'>DG,G</option>
+		  <option value='DA,CA'>DA,CA</option>
+		  <option value='A,CA,DA'>A,CA,DA</option>
+		  <option value='B,C,D'>B,C,D</option>
+		  <option value='BG,G,DG'>BG,G,DG</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="country" name="country">
 		  <option value='-1'>國家</option>
+		  <option value='1'>台灣</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
@@ -57,11 +75,16 @@
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="ctrl" name="ctrl">
 		  <option value='-1'>控管</option>
+		  <option value='0'>立即訂房</option>
+		  <option value='1'>客服訂房</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="c_type" name="c_type">
 		  <option value='-1'>合作種類</option>
+		  <option value='合約'>合約</option>
+		  <option value='住宿卷'>住宿卷</option>
+		  <option value='約卷'>約卷</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
@@ -161,7 +184,7 @@
 		      </td>
 		      <td>--</td>
 		      <td>
-		      	<span class="btn btn-secondary">修改</span>
+		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-secondary">修改</a>
 		      	<span class="btn btn-secondary">關閉</span>
 		      </td>
 	    </tr>

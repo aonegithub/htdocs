@@ -12,13 +12,13 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">新增完成</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">編輯完成</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        已新增一筆
+	        已編輯成功
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
@@ -27,17 +27,18 @@
 	  </div>
 	</div>
 @endif
+
 <div style="text-align:right;">
 	<a href="/{{$Country}}/auth/manager/hotel_list" class="btn btn-secondary">返回飯店清單</a>
 </div>
-<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_add">
+<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_edit/{{$Hotel->nokey}}">
 	{{ csrf_field() }}
 	<div class="row">
 		<div class="input-group input-group-sm col-md-6">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->name}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
@@ -45,20 +46,20 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">版本</span>
 		  </div>
 		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;">
-			  <option value='A'>A</option>
-			  <option value='B'>B</option>
-			  <option value='C'>C</option>
-			  <option value='D'>D</option>
-			  <option value='G'>G</option>
-			  <option value='A,CA'>A,CA</option>
-			  <option value='B,C'>B,C</option>
-			  <option value='BG,G'>BG,G</option>
-			  <option value='D,C'>D,C</option>
-			  <option value='DG,G'>DG,G</option>
-			  <option value='DA,CA'>DA,CA</option>
-			  <option value='A,CA,DA'>A,CA,DA</option>
-			  <option value='B,C,D'>B,C,D</option>
-			  <option value='BG,G,DG'>BG,G,DG</option>
+			  <option value='A' @if($Hotel->version=='A') selected="" @endif>A</option>
+			  <option value='B' @if($Hotel->version=='B') selected="" @endif>B</option>
+			  <option value='C' @if($Hotel->version=='C') selected="" @endif>C</option>
+			  <option value='D' @if($Hotel->version=='D') selected="" @endif>D</option>
+			  <option value='G' @if($Hotel->version=='G') selected="" @endif>G</option>
+			  <option value='A,CA' @if($Hotel->version=='A,CA') selected="" @endif>A,CA</option>
+			  <option value='B,C' @if($Hotel->version=='B,C') selected="" @endif>B,C</option>
+			  <option value='BG,G' @if($Hotel->version=='BG,G') selected="" @endif>BG,G</option>
+			  <option value='D,C' @if($Hotel->version=='D,C') selected="" @endif>D,C</option>
+			  <option value='DG,G' @if($Hotel->version=='DG,G') selected="" @endif>DG,G</option>
+			  <option value='DA,CA' @if($Hotel->version=='DA,CA') selected="" @endif>DA,CA</option>
+			  <option value='A,CA,DA' @if($Hotel->version=='A,CA,DA') selected="" @endif>A,CA,DA</option>
+			  <option value='B,C,D' @if($Hotel->version=='B,C,D') selected="" @endif>B,C,D</option>
+			  <option value='BG,G,DG' @if($Hotel->version=='BG,G,DG') selected="" @endif>BG,G,DG</option>
 		  </select>
 		</div>
 		<!-- ** -->
@@ -67,15 +68,15 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">狀態</span>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="state0" value="0" name="state">
+		        <input type="radio" id="state0" value="0" name="state"@if($Hotel->state==0) checked="checked" @endif>
 		        <label for="state0">上線</label>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="state1" value="1" name="state" checked="checked">
+		        <input type="radio" id="state1" value="1" name="state"@if($Hotel->state==1) checked="checked" @endif>
 		        <label for="state1">下線</label>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="state2" value="2" name="state">
+		        <input type="radio" id="state2" value="2" name="state"@if($Hotel->state==2) checked="checked" @endif>
 		        <label for="state2">關閉</label>
 		  </div>
 		</div>
@@ -86,14 +87,14 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">官方網站</span>
 		  </div>
-		  <input type="text" id="url" name="url" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		  <input type="text" id="url" name="url" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->url}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">訂金</span>
 		  </div>
-		  <input type="text" id="deposit" name="deposit" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="max-width: 200px;" value="10">%
+		  <input type="text" id="deposit" name="deposit" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="max-width: 200px;" value="{{$Hotel->deposit}}">%
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
@@ -101,11 +102,11 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">控管</span>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="control1" value="0" name="control">
+		        <input type="radio" id="control1" value="0" name="control"@if($Hotel->control==0) checked="checked" @endif>
 		        <label for="control1">立即訂房</label>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="control2" value="1" name="control" checked="checked">
+		        <input type="radio" id="control2" value="1" name="control"@if($Hotel->control==1) checked="checked" @endif>
 		        <label for="control2">客服訂房</label>
 		  </div>
 		</div>
@@ -125,18 +126,21 @@
 					  <select class="form-control" id="area_level2" name="area_level2" onchange="chg_area(this,2)">
 						  <option value='-1'>-</option>
 						  @foreach($Areas_level2 as $key => $area2)
-								<option value='{{$area2->nokey}}'>{{$area2->area_name}}</option>
+								<option value='{{$area2->nokey}}'@if($Hotel->area_level2==$area2->nokey) selected="" @endif>{{$area2->area_name}}</option>
 						  @endforeach
 					  </select>
 					  <select class="form-control" id="area_level3" name="area_level3" onchange="chg_zip_code(this,'zip_code')">
 						  <option value='-1'>-</option>
+						  @foreach($Addr_level3 as $key => $addr3)
+							<option value='{{$addr3->nokey}}'@if($Hotel->area_level3==$addr3->nokey) selected="" @endif>{{$addr3->area_name}}</option>
+						  @endforeach
 					  </select><br/>
 					  	<div class="input-group input-group-sm col-md-2"> 
-						  <input id="zip_code" name="zip_code" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="郵遞區號">
+						  <input id="zip_code" name="zip_code" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="郵遞區號" value="{{$Hotel->zip_code}}">
 						</div>
 						<!-- ** -->
 					  	<div class="input-group input-group-sm col-md-6">
-						  <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址">
+						  <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址" value="{{$Hotel->address}}">
 						</div>
 				</div>
 		    </th>
@@ -147,14 +151,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">C版</span>
 					  </div>
-					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c_bonus}}">%
 					</div>
 				</div>
 		    </td>
@@ -166,14 +170,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店電話</span>
 					  </div>
-					  <input id="tel1" name="tel1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="tel1" name="tel1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->tel1}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">備用電話</span>
 					  </div>
-					  <input id="tel2" name="tel2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="tel2" name="tel2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->tel2}}">
 					</div>
 				</div>
 		    </td>
@@ -184,14 +188,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">AB版</span>
 					  </div>
-					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab_bonus}}">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -204,14 +208,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店傳真</span>
 					  </div>
-					  <input id="fax1" name="fax1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="fax1" name="fax1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fax1}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">備用傳真</span>
 					  </div>
-					  <input id="fax2" name="fax2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="fax2" name="fax2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fax2}}">
 					</div>
 				</div>
 		    </td>
@@ -222,14 +226,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">D版</span>
 					  </div>
-					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d_bonus}}">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -240,7 +244,7 @@
 		    	<!-- ** -->
 		    	<div class="row" style="padding-left: 15px;">
 		    		<div class="checkbox checkbox-primary">
-	                    <input id="fees_sale_state" name="fees_sale_state" type="checkbox" value="1">
+	                    <input id="fees_sale_state" name="fees_sale_state" type="checkbox" value="1"@if($Hotel->fees_sale_state==1) checked="checked" @endif>
 	                    <label for="fees_sale_state">
 	                    </label>
 	                </div>
@@ -248,11 +252,11 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">經銷紅利</span>
 					  </div>
-					  <input id="fees_sale_bonus" name="fees_sale_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_sale_bonus" name="fees_sale_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_sale_bonus}}">%
 					</div>
 					<!-- ** -->
 					<div class="checkbox checkbox-primary">
-	                    <input id="fees_roll_state" name="fees_roll_state" type="checkbox" value="1">
+	                    <input id="fees_roll_state" name="fees_roll_state" type="checkbox" value="1"@if($Hotel->fees_roll_state==1) checked="checked" @endif>
 	                    <label for="fees_roll_state">
 	                    </label>
 	                </div>
@@ -260,7 +264,7 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">住宿紅利</span>
 					  </div>
-					  <input id="fees_roll_bonus" name="fees_roll_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_roll_bonus" name="fees_roll_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_roll_bonus}}">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -274,14 +278,14 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">主要信箱</span>
 		  </div>
-		  <input id="email1" name="email1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		  <input id="email1" name="email1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->email1}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">備用信箱</span>
 		  </div>
-		  <input id="email2" name="email2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		  <input id="email2" name="email2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->email2}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -289,14 +293,14 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track0" value="0" name="track" checked="">
+		        <input type="radio" id="track0" value="0" name="track"@if($Hotel->track==0) checked="checked" @endif>
 		        <label for="track0">不追蹤</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track1" value="1" name="track">
+		        <input type="radio" id="track1" value="1" name="track"@if($Hotel->track==1) checked="checked" @endif>
 		        <label for="track1">追蹤</label>
 		  </div>
-		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-4" placeholder="追蹤事由" style="margin-left: 10px;">
+		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-4" placeholder="追蹤事由" style="margin-left: 10px;" value="{{$Hotel->track_comm}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -305,11 +309,11 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">通訊軟體</span>
 		  </div>
-		  <input id="app_line" name="app_line" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Line">
+		  <input id="app_line" name="app_line" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Line" value="{{$Hotel->app_line}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
-		  <input id="app_wechat" name="app_wechat" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="WeChat">
+		  <input id="app_wechat" name="app_wechat" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="WeChat" value="{{$Hotel->app_wechat}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
@@ -317,11 +321,11 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">結帳方式</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="checkout0" value="0" name="checkout">
+		        <input type="radio" id="checkout0" value="0" name="checkout"@if($Hotel->checkout==0) checked="checked" @endif>
 		        <label for="checkout0">日結</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="checkout1" value="1" name="checkout" checked="">
+		        <input type="radio" id="checkout1" value="1" name="checkout"@if($Hotel->checkout==1) checked="checked" @endif>
 		        <label for="checkout1">月結</label>
 		  </div>
 		</div>
@@ -329,7 +333,7 @@
 			  <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">訂房起始日</span>
 			  </div>
-			  <input id="booking_day" name="booking_day" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1">日
+			  <input id="booking_day" name="booking_day" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->booking_day}}">日
 		</div>
 	</div>
 	<!-- ** -->
@@ -339,17 +343,17 @@
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">相關證照</span>
 		  	</div>
 		  	<div class="checkbox checkbox-primary">
-		        <input id="license_hotel" name="license_hotel" type="checkbox" value="1">
+		        <input id="license_hotel" name="license_hotel" type="checkbox" value="1"@if($Hotel->license_hotel==1) checked="checked" @endif>
 		        <label for="license_hotel">合法旅館
 		        </label>
 		  	</div>
 		  	<div class="checkbox checkbox-primary">
-		        <input id="license_homestay" name="license_homestay" type="checkbox" value="1">
+		        <input id="license_homestay" name="license_homestay" type="checkbox" value="1"@if($Hotel->license_homestay==1) checked="checked" @endif>
 		        <label for="license_homestay">合法民宿
 		        </label>
 		  	</div>
 		  	<div class="checkbox checkbox-primary">
-		        <input id="license_hospitable" name="license_hospitable" type="checkbox" value="1">
+		        <input id="license_hospitable" name="license_hospitable" type="checkbox" value="1"@if($Hotel->license_hospitable==1) checked="checked" @endif>
 		        <label for="license_hospitable">好客民宿
 		        </label>
 		  	</div>
@@ -360,15 +364,15 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">發票型態</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="invoice_type0" value="0" name="invoice_type" checked="">
+		        <input type="radio" id="invoice_type0" value="0" name="invoice_type"@if($Hotel->invoice_type==0) checked="checked" @endif>
 		        <label for="invoice_type0">甲</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="invoice_type1" value="1" name="invoice_type">
+		        <input type="radio" id="invoice_type1" value="1" name="invoice_type"@if($Hotel->invoice_type==1) checked="checked" @endif>
 		        <label for="invoice_type1">乙</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="invoice_type2" value="2" name="invoice_type">
+		        <input type="radio" id="invoice_type2" value="2" name="invoice_type"@if($Hotel->invoice_type==2) checked="checked" @endif>
 		        <label for="invoice_type2">丙</label>
 		  </div>
 		</div>
@@ -377,15 +381,15 @@
 			    <span class="input-group-text" id="inputGroup-sizing-sm">配合度</span>
 			  </div>
 			  <div class="radio radio-inline align-middle">
-			        <input type="radio" id="coordinate1" value="0" name="coordinate" checked="">
+			        <input type="radio" id="coordinate1" value="0" name="coordinate"@if($Hotel->coordinate==0) checked="checked" @endif>
 			        <label for="coordinate1">佳</label>
 			  </div>
 			  <div class="radio radio-inline align-middle">
-			        <input type="radio" id="coordinate2" value="1" name="coordinate">
+			        <input type="radio" id="coordinate2" value="1" name="coordinate"@if($Hotel->coordinate==1) checked="checked" @endif>
 			        <label for="coordinate2">普通</label>
 			  </div>
 			  <div class="radio radio-inline align-middle">
-			        <input type="radio" id="coordinate3" value="2" name="coordinate">
+			        <input type="radio" id="coordinate3" value="2" name="coordinate"@if($Hotel->coordinate==2) checked="checked" @endif>
 			        <label for="coordinate3">差</label>
 			  </div>
 		</div>
@@ -397,27 +401,27 @@
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店類型</span>
 		  	</div>
 		  	<select class="form-control" id="type_scale" name="type_scale">
-			  	<option value='國際觀光飯店'>國際觀光飯店</option>
-			  	<option value='商務休閒飯店'>商務休閒飯店</option>
-			  	<option value='汽車旅館'>汽車旅館</option>
-			  	<option value='民宿'>民宿</option>
-			  	<option value='露營'>露營</option>
+			  	<option value='國際觀光飯店'@if($Hotel->type_scale=='國際觀光飯店') selected="" @endif>國際觀光飯店</option>
+			  	<option value='商務休閒飯店'@if($Hotel->type_scale=='商務休閒飯店') selected="" @endif>商務休閒飯店</option>
+			  	<option value='汽車旅館'@if($Hotel->type_scale=='汽車旅館') selected="" @endif>汽車旅館</option>
+			  	<option value='民宿'@if($Hotel->type_scale=='民宿') selected="" @endif>民宿</option>
+			  	<option value='露營'@if($Hotel->type_scale=='露營') selected="" @endif>露營</option>
 		    </select>
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店星級</span>
 		  	</div>
 		  	<select class="form-control" id="type_level" name="type_level">
-			  	<option value='0'>☆</option>
-			  	<option value='1'>★</option>
-			  	<option value='2'>★★</option>
-			  	<option value='3'>★★★</option>
-			  	<option value='4'>★★★★</option>
-			  	<option value='5'>★★★★★</option>
+			  	<option value='0'@if($Hotel->type_level==0) selected="" @endif>☆</option>
+			  	<option value='1'@if($Hotel->type_level==1) selected="" @endif>★</option>
+			  	<option value='2'@if($Hotel->type_level==2) selected="" @endif>★★</option>
+			  	<option value='3'@if($Hotel->type_level==3) selected="" @endif>★★★</option>
+			  	<option value='4'@if($Hotel->type_level==4) selected="" @endif>★★★★</option>
+			  	<option value='5'@if($Hotel->type_level==5) selected="" @endif>★★★★★</option>
 		    </select>
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">房間總數</span>
 			  </div>
-			  <input id="type_room" name="type_room" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1">
+			  <input id="type_room" name="type_room" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->type_room}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -425,14 +429,14 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police0" value="0" name="local_police" checked="">
+		        <input type="radio" id="local_police0" value="0" name="local_police"@if($Hotel->local_police==0) checked="checked" @endif>
 		        <label for="local_police0">不顯示</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police1" value="1" name="local_police">
+		        <input type="radio" id="local_police1" value="1" name="local_police"@if($Hotel->local_police==1) checked="checked" @endif>
 		        <label for="local_police1">顯示</label>
 		  </div>
-		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;">
+		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;" value="{{ $Hotel->local_police_comm }}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -442,15 +446,15 @@
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">開立發票</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="invoice0" value="0" name="invoice" checked="">
+			    <input type="radio" id="invoice0" value="0" name="invoice"@if($Hotel->invoice==0) checked="checked" @endif>
 			    <label for="invoice0">可</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="invoice1" value="1" name="invoice">
+			    <input type="radio" id="invoice1" value="1" name="invoice"@if($Hotel->invoice==1) checked="checked" @endif>
 			    <label for="invoice1">僅開立收據</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="invoice2" value="2" name="invoice">
+			    <input type="radio" id="invoice2" value="2" name="invoice"@if($Hotel->invoice==2) checked="checked" @endif>
 			    <label for="invoice2">皆無</label>
 			</div>
 		</div>
@@ -459,7 +463,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
 			  </div>
-			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_title}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -468,14 +472,14 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">立案名稱</span>
 			</div>
-			<input id="reg_name" name="reg_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			<input id="reg_name" name="reg_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->reg_name}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
 			  </div>
-			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_descript}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -484,14 +488,14 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">統一編號</span>
 			</div>
-			<input id="reg_no" name="reg_no" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			<input id="reg_no" name="reg_no" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->reg_no}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
 			  </div>
-			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_keyword}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -501,33 +505,31 @@
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">現場刷卡</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="credit_card0" value="0" name="credit_card" checked="">
+			    <input type="radio" id="credit_card0" value="0" name="credit_card"@if($Hotel->credit_card==0) checked="checked" @endif>
 			    <label for="credit_card0">可(一般刷卡)</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="credit_card1" value="1" name="credit_card">
+			    <input type="radio" id="credit_card1" value="1" name="credit_card"@if($Hotel->credit_card==1) checked="checked" @endif>
 			    <label for="credit_card1">可(支援國民旅遊卡)</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="credit_card2" value="2" name="credit_card">
+			    <input type="radio" id="credit_card2" value="2" name="credit_card"@if($Hotel->credit_card==2) checked="checked" @endif>
 			    <label for="credit_card2">皆無</label>
 			</div>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
-			<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-				<input type="radio" id="display_tel0" value="0" name="display_tel" checked="">
+				<input type="radio" id="display_tel0" value="0" name="display_tel"@if($Hotel->display_tel==0) checked="checked" @endif>
 				<label for="display_tel0">不顯示</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-				<input type="radio" id="display_tel1" value="1" name="display_tel">
+				<input type="radio" id="display_tel1" value="1" name="display_tel"@if($Hotel->display_tel==1) checked="checked" @endif>
 				<label for="display_tel1">顯示飯店電話</label>
 			</div>
-		</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -536,10 +538,10 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
 			</div>
-			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="">
-			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="">
-			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-6" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="">
-			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="">
+			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
+			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
+			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-6" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
+			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
@@ -547,9 +549,9 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
 		  </div>
 		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
-			  <option value='合約'>合約</option>
-			  <option value='住宿卷'>住宿卷</option>
-			  <option value='約卷'>約卷</option>
+			  <option value='合約'@if($Hotel->cooperation=='合約') selected="" @endif>合約</option>
+			  <option value='住宿卷'@if($Hotel->cooperation=='住宿卷') selected="" @endif>住宿卷</option>
+			  <option value='約卷'@if($Hotel->cooperation=='約卷') selected="" @endif>約卷</option>
 		  </select>
 		</div>
 	</div>
@@ -559,7 +561,7 @@
 			<div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店優點</span>
 			</div>
-			<input id="point" name="point" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			<input id="point" name="point" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->point}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -576,25 +578,25 @@
 		  </tr>
 		  <tr>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="">
+		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="{{$Hotel->contact_name}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
+		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="{{$Hotel->contact_job}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="">
+		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="{{$Hotel->contact_tel}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="">
+		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="{{$Hotel->contact_mobile}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
+		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="{{$Hotel->contact_line}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="">
+		    	<input type="text" class="form-control" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="{{$Hotel->contact_wechat}}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="">
+		    	<input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="{{$Hotel->contact_email}}">
 		    </td>
 		  </tr>
 		</table>
@@ -606,14 +608,14 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">後台網址</span>
 			</div>
-			<input type="text" class="form-control" id="manage_url" name="manage_url" placeholder="" value="">
+			<input type="text" class="form-control" id="manage_url" name="manage_url" placeholder="" value="{{$Hotel->manage_url}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">後台簡址</span>
 			</div>
-			<input type="text" class="form-control" id="manage_surl" name="manage_surl" placeholder="" value="">
+			<input type="text" class="form-control" id="manage_surl" name="manage_surl" placeholder="" value="{{$Hotel->manage_surl}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -623,14 +625,14 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">C版網址</span>
 			</div>
-			<input type="text" class="form-control" id="c_url" name="c_url" placeholder="" value="">
+			<input type="text" class="form-control" id="c_url" name="c_url" placeholder="" value="{{$Hotel->c_url}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">C版簡址</span>
 			</div>
-			<input type="text" class="form-control" id="c_surl" name="c_surl" placeholder="" value="">
+			<input type="text" class="form-control" id="c_surl" name="c_surl" placeholder="" value="{{$Hotel->c_surl}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -641,19 +643,19 @@
 			    <span class="input-group-text" id="inputGroup-sizing-sm">D版網址</span>
 			</div>
 			<div class="checkbox checkbox-primary">
-	            <input id="d_enable" name="d_enable" type="checkbox" value="1">
+	            <input id="d_enable" name="d_enable" type="checkbox" value="1"@if($Hotel->d_enable==1) checked="checked" @endif>
 	            <label for="d_enable">
 	            	啟用
 	            </label>
 	        </div>
-			<input type="text" class="form-control" id="d_url" name="d_url" placeholder="" value="">
+			<input type="text" class="form-control" id="d_url" name="d_url" placeholder="" value="{{$Hotel->d_url}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">D版簡址</span>
 			</div>
-			<input type="text" class="form-control" id="d_surl" name="d_surl" placeholder="" value="">
+			<input type="text" class="form-control" id="d_surl" name="d_surl" placeholder="" value="{{$Hotel->d_surl}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -663,7 +665,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">AB版網址</span>
 			</div>
-			<input type="text" class="form-control" id="ab_url" name="ab_url" placeholder="" value="">
+			<input type="text" class="form-control" id="ab_url" name="ab_url" placeholder="" value="{{$Hotel->ab_url}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -677,21 +679,21 @@
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">姓名</span>
 						</div>
-						<input type="text" class="form-control" id="login_name" name="login_name" placeholder="" value="">
+						<input type="text" class="form-control" id="login_name" name="login_name" placeholder="" value="{{$Hotel->login_name}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">所屬公司</span>
 						</div>
-						<input type="text" class="form-control" id="login_com" name="login_com" placeholder="" value="">
+						<input type="text" class="form-control" id="login_com" name="login_com" placeholder="" value="{{$Hotel->login_com}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">部門或職稱</span>
 						</div>
-						<input type="text" class="form-control" id="login_job" name="login_job" placeholder="" value="">
+						<input type="text" class="form-control" id="login_job" name="login_job" placeholder="" value="{{$Hotel->login_job}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-5">
@@ -704,13 +706,16 @@
 					  	<select class="form-control col-md-2" id="login_area_level2" name="login_area_level2" onchange="login_chg_area(this,2)">
 						  	<option value='-1'>-</option>
 						  	@foreach($Areas_level2 as $key => $area2)
-								<option value='{{$area2->nokey}}'>{{$area2->area_name}}</option>
+								<option value='{{$area2->nokey}}'@if($Hotel->login_addr_level2==$area2->nokey) selected="" @endif>{{$area2->area_name}}</option>
 						  	@endforeach
 					  	</select>
-					  	<select class="form-control col-md-2" id="login_area_level3" name="login_area_level3">
+					  	<select class="form-control col-md-2" id="login_area_level3" name="login_area_level3" onchange="chg_zip_code()">
 							<option value='-1'>-</option>
+							@foreach($Login_addr_level3 as $key => $addr3)
+								<option value='{{$addr3->nokey}}'@if($Hotel->login_addr_level3==$addr3->nokey) selected="" @endif>{{$addr3->area_name}}</option>
+						  	@endforeach
 						</select>
-						<input type="text" class="form-control col-md-8" id="login_addr" name="login_addr" placeholder="請輸入地址" value="">
+						<input type="text" class="form-control col-md-8" id="login_addr" name="login_addr" placeholder="請輸入地址" value="{{$Hotel->login_addr}}">
 					</div>
 		    	</div>
 		    </td>
@@ -722,35 +727,35 @@
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">公司電話</span>
 						</div>
-						<input type="text" class="form-control" id="login_tel" name="login_tel" placeholder="" value="">
+						<input type="text" class="form-control" id="login_tel" name="login_tel" placeholder="" value="{{$Hotel->login_tel}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">聯絡手機</span>
 						</div>
-						<input type="text" class="form-control" id="login_mobile" name="login_mobile" placeholder="" value="">
+						<input type="text" class="form-control" id="login_mobile" name="login_mobile" placeholder="" value="{{$Hotel->login_mobile}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">信箱</span>
 						</div>
-						<input type="text" class="form-control" id="login_email" name="login_email" placeholder="" value="">
+						<input type="text" class="form-control" id="login_email" name="login_email" placeholder="" value="{{$Hotel->login_email}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">帳號</span>
 						</div>
-						<input type="text" class="form-control" id="login_id" name="login_id" placeholder="" value="">
+						<input type="text" class="form-control" id="login_id" name="login_id" placeholder="" value="{{$Hotel->login_id}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
 						    <span class="input-group-text" id="inputGroup-sizing-sm">密碼</span>
 						</div>
-						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
+						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="{{$Hotel->login_passwd}}">
 					</div>
 		    	</div>
 		    </td>
@@ -764,15 +769,15 @@
 						</div>
 						<!-- ** -->
 						<div class="radio radio-inline">
-						    <input type="radio" id="login_is_group0" value="0" name="login_is_group" checked="">
+						    <input type="radio" id="login_is_group0" value="0" name="login_is_group"@if($Hotel->login_is_group==0) checked="checked" @endif>
 						    <label for="login_is_group0">否</label>
 						</div>
 						<div class="radio radio-inline">
-						    <input type="radio" id="login_is_group1" value="1" name="login_is_group">
+						    <input type="radio" id="login_is_group1" value="1" name="login_is_group"@if($Hotel->login_is_group==1) checked="checked" @endif>
 						    <label for="login_is_group1">是</label>
 						</div>
-						<input type="text" class="form-control" id="login_group_name" name="login_group_name" placeholder="集團名稱" value="">與
-						<input type="text" class="form-control" id="login_group_url" name="login_group_url" placeholder="" value="http://">
+						<input type="text" class="form-control" id="login_group_name" name="login_group_name" placeholder="集團名稱" value="{{$Hotel->login_group_name}}">與
+						<input type="text" class="form-control" id="login_group_url" name="login_group_url" placeholder="" value="{{$Hotel->login_group_url}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
@@ -780,11 +785,11 @@
 						    <span class="input-group-text" id="inputGroup-sizing-sm">申請合作家數</span>
 						</div>
 						<div class="radio radio-inline">
-						    <input type="radio" id="login_group_count0" value="0" name="login_group_count" checked="">
+						    <input type="radio" id="login_group_count0" value="0" name="login_group_count"@if($Hotel->login_group_count==0) checked="checked" @endif>
 						    <label for="login_group_count0">一家</label>
 						</div>
 						<div class="radio radio-inline">
-						    <input type="radio" id="login_group_count1" value="1" name="login_group_count">
+						    <input type="radio" id="login_group_count1" value="1" name="login_group_count"@if($Hotel->login_group_count==1) checked="checked" @endif>
 						    <label for="login_group_count1">多家</label>
 						</div>
 					</div>
@@ -800,7 +805,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">合約到期日</span>
 			</div>
-			<input type="text" class="form-control" id="expire" name="expire" placeholder="" value="2020-09-19">
+			<input type="text" class="form-control" id="expire" name="expire" placeholder="" value="{{$Hotel->expire}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -811,7 +816,7 @@
 		</div>
 	</div>
 	<!-- ** -->
-	<button type="submit" class="btn btn-secondary btn-lg btn-block" style="margin-top: 30px;">新增飯店</button>
+	<button type="submit" class="btn btn-secondary btn-lg btn-block" style="margin-top: 30px;">確定修改</button>
 </form>
 
 @endsection
@@ -846,6 +851,7 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	
 	//切換三級選單取得郵遞區號
 	function chg_zip_code(obj,target){
 		$('#'+target).prop('disabled', true);
@@ -854,7 +860,7 @@ var level_global=1;
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'area_get_zipcode',
+	        url: '../area_get_zipcode',
 	        data: {nokey:$(obj).val()},
 	        success: function(data) {
 	        	$('#'+target).val("");
@@ -877,7 +883,7 @@ var level_global=1;
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'area_get',
+	        url: '../area_get',
 	        data: {level:sel_val},
 	        success: function(data) {
 	        	//填入下一級選項
@@ -904,8 +910,8 @@ var level_global=1;
 	//登錄者用
 	// 切換選項時，level為該選項之級別值
 	function login_chg_area(sel_obj, level){
-		$("#contact_area_level"+(level+1)).prop('disabled', true);
-		$("#contact_area_level"+(level+1)+" option").remove();
+		$("#login_area_level"+(level+1)).prop('disabled', true);
+		$("#login_area_level"+(level+1)+" option").remove();
 		sel_val =$(sel_obj).val();
 
 		if(sel_val == '-1'){
@@ -916,7 +922,7 @@ var level_global=1;
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'area_get',
+	        url: '../area_get',
 	        data: {level:sel_val},
 	        success: function(data) {
 	        	//填入下一級選項
@@ -928,14 +934,14 @@ var level_global=1;
 	//填入下級選項
 	function login_fill_area(data, level){
 		if(level <=4){
-			$("#contact_area_level"+(level+1)+" option[value!='-1']").remove();
+			$("#login_area_level"+(level+1)+" option[value!='-1']").remove();
 			for(i=0; i< data.length; i++){
-				$("#contact_area_level"+(level+1)).append($('<option>', {
+				$("#login_area_level"+(level+1)).append($('<option>', {
 				    value: data[i]['nokey'],
 				    text: data[i]['area_name']
 				}));
 			}
-			$("#contact_area_level"+(level+1)).prop('disabled', false);
+			$("#login_area_level"+(level+1)).prop('disabled', false);
 			//alert(data['1']['area_name']);
 			//$("#area_level"+level+" option[value!='-1']").remove();
 		}

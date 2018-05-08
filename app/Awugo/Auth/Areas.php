@@ -16,7 +16,7 @@ class Areas extends Model
      * @var array
      */
     protected $fillable = [
-        'area_name', 'area_parent', 'area_level', 'area_code',
+        'area_name', 'area_parent', 'area_level', 'area_code', 'zip_code',
     ];
 
     // *
