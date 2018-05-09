@@ -37,10 +37,10 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
+		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">版本</span>
 		  </div>
@@ -89,11 +89,11 @@
 		  <input type="text" id="url" name="url" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
+		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">訂金</span>
 		  </div>
-		  <input type="text" id="deposit" name="deposit" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="max-width: 200px;" value="10">%
+		  <input type="text" id="deposit" name="deposit" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="max-width: 200px;" value="0">%
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
@@ -123,13 +123,13 @@
 						  <option value='1'>台灣</option>
 					  </select>
 					  <select class="form-control" id="area_level2" name="area_level2" onchange="chg_area(this,2)">
-						  <option value='-1'>-</option>
+						  <option value='-1'>縣市</option>
 						  @foreach($Areas_level2 as $key => $area2)
 								<option value='{{$area2->nokey}}'>{{$area2->area_name}}</option>
 						  @endforeach
 					  </select>
 					  <select class="form-control" id="area_level3" name="area_level3" onchange="chg_zip_code(this,'zip_code')">
-						  <option value='-1'>-</option>
+						  <option value='-1'>區域</option>
 					  </select><br/>
 					  	<div class="input-group input-group-sm col-md-2"> 
 						  <input id="zip_code" name="zip_code" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="郵遞區號">
@@ -147,14 +147,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">C版</span>
 					  </div>
-					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 		    </td>
@@ -166,14 +166,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店電話</span>
 					  </div>
-					  <input id="tel1" name="tel1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="tel1" name="tel1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="+886">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">備用電話</span>
 					  </div>
-					  <input id="tel2" name="tel2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="tel2" name="tel2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="+886">
 					</div>
 				</div>
 		    </td>
@@ -184,14 +184,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">AB版</span>
 					  </div>
-					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -204,14 +204,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店傳真</span>
 					  </div>
-					  <input id="fax1" name="fax1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="fax1" name="fax1" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="+886">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">備用傳真</span>
 					  </div>
-					  <input id="fax2" name="fax2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+					  <input id="fax2" name="fax2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="+886">
 					</div>
 				</div>
 		    </td>
@@ -222,14 +222,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">D版</span>
 					  </div>
-					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -240,7 +240,7 @@
 		    	<!-- ** -->
 		    	<div class="row" style="padding-left: 15px;">
 		    		<div class="checkbox checkbox-primary">
-	                    <input id="fees_sale_state" name="fees_sale_state" type="checkbox" value="1">
+	                    <input id="fees_sale_state" name="fees_sale_state" type="checkbox" value="1" onclick="toggleInput('fees_sale_bonus')">
 	                    <label for="fees_sale_state">
 	                    </label>
 	                </div>
@@ -248,11 +248,11 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">經銷紅利</span>
 					  </div>
-					  <input id="fees_sale_bonus" name="fees_sale_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_sale_bonus" name="fees_sale_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0" disabled="">%
 					</div>
 					<!-- ** -->
 					<div class="checkbox checkbox-primary">
-	                    <input id="fees_roll_state" name="fees_roll_state" type="checkbox" value="1">
+	                    <input id="fees_roll_state" name="fees_roll_state" type="checkbox" value="1" onclick="toggleInput('fees_roll_bonus')">
 	                    <label for="fees_roll_state">
 	                    </label>
 	                </div>
@@ -260,7 +260,7 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">住宿紅利</span>
 					  </div>
-					  <input id="fees_roll_bonus" name="fees_roll_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="10">%
+					  <input id="fees_roll_bonus" name="fees_roll_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0" disabled="">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -296,7 +296,7 @@
 		        <input type="radio" id="track1" value="1" name="track">
 		        <label for="track1">追蹤</label>
 		  </div>
-		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-4" placeholder="追蹤事由" style="margin-left: 10px;">
+		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-6" placeholder="追蹤事由" style="margin-left: 10px;">
 		</div>
 	</div>
 	<!-- ** -->
@@ -312,7 +312,7 @@
 		  <input id="app_wechat" name="app_wechat" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="WeChat">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
+		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">結帳方式</span>
 		  </div>
@@ -355,7 +355,7 @@
 		  	</div>
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
+		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">發票型態</span>
 		  </div>
@@ -402,6 +402,9 @@
 			  	<option value='汽車旅館'>汽車旅館</option>
 			  	<option value='民宿'>民宿</option>
 			  	<option value='露營'>露營</option>
+			  	<option value='國際觀光飯店／商務休閒飯店'>國際觀光飯店／商務休閒飯店</option>
+			  	<option value='商務休閒飯店／汽車旅館'>商務休閒飯店／汽車旅館</option>
+			  	<option value='民宿／露營'>民宿／露營</option>
 		    </select>
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店星級</span>
@@ -515,7 +518,6 @@
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
-			<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
 			</div>
@@ -527,7 +529,10 @@
 				<input type="radio" id="display_tel1" value="1" name="display_tel">
 				<label for="display_tel1">顯示飯店電話</label>
 			</div>
-		</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="display_tel2" value="2" name="display_tel">
+				<label for="display_tel2">顯示awugo電話</label>
+			</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -536,9 +541,9 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
 			</div>
-			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="">
+			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="">
 			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="">
-			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-6" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="">
+			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-5" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="">
 			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="">
 		</div>
 		<!-- ** -->
@@ -582,10 +587,10 @@
 		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="">
+		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="" onkeyup="cloneTr(this)">
+		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886" onkeyup="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
@@ -670,33 +675,33 @@
 	<div class="row">
 		<table width="100%">
 		  <tr>
-		    <th style="background-color: #c9fcb3;width: 85px;height: 100px;text-align: center;" rowspan="3">登錄者</th>
+		    <th style="background-color: #fff3c6;width: 85px;height: 100px;text-align: center;" rowspan="3">登錄者</th>
 		    <td colspan="6">
 		    	<div class="row col-md-12">
 		    		<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">姓名</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">姓名</span>
 						</div>
 						<input type="text" class="form-control" id="login_name" name="login_name" placeholder="" value="">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">所屬公司</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">所屬公司</span>
 						</div>
 						<input type="text" class="form-control" id="login_com" name="login_com" placeholder="" value="">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">部門或職稱</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">部門或職稱</span>
 						</div>
 						<input type="text" class="form-control" id="login_job" name="login_job" placeholder="" value="">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-5">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">公司地址</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">公司地址</span>
 						</div>
 						<select class="form-control col-md-2" id="login_area_level1" name="login_area_level1" style="display:none">
 						  	<option value='1'>台灣</option>
@@ -720,35 +725,35 @@
 		    	<div class="row col-md-12">
 		    		<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">公司電話</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">公司電話</span>
 						</div>
-						<input type="text" class="form-control" id="login_tel" name="login_tel" placeholder="" value="">
+						<input type="text" class="form-control" id="login_tel" name="login_tel" placeholder="" value="+886">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">聯絡手機</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">聯絡手機</span>
 						</div>
-						<input type="text" class="form-control" id="login_mobile" name="login_mobile" placeholder="" value="">
+						<input type="text" class="form-control" id="login_mobile" name="login_mobile" placeholder="" value="+886">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">信箱</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">信箱</span>
 						</div>
 						<input type="text" class="form-control" id="login_email" name="login_email" placeholder="" value="">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">帳號</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳號</span>
 						</div>
 						<input type="text" class="form-control" id="login_id" name="login_id" placeholder="" value="">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-2">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">密碼</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">密碼</span>
 						</div>
 						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
 					</div>
@@ -760,7 +765,7 @@
 				<div class="row col-md-12">
 		    		<div class="input-group input-group-sm col-md-6">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">集團或連鎖</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">集團或連鎖</span>
 						</div>
 						<!-- ** -->
 						<div class="radio radio-inline">
@@ -777,7 +782,7 @@
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
 					    <div class="input-group-prepend">
-						    <span class="input-group-text" id="inputGroup-sizing-sm">申請合作家數</span>
+						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">申請合作家數</span>
 						</div>
 						<div class="radio radio-inline">
 						    <input type="radio" id="login_group_count0" value="0" name="login_group_count" checked="">
@@ -846,6 +851,14 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//開關輸入項
+	function toggleInput(objID){
+		if($('#'+objID).prop('disabled')){
+			$('#'+objID).prop('disabled',false);
+		}else{
+			$('#'+objID).prop('disabled',true);
+		}
+	}
 	//無限增加聯絡人
 	function cloneTr(obj){
 		objClone =$(obj).parent().parent().clone();
@@ -897,11 +910,17 @@ var level_global=1;
 	function fill_area(data, level){
 		if(level <=4){
 			$("#area_level"+(level+1)+" option[value!='-1']").remove();
-			for(i=0; i< data.length; i++){
-				$("#area_level"+(level+1)).append($('<option>', {
-				    value: data[i]['nokey'],
-				    text: data[i]['area_name']
+			$("#area_level"+(level+1)).append($('<option>', {
+				    value: -1,
+				    text: '區域'
 				}));
+			if($("#area_level"+level).val() !='-1'){
+				for(i=0; i< data.length; i++){
+					$("#area_level"+(level+1)).append($('<option>', {
+					    value: data[i]['nokey'],
+					    text: data[i]['area_name']
+					}));
+				}
 			}
 			$("#area_level"+(level+1)).prop('disabled', false);
 			//alert(data['1']['area_name']);
@@ -911,8 +930,8 @@ var level_global=1;
 	//登錄者用
 	// 切換選項時，level為該選項之級別值
 	function login_chg_area(sel_obj, level){
-		$("#contact_area_level"+(level+1)).prop('disabled', true);
-		$("#contact_area_level"+(level+1)+" option").remove();
+		$("#login_area_level"+(level+1)).prop('disabled', true);
+		$("#login_area_level"+(level+1)+" option").remove();
 		sel_val =$(sel_obj).val();
 
 		if(sel_val == '-1'){
@@ -935,14 +954,20 @@ var level_global=1;
 	//填入下級選項
 	function login_fill_area(data, level){
 		if(level <=4){
-			$("#contact_area_level"+(level+1)+" option[value!='-1']").remove();
-			for(i=0; i< data.length; i++){
-				$("#contact_area_level"+(level+1)).append($('<option>', {
-				    value: data[i]['nokey'],
-				    text: data[i]['area_name']
+			//$("#login_area_level"+(level+1)+" option[value!='-1']").remove();
+			$("#login_area_level"+(level+1)).append($('<option>', {
+				    value: -1,
+				    text: '區域'
 				}));
+			if($("#login_area_level"+level).val() !='-1'){
+				for(i=0; i< data.length; i++){
+					$("#login_area_level"+(level+1)).append($('<option>', {
+					    value: data[i]['nokey'],
+					    text: data[i]['area_name']
+					}));
+				}
 			}
-			$("#contact_area_level"+(level+1)).prop('disabled', false);
+			$("#login_area_level"+(level+1)).prop('disabled', false);
 			//alert(data['1']['area_name']);
 			//$("#area_level"+level+" option[value!='-1']").remove();
 		}
