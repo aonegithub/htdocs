@@ -27,9 +27,7 @@
 	  </div>
 	</div>
 @endif
-<div style="text-align:right;">
-	<a href="/{{$Country}}/auth/manager/hotel_list" class="btn btn-secondary">返回飯店清單</a>
-</div>
+
 <form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_add">
 	{{ csrf_field() }}
 	<div class="row">
@@ -37,7 +35,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;">
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -45,6 +43,7 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">版本</span>
 		  </div>
 		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;">
+		  	  <option value='-1'>選擇版本</option>
 			  <option value='A'>A</option>
 			  <option value='B'>B</option>
 			  <option value='C'>C</option>
@@ -105,7 +104,7 @@
 		        <label for="control1">立即訂房</label>
 		  </div>
 		  <div class="radio radio-inline">
-		        <input type="radio" id="control2" value="1" name="control" checked="checked">
+		        <input type="radio" id="control2" value="1" name="control">
 		        <label for="control2">客服訂房</label>
 		  </div>
 		</div>
@@ -321,7 +320,7 @@
 		        <label for="checkout0">日結</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="checkout1" value="1" name="checkout" checked="">
+		        <input type="radio" id="checkout1" value="1" name="checkout">
 		        <label for="checkout1">月結</label>
 		  </div>
 		</div>
@@ -377,11 +376,11 @@
 			    <span class="input-group-text" id="inputGroup-sizing-sm">配合度</span>
 			  </div>
 			  <div class="radio radio-inline align-middle">
-			        <input type="radio" id="coordinate1" value="0" name="coordinate" checked="">
+			        <input type="radio" id="coordinate1" value="0" name="coordinate">
 			        <label for="coordinate1">佳</label>
 			  </div>
 			  <div class="radio radio-inline align-middle">
-			        <input type="radio" id="coordinate2" value="1" name="coordinate">
+			        <input type="radio" id="coordinate2" value="1" name="coordinate" checked="">
 			        <label for="coordinate2">普通</label>
 			  </div>
 			  <div class="radio radio-inline align-middle">
@@ -396,7 +395,8 @@
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店類型</span>
 		  	</div>
-		  	<select class="form-control" id="type_scale" name="type_scale">
+		  	<select class="form-control col-md-5" id="type_scale" name="type_scale">
+		  		<option value='-1'>選擇飯店類型</option>
 			  	<option value='國際觀光飯店'>國際觀光飯店</option>
 			  	<option value='商務休閒飯店'>商務休閒飯店</option>
 			  	<option value='汽車旅館'>汽車旅館</option>
@@ -409,7 +409,7 @@
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店星級</span>
 		  	</div>
-		  	<select class="form-control" id="type_level" name="type_level">
+		  	<select class="form-control col-md-2" id="type_level" name="type_level">
 			  	<option value='0'>☆</option>
 			  	<option value='1'>★</option>
 			  	<option value='2'>★★</option>
@@ -419,8 +419,12 @@
 		    </select>
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">房間總數</span>
-			  </div>
-			  <input id="type_room" name="type_room" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1">
+			</div>
+			<input id="type_room" name="type_room" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1" onkeyup="room2sort()">
+			<div class="input-group-prepend">
+			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">排序</span>
+			</div>
+			<input id="sort" name="sort" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="0">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -445,7 +449,7 @@
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">開立發票</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="invoice0" value="0" name="invoice" checked="">
+			    <input type="radio" id="invoice0" value="0" name="invoice">
 			    <label for="invoice0">可</label>
 			</div>
 			<div class="radio radio-inline align-middle">
@@ -504,7 +508,7 @@
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">現場刷卡</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-			    <input type="radio" id="credit_card0" value="0" name="credit_card" checked="">
+			    <input type="radio" id="credit_card0" value="0" name="credit_card">
 			    <label for="credit_card0">可(一般刷卡)</label>
 			</div>
 			<div class="radio radio-inline align-middle">
@@ -552,6 +556,7 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
 		  </div>
 		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
+		  	  <option value='-1'>選擇合作種類</option>
 			  <option value='合約'>合約</option>
 			  <option value='住宿卷'>住宿卷</option>
 			  <option value='約卷'>約卷</option>
@@ -812,7 +817,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">瀏覽人數</span>
 			</div>
-			<span class="form-control">888今日:88昨日:77:前日:88</span>
+			<span class="form-control">今日:88／昨日:77／前日:88／總計:6500</span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -851,6 +856,18 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//飯店房間數量同步乘以10到排序值
+	function room2sort(){
+		count=parseInt($('#type_room').val())*10;
+		$('#sort').val(count);
+	}
+	//飯店名稱同步SEO選項
+	function name2seo(){
+		seo_text=$('#name').val();
+		$('#seo_title').empty().val(seo_text);
+		$('#seo_keyword').empty().val(seo_text);
+		$('#seo_descript').empty().val(seo_text);
+	}
 	//開關輸入項
 	function toggleInput(objID){
 		if($('#'+objID).prop('disabled')){

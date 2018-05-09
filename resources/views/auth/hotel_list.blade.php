@@ -90,6 +90,10 @@
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="room_count" name="room_count">
 		  <option value='-1'>房間數量</option>
+		  <option value='100'>100以上</option>
+		  <option value='50-99'>50-99</option>
+		  <option value='15-49'>15-49</option>
+		  <option value='1-14'>1-14</option>
 		</select>
 	</div>
 	<div class="col-md-2 search-padding">

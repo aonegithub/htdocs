@@ -180,6 +180,7 @@ class HotelController extends Controller
         $hotel->login_group_url=$request['login_group_url'];            //登錄者集團網址
         $hotel->login_group_count=$request['login_group_count'];        //登錄者子公司數量
         $hotel->expire=$request['expire'];                              //到期日
+        $hotel->sort=$request['sort'];                                  //前台排序
         $hotel->created_manager_name=session()->get('manager_name');    //寫入者
         $hotel->created_manager_id=session()->get('manager_id');        //寫入者外鍵
         $hotel->save();
@@ -325,13 +326,14 @@ class HotelController extends Controller
         $hotel->login_id=$request['login_id'];                          //登錄者帳號
         if(!empty($request['login_passwd'])){
             $request['login_passwd']=Hash::make($request['login_passwd']);
+            $hotel->login_passwd=$request['login_passwd'];                  //登錄者密碼HASH
         }
-        $hotel->login_passwd=$request['login_passwd'];                  //登錄者密碼HASH
         $hotel->login_is_group=$request['login_is_group'];              //登錄者是否集團
         $hotel->login_group_name=$request['login_group_name'];          //登錄者集團名稱
         $hotel->login_group_url=$request['login_group_url'];            //登錄者集團網址
         $hotel->login_group_count=$request['login_group_count'];        //登錄者子公司數量
         $hotel->expire=$request['expire'];                              //到期日
+        $hotel->sort=$request['sort'];                                  //前台排序
         $hotel->created_manager_name=session()->get('manager_name');    //寫入者
         $hotel->created_manager_id=session()->get('manager_id');        //寫入者外鍵
         $hotel->save();

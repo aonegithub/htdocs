@@ -28,9 +28,6 @@
 	</div>
 @endif
 
-<div style="text-align:right;">
-	<a href="/{{$Country}}/auth/manager/hotel_list" class="btn btn-secondary">返回飯店清單</a>
-</div>
 <form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_edit/{{$Hotel->nokey}}">
 	{{ csrf_field() }}
 	<div class="row">
@@ -38,7 +35,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->name}}" style="color:red;">
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->name}}" style="color:red;" onkeyup="name2seo()">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -400,7 +397,7 @@
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店類型</span>
 		  	</div>
-		  	<select class="form-control" id="type_scale" name="type_scale">
+		  	<select class="form-control col-md-5" id="type_scale" name="type_scale">
 			  	<option value='國際觀光飯店'@if($Hotel->type_scale=='國際觀光飯店') selected="" @endif>國際觀光飯店</option>
 			  	<option value='商務休閒飯店'@if($Hotel->type_scale=='商務休閒飯店') selected="" @endif>商務休閒飯店</option>
 			  	<option value='汽車旅館'@if($Hotel->type_scale=='汽車旅館') selected="" @endif>汽車旅館</option>
@@ -413,7 +410,7 @@
 		  	<div class="input-group-prepend">
 		    	<span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店星級</span>
 		  	</div>
-		  	<select class="form-control" id="type_level" name="type_level">
+		  	<select class="form-control col-md-2" id="type_level" name="type_level">
 			  	<option value='0'@if($Hotel->type_level==0) selected="" @endif>☆</option>
 			  	<option value='1'@if($Hotel->type_level==1) selected="" @endif>★</option>
 			  	<option value='2'@if($Hotel->type_level==2) selected="" @endif>★★</option>
@@ -424,7 +421,11 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">房間總數</span>
 			  </div>
-			  <input id="type_room" name="type_room" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->type_room}}">
+			  <input id="type_room" name="type_room" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->type_room}}" onkeyup="room2sort()">
+			<div class="input-group-prepend">
+			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">排序</span>
+			</div>
+			<input id="sort" name="sort" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->sort}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -545,9 +546,9 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
 			</div>
-			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
+			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
 			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
-			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-6" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
+			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-5" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
 			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
 		</div>
 		<!-- ** -->
@@ -762,7 +763,7 @@
 					    <div class="input-group-prepend">
 						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">密碼</span>
 						</div>
-						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="{{$Hotel->login_passwd}}">
+						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
 					</div>
 		    	</div>
 		    </td>
@@ -819,7 +820,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">瀏覽人數</span>
 			</div>
-			<span class="form-control">888今日:88昨日:77:前日:88</span>
+			<span class="form-control">今日:88／昨日:77／前日:88／總計:6500</span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -858,6 +859,18 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//飯店房間數量同步乘以10到排序值
+	function room2sort(){
+		count=parseInt($('#type_room').val())*10;
+		$('#sort').val(count);
+	}
+	//飯店名稱同步SEO選項
+	function name2seo(){
+		seo_text=$('#name').val();
+		$('#seo_title').empty().val(seo_text);
+		$('#seo_keyword').empty().val(seo_text);
+		$('#seo_descript').empty().val(seo_text);
+	}
 	//開關輸入項
 	function toggleInput(objID){
 		if($('#'+objID).prop('disabled')){
