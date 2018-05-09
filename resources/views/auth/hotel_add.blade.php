@@ -28,21 +28,21 @@
 	</div>
 @endif
 
-<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_add">
+<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_add" onsubmit="return valid(this);">
 	{{ csrf_field() }}
 	<div class="row">
 		<div class="input-group input-group-sm col-md-6">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()">
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()" required>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">版本</span>
 		  </div>
-		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;">
+		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;" onchange="chg_ver(this)">
 		  	  <option value='-1'>選擇版本</option>
 			  <option value='A'>A</option>
 			  <option value='B'>B</option>
@@ -135,7 +135,7 @@
 						</div>
 						<!-- ** -->
 					  	<div class="input-group input-group-sm col-md-6">
-						  <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址">
+						  <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址" required>
 						</div>
 				</div>
 		    </th>
@@ -146,14 +146,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">C版</span>
 					  </div>
-					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_c" name="fees_c" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 		    </td>
@@ -183,14 +183,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">AB版</span>
 					  </div>
-					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_ab" name="fees_ab" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -221,14 +221,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">D版</span>
 					  </div>
-					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_d" name="fees_d" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
+					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -359,7 +359,7 @@
 		    <span class="input-group-text" id="inputGroup-sizing-sm">發票型態</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="invoice_type0" value="0" name="invoice_type" checked="">
+		        <input type="radio" id="invoice_type0" value="0" name="invoice_type">
 		        <label for="invoice_type0">甲</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
@@ -420,7 +420,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">房間總數</span>
 			</div>
-			<input id="type_room" name="type_room" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1" onkeyup="room2sort()">
+			<input id="type_room" name="type_room" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="1" onkeyup="room2sort()" required>
 			<div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">排序</span>
 			</div>
@@ -586,7 +586,7 @@
 		  </tr>
 		  <tr id="contact_row">
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="">
+		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
@@ -595,7 +595,7 @@
 		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886" onkeyup="cloneTr(this)">
+		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
@@ -665,6 +665,7 @@
 			</div>
 			<input type="text" class="form-control" id="d_surl" name="d_surl" placeholder="" value="">
 		</div>
+		
 	</div>
 	<!-- ** -->
 	<div class="row">
@@ -674,6 +675,24 @@
 			    <span class="input-group-text" id="inputGroup-sizing-sm">AB版網址</span>
 			</div>
 			<input type="text" class="form-control" id="ab_url" name="ab_url" placeholder="" value="">
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-6">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">D版顯示電話</span>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel0" value="0" name="d_display_tel" checked="">
+				<label for="d_display_tel0">不顯示</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel1" value="1" name="d_display_tel">
+				<label for="d_display_tel1">顯示飯店電話</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel2" value="2" name="d_display_tel">
+				<label for="d_display_tel2">顯示awugo電話</label>
+			</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -712,13 +731,13 @@
 						  	<option value='1'>台灣</option>
 					  	</select>
 					  	<select class="form-control col-md-2" id="login_area_level2" name="login_area_level2" onchange="login_chg_area(this,2)">
-						  	<option value='-1'>-</option>
+						  	<option value='-1'>縣市</option>
 						  	@foreach($Areas_level2 as $key => $area2)
 								<option value='{{$area2->nokey}}'>{{$area2->area_name}}</option>
 						  	@endforeach
 					  	</select>
 					  	<select class="form-control col-md-2" id="login_area_level3" name="login_area_level3">
-							<option value='-1'>-</option>
+							<option value='-1'>區域</option>
 						</select>
 						<input type="text" class="form-control col-md-8" id="login_addr" name="login_addr" placeholder="請輸入地址" value="">
 					</div>
@@ -856,6 +875,120 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//版本切換
+	function chg_ver(obj){
+		if($(obj).val() !='-1'){
+			ver_close();
+			switch($(obj).val()){
+				case 'A':
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'B':
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					break;
+				case 'D':
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					break;
+				case 'A,CA':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'B,C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'BG,G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'D,C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'DG,G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'DA,CA':
+				case 'A,CA,DA':
+				case 'B,C,D':
+				case 'BG,G,DG':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+			}
+		}else{
+			ver_close();
+		}
+	}
+	function ver_close(){
+		 $('.ver_chg').prop('disabled',true);
+	}
+	//送出驗證
+	function valid(form) {
+		if($('#type_scale').val()=='-1'){
+			alert('飯店類型未選擇');
+			return false;
+		}
+		if(!($('#invoice0').prop('checked') || $('#invoice1').prop('checked') || $('#invoice2').prop('checked'))){
+			alert('開立發票未選擇');
+			return false;
+		}
+		if(!($('#credit_card0').prop('checked') || $('#credit_card1').prop('checked') || $('#credit_card2').prop('checked'))){
+			alert('現場刷卡項目未選擇');
+			return false;
+		}
+		if($('#ver').val()=='-1'){
+			alert('版本類型未選擇');
+			return false;
+		}
+		if(!($('#control1').prop('checked') || $('#control2').prop('checked'))){
+			alert('控管方式未選擇');
+			return false;
+		}
+		if(!($('#checkout0').prop('checked') || $('#checkout1').prop('checked'))){
+			alert('結帳方式未選擇');
+			return false;
+		}
+		if(!($('#invoice_type0').prop('checked') || $('#invoice_type1').prop('checked') || $('#invoice_type2').prop('checked'))){
+			alert('發票型態未選擇');
+			return false;
+		}
+		if($('#cooperation').val()=='-1'){
+			alert('合作種類未選擇');
+			return false;
+		}
+		if($('#tel1').val()=='+886'){
+			alert('飯店電話未填寫');
+			return false;
+		}
+		return true;
+	}
 	//飯店房間數量同步乘以10到排序值
 	function room2sort(){
 		count=parseInt($('#type_room').val())*10;
@@ -995,6 +1128,9 @@ $(window).resize(function(){
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//預設將版本傭金項目關閉
+	ver_close();
+	//拉天花板
 	$("body").css("margin-top",$("nav").height()+20);
 	//停用完成跳出確認
 	@if(!is_null(session()->get('controll_back_msg')))

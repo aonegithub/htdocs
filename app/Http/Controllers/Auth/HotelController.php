@@ -94,16 +94,24 @@ class HotelController extends Controller
         $hotel->area_level3=$request['area_level3'];                    //所在區域層級3
         $hotel->zip_code=$request['zip_code'];                          //飯店郵遞區號
         $hotel->address=$request['address'];                            //剩餘地址
-        $hotel->fees_c=$request['fees_c'];                              //C版手續費
-        $hotel->fees_c_bonus=$request['fees_c_bonus'];                  //C版紅利
-        $hotel->fees_ab=$request['fees_ab'];                            //AB版手續費
-        $hotel->fees_ab_bonus=$request['fees_ab_bonus'];                //AB版紅利
-        $hotel->fees_d=$request['fees_d'];                              //D版手續費
-        $hotel->fees_d_bonus=$request['fees_d_bonus'];                  //D版紅利
-        $hotel->fees_sale_bonus=$request['fees_sale_bonus'];            //經銷版紅利
+        //C版手續費
+        $hotel->fees_c=(!empty($request['fees_c']))?$request['fees_c']:0;                 
+        //C版紅利             
+        $hotel->fees_c_bonus=(!empty($request['fees_c_bonus']))?$request['fees_c_bonus']:0;
+        //AB版手續費
+        $hotel->fees_ab=(!empty($request['fees_ab']))?$request['fees_ab']:0;    
+        //AB版紅利                        
+        $hotel->fees_ab_bonus=(!empty($request['fees_ab_bonus']))?$request['fees_ab_bonus']:0;
+        //D版手續費
+        $hotel->fees_d=(!empty($request['fees_d']))?$request['fees_d']:0;                  
+        //D版紅利            
+        $hotel->fees_d_bonus=(!empty($request['fees_d_bonus']))?$request['fees_d_bonus']:0;
+        //經銷版紅利
+        $hotel->fees_sale_bonus=(!empty($request['fees_sale_bonus']))?$request['fees_sale_bonus']:0;
         //經銷版勾選狀態
         $hotel->fees_sale_state=(!empty($request['fees_sale_state']))?$request['fees_sale_state']:0;
-        $hotel->fees_roll_bonus=$request['fees_roll_bonus'];            //住宿卷版紅利
+        //住宿卷版紅利
+        $hotel->fees_roll_bonus=(!empty($request['fees_roll_bonus']))?$request['fees_roll_bonus']:0;
         //住宿卷版勾選狀態
         $hotel->fees_roll_state=(!empty($request['fees_roll_state']))?$request['fees_roll_state']:0;   
         //合法旅館勾選狀態
@@ -157,6 +165,7 @@ class HotelController extends Controller
         $hotel->c_surl=$request['c_surl'];                              //C版簡易網址
         $hotel->d_url=$request['d_url'];                                //D版網址
         $hotel->d_surl=$request['d_surl'];                              //D版簡易網址
+        $hotel->d_display_tel=$request['d_display_tel'];                //D版顯示電話
         //D版勾選狀態
         $hotel->d_enable=(!empty($request['d_enable']))?$request['d_enable']:0;
         $hotel->ab_url=$request['ab_url'];                              //AB版網址
@@ -247,16 +256,24 @@ class HotelController extends Controller
         $hotel->area_level3=$request['area_level3'];                    //所在區域層級3
         $hotel->zip_code=$request['zip_code'];                          //飯店郵遞區號
         $hotel->address=$request['address'];                            //剩餘地址
-        $hotel->fees_c=$request['fees_c'];                              //C版手續費
-        $hotel->fees_c_bonus=$request['fees_c_bonus'];                  //C版紅利
-        $hotel->fees_ab=$request['fees_ab'];                            //AB版手續費
-        $hotel->fees_ab_bonus=$request['fees_ab_bonus'];                //AB版紅利
-        $hotel->fees_d=$request['fees_d'];                              //D版手續費
-        $hotel->fees_d_bonus=$request['fees_d_bonus'];                  //D版紅利
-        $hotel->fees_sale_bonus=$request['fees_sale_bonus'];            //經銷版紅利
+        //C版手續費
+        $hotel->fees_c=(!empty($request['fees_c']))?$request['fees_c']:0;                 
+        //C版紅利             
+        $hotel->fees_c_bonus=(!empty($request['fees_c_bonus']))?$request['fees_c_bonus']:0;
+        //AB版手續費
+        $hotel->fees_ab=(!empty($request['fees_ab']))?$request['fees_ab']:0;    
+        //AB版紅利                        
+        $hotel->fees_ab_bonus=(!empty($request['fees_ab_bonus']))?$request['fees_ab_bonus']:0;
+        //D版手續費
+        $hotel->fees_d=(!empty($request['fees_d']))?$request['fees_d']:0;                  
+        //D版紅利            
+        $hotel->fees_d_bonus=(!empty($request['fees_d_bonus']))?$request['fees_d_bonus']:0;
+        //經銷版紅利
+        $hotel->fees_sale_bonus=(!empty($request['fees_sale_bonus']))?$request['fees_sale_bonus']:0;            
         //經銷版勾選狀態
         $hotel->fees_sale_state=(!empty($request['fees_sale_state']))?$request['fees_sale_state']:0;
-        $hotel->fees_roll_bonus=$request['fees_roll_bonus'];            //住宿卷版紅利
+        //住宿卷版紅利
+        $hotel->fees_roll_bonus=(!empty($request['fees_roll_bonus']))?$request['fees_roll_bonus']:0;
         //住宿卷版勾選狀態
         $hotel->fees_roll_state=(!empty($request['fees_roll_state']))?$request['fees_roll_state']:0;   
         //合法旅館勾選狀態
@@ -312,6 +329,7 @@ class HotelController extends Controller
         $hotel->d_surl=$request['d_surl'];                              //D版簡易網址
         //D版勾選狀態
         $hotel->d_enable=(!empty($request['d_enable']))?$request['d_enable']:0;
+        $hotel->d_display_tel=$request['d_display_tel'];                //D版顯示電話
         $hotel->ab_url=$request['ab_url'];                              //AB版網址
         $hotel->login_name=$request['login_name'];                      //登錄者名稱
         $hotel->login_com=$request['login_com'];                        //登錄者公司

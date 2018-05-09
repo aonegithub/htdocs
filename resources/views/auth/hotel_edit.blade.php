@@ -42,7 +42,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">版本</span>
 		  </div>
-		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;">
+		  <select class="form-control" id="ver" name="ver" style="max-width: 200px;" onchange="chg_ver(this)">
 			  <option value='A' @if($Hotel->version=='A') selected="" @endif>A</option>
 			  <option value='B' @if($Hotel->version=='B') selected="" @endif>B</option>
 			  <option value='C' @if($Hotel->version=='C') selected="" @endif>C</option>
@@ -148,14 +148,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">C版</span>
 					  </div>
-					  <input id="fees_c" name="fees_c" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c}}">%
+					  <input id="fees_c" name="fees_c" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c_bonus}}">%
+					  <input id="fees_c_bonus" name="fees_c_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_c_bonus}}">%
 					</div>
 				</div>
 		    </td>
@@ -185,14 +185,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">AB版</span>
 					  </div>
-					  <input id="fees_ab" name="fees_ab" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab}}">%
+					  <input id="fees_ab" name="fees_ab" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab_bonus}}">%
+					  <input id="fees_ab_bonus" name="fees_ab_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_ab_bonus}}">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -223,14 +223,14 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">D版</span>
 					  </div>
-					  <input id="fees_d" name="fees_d" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d}}">%
+					  <input id="fees_d" name="fees_d" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d}}">%
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-4" style="padding-left: 15px;">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">紅利</span>
 					  </div>
-					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d_bonus}}">%
+					  <input id="fees_d_bonus" name="fees_d_bonus" type="text" class="form-control ver_chg" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->fees_d_bonus}}">%
 					</div>
 				</div>
 				<!-- ** -->
@@ -675,6 +675,24 @@
 			</div>
 			<input type="text" class="form-control" id="ab_url" name="ab_url" placeholder="" value="{{$Hotel->ab_url}}">
 		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-6">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">D版顯示電話</span>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel0" value="0" name="d_display_tel"@if($Hotel->d_display_tel==0) checked="checked" @endif>
+				<label for="d_display_tel0">不顯示</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel1" value="1" name="d_display_tel"@if($Hotel->d_display_tel==1) checked="checked" @endif>
+				<label for="d_display_tel1">顯示飯店電話</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="d_display_tel2" value="2" name="d_display_tel"@if($Hotel->d_display_tel==2) checked="checked" @endif>
+				<label for="d_display_tel2">顯示awugo電話</label>
+			</div>
+		</div>
 	</div>
 	<!-- ** -->
 	<div class="row">
@@ -859,6 +877,80 @@
 @section('custom_script')
 //現存級別
 var level_global=1;
+	//版本切換
+	function chg_ver(obj){
+		if($(obj).val() !='-1'){
+			ver_close();
+			switch($(obj).val()){
+				case 'A':
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'B':
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					break;
+				case 'D':
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					break;
+				case 'A,CA':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'B,C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'BG,G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+				case 'D,C':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'DG,G':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					break;
+				case 'DA,CA':
+				case 'A,CA,DA':
+				case 'B,C,D':
+				case 'BG,G,DG':
+					$('#fees_c').prop('disabled',false);
+					$('#fees_c_bonus').prop('disabled',false);
+					$('#fees_d').prop('disabled',false);
+					$('#fees_d_bonus').prop('disabled',false);
+					$('#fees_ab').prop('disabled',false);
+					$('#fees_ab_bonus').prop('disabled',false);
+					break;
+			}
+		}else{
+			ver_close();
+		}
+	}
+	function ver_close(){
+		 $('.ver_chg').prop('disabled',true);
+	}
 	//飯店房間數量同步乘以10到排序值
 	function room2sort(){
 		count=parseInt($('#type_room').val())*10;
@@ -991,6 +1083,10 @@ $(window).resize(function(){
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//預設將版本傭金項目關閉
+	ver_close();
+	$('#ver').change();
+	//拉天花板
 	$("body").css("margin-top",$("nav").height()+20);
 	//停用完成跳出確認
 	@if(!is_null(session()->get('controll_back_msg')))
