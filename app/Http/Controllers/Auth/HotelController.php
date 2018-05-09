@@ -159,6 +159,7 @@ class HotelController extends Controller
         $hotel->contact_line=$request['contact_line'];                  //聯絡人Line
         $hotel->contact_wechat=$request['contact_wechat'];              //聯絡人wechat
         $hotel->contact_email=$request['contact_email'];                //聯絡人email
+        $hotel->contact_text=$request['contact_text'];                  //無限聯絡人csv
         $hotel->manage_url=$request['manage_url'];                      //飯店管理後台網址
         $hotel->manage_surl=$request['manage_surl'];                    //飯店管理後台簡易網址
         $hotel->c_url=$request['c_url'];                                //C版網址
@@ -223,7 +224,25 @@ class HotelController extends Controller
         $Addr_level3 =Areas::where('area_parent',$Hotel->area_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //三級區域
         //帶入已選行政區域
         $Login_addr_level3 =Areas::where('area_parent',$Hotel->login_addr_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //三級區域
-
+        //切聯絡人csv
+        $contact_column_count =7;
+        $contact_arr =explode(',', $Hotel->contact_text);
+        $contact_arr_rang =floor(count($contact_arr)/$contact_column_count)-1;  //計算機本維度(減一去除空行)
+        $Contact_Array =array();
+        //切割生成多維聯絡人陣列
+        for($i=0; $i<$contact_arr_rang; $i++){
+            for($j=0; $j<$contact_column_count; $j++){
+                if($i==0){
+                    $Contact_Array[$i][$j] = $contact_arr[$j];
+                }else{
+                    $Contact_Array[$i][$j] = $contact_arr[($j+($i*$contact_column_count))];
+                }
+                
+            }
+        }
+        // print_r($Contact_Array);
+        // exit;
+        //
         $binding =[
             'Title' => $this->menu_item_text,
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
@@ -234,6 +253,7 @@ class HotelController extends Controller
             'Hotel' => $Hotel,
             'Addr_level3' => $Addr_level3,
             'Login_addr_level3' => $Login_addr_level3,
+            'Contact' => $Contact_Array,
         ];
         return view('auth.hotel_edit', $binding);
     }
@@ -321,6 +341,7 @@ class HotelController extends Controller
         $hotel->contact_line=$request['contact_line'];                  //聯絡人Line
         $hotel->contact_wechat=$request['contact_wechat'];              //聯絡人wechat
         $hotel->contact_email=$request['contact_email'];                //聯絡人email
+        $hotel->contact_text=$request['contact_text'];                  //無限聯絡人csv
         $hotel->manage_url=$request['manage_url'];                      //飯店管理後台網址
         $hotel->manage_surl=$request['manage_surl'];                    //飯店管理後台簡易網址
         $hotel->c_url=$request['c_url'];                                //C版網址

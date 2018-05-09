@@ -25,7 +25,7 @@ class Hotel extends Model
         'fees_roll_bonus','track','track_comm','checkout','invoice_type','coordinate',
         'local_police','local_police_comm','seo_title','seo_descript','seo_keyword','contact_name',
         'contact_job','contact_tel','contact_mobile','contact_line','contact_wechat',
-        'contact_email','display_tel','manage_url','manage_surl','c_url','c_surl','d_url','d_surl',
+        'contact_email', 'contact_text','display_tel','manage_url','manage_surl','c_url','c_surl','d_url','d_surl',
         'd_enable','ab_url','login_name','login_com','login_job','login_tel','login_mobile',
         'login_email','login_id','login_passwd','login_addr_level1','login_addr_level2',
         'login_addr_level3','login_addr_level4','login_is_group','login_group_name',

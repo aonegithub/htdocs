@@ -28,7 +28,7 @@
 	</div>
 @endif
 
-<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_edit/{{$Hotel->nokey}}">
+<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_edit/{{$Hotel->nokey}}" onsubmit="return valid(this);">
 	{{ csrf_field() }}
 	<div class="row">
 		<div class="input-group input-group-sm col-md-6">
@@ -584,30 +584,56 @@
 		    <th style="background-color: #c9fcb3;height:45px;text-align: center;width:10%;">微信</th>
 		    <th style="background-color: #c9fcb3;height:45px;text-align: center;width:35%;">信箱</th>
 		  </tr>
+		  @foreach($Contact as $key => $contact_item)
 		  <tr>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="{{$Hotel->contact_name}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="{{ $contact_item[0] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="{{$Hotel->contact_job}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="{{ $contact_item[1] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="{{$Hotel->contact_tel}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="{{ $contact_item[2] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="{{$Hotel->contact_mobile}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="{{ $contact_item[3] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="{{$Hotel->contact_line}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="{{ $contact_item[4] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="{{$Hotel->contact_wechat}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="{{ $contact_item[5] }}">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="{{$Hotel->contact_email}}">
+		    	<input type="text" class="form-control clone_contact" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="{{ $contact_item[6] }}">
+		    </td>
+		  </tr>
+		  @endforeach
+		  <tr id="contact_row">
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="">
+		    </td>
+		    <td style="height:45px;">
+		    	<input type="text" class="form-control clone_contact" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="">
 		    </td>
 		  </tr>
 		</table>
+		<textarea id="contact_text" name="contact_text" style="width: 500px;height: 600px;display:none;"></textarea>
 	</div>
 	<!-- ** -->
 	<div class="row">
@@ -951,6 +977,54 @@ var level_global=1;
 	function ver_close(){
 		 $('.ver_chg').prop('disabled',true);
 	}
+	//送出驗證
+	function valid(form) {
+		var contact_text='';
+		
+		$('.clone_contact').each(function(){
+			contact_text +=$(this).val()+',';
+			$('#contact_text').val(contact_text);
+			//console.log(contact_text);
+		});
+		//
+		if($('#type_scale').val()=='-1'){
+			alert('飯店類型未選擇');
+			return false;
+		}
+		if(!($('#invoice0').prop('checked') || $('#invoice1').prop('checked') || $('#invoice2').prop('checked'))){
+			alert('開立發票未選擇');
+			return false;
+		}
+		if(!($('#credit_card0').prop('checked') || $('#credit_card1').prop('checked') || $('#credit_card2').prop('checked'))){
+			alert('現場刷卡項目未選擇');
+			return false;
+		}
+		if($('#ver').val()=='-1'){
+			alert('版本類型未選擇');
+			return false;
+		}
+		if(!($('#control1').prop('checked') || $('#control2').prop('checked'))){
+			alert('控管方式未選擇');
+			return false;
+		}
+		if(!($('#checkout0').prop('checked') || $('#checkout1').prop('checked'))){
+			alert('結帳方式未選擇');
+			return false;
+		}
+		if(!($('#invoice_type0').prop('checked') || $('#invoice_type1').prop('checked') || $('#invoice_type2').prop('checked'))){
+			alert('發票型態未選擇');
+			return false;
+		}
+		if($('#cooperation').val()=='-1'){
+			alert('合作種類未選擇');
+			return false;
+		}
+		if($('#tel1').val()=='+886'){
+			alert('飯店電話未填寫');
+			return false;
+		}
+		return true;
+	}
 	//飯店房間數量同步乘以10到排序值
 	function room2sort(){
 		count=parseInt($('#type_room').val())*10;
@@ -970,6 +1044,13 @@ var level_global=1;
 		}else{
 			$('#'+objID).prop('disabled',true);
 		}
+	}
+	//無限增加聯絡人
+	function cloneTr(obj){
+		objClone =$(obj).parent().parent().clone();
+		$(obj).removeAttr('onkeyup');
+		objClone.find('input').val("");
+		objClone.appendTo('.tg');
 	}
 	//切換三級選單取得郵遞區號
 	function chg_zip_code(obj,target){

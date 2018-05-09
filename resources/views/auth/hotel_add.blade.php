@@ -586,28 +586,29 @@
 		  </tr>
 		  <tr id="contact_row">
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
+		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
+		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
+		    	<input type="text" class="form-control clone_contact" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886">
+		    	<input type="text" class="form-control clone_contact" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
+		    	<input type="text" class="form-control clone_contact" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="">
+		    	<input type="text" class="form-control clone_contact" id="contact_wechat" name="contact_wechat" placeholder="請輸入微信" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="">
+		    	<input type="text" class="form-control clone_contact" id="contact_email" name="contact_email" placeholder="請輸入信箱" value="">
 		    </td>
 		  </tr>
 		</table>
+		<textarea id="contact_text" name="contact_text" style="width: 500px;height: 600px;display:none;"></textarea>
 	</div>
 	<!-- ** -->
 	<div class="row">
@@ -951,6 +952,14 @@ var level_global=1;
 	}
 	//送出驗證
 	function valid(form) {
+		var contact_text='';
+		
+		$('.clone_contact').each(function(){
+			contact_text +=$(this).val()+',';
+			$('#contact_text').val(contact_text);
+			//console.log(contact_text);
+		});
+		//
 		if($('#type_scale').val()=='-1'){
 			alert('飯店類型未選擇');
 			return false;
