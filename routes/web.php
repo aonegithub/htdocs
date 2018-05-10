@@ -48,6 +48,7 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::get('hotel_edit/{hotelkey}', 'Auth\HotelController@edit');
 			Route::post('hotel_edit/{hotelkey}', 'Auth\HotelController@editPost');
 			Route::post('hotel_disable/{hotelkey}', 'Auth\HotelController@disableAjax'); //異步關閉(ajax)
+			Route::get('hotel_browse/{hotelkey}', 'Auth\HotelController@browse');
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){

@@ -3,7 +3,7 @@
 @section('title', 'Page Expired')
 
 @section('message')
-    The page has expired due to inactivity.
+    此頁面安全性密鑰已經過期
     <br/><br/>
-    Please refresh and try again.
+    請重新整理或重新登入
 @stop

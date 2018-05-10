@@ -151,8 +151,8 @@
 		@yield('content')
 	</div>
 		<footer>
-				<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);">
-					<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">瀏覽數:00001／本日：00001／昨日：00001</span>
+				<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);clear: both;">
+					<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">今日:88　昨日:77　前日:88　總計:6500</span>
 				</div>
 			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司</p>
 		</footer>
@@ -178,6 +178,7 @@
 	</div>
 	<!-- jQuery331 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>

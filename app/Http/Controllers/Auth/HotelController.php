@@ -21,15 +21,52 @@ class HotelController extends Controller
     private $menu_item_text ='飯店管理';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 飯店管理預設清單
-    public function main($country){
-        // $queryString =  Request::only([ 'id', 'author', 'title', 'order', 'sort' ]); 
+    public function main(Request $request,$country){
+        //生成查詢字串
+        $state_q =Request::input('state');              //狀態
+        $ver_q =Request::input('ver');                  //版本
+        $country_q =Request::input('country');          //國家
+        $area2_q =Request::input('area2');              //縣市
+        $area3_q =Request::input('area3');              //區域
+        $ctrl_q =Request::input('ctrl');                //控管
+        $c_type_q =Request::input('c_type');            //合作
+        $room_count_q =Request::input('room_count');    //房間
+        $search_q =Request::input('search');            //關鍵字
+        $queryString =['state'=>$state_q,'ver'=>$ver_q,'country'=>$country_q,'area2'=>$area2_q,'area3'=>$area3_q,'ctrl'=>$ctrl_q,'c_type'=>$c_type_q,'room_count'=>$room_count_q,'search'=>$search_q];
+        // 資料庫用
+        $state_s =($state_q==null ||$state_q=='-1')?'%':$state_q;                           //狀態
+        $ver_s =($ver_q==null ||$ver_q=='-1')?'%':$ver_q;                                   //版本
+        $country_s =($country_q==null ||$country_q=='-1')?'%':$country_q;                   //國家
+        $area2_s =($area2_q==null ||$area2_q=='-1')?'%':$area2_q;                           //縣市
+        $area3_s =($area3_q==null ||$area3_q=='-1')?'%':$area3_q;                           //區域
+        $ctrl_s =($ctrl_q==null ||$ctrl_q=='-1')?'%':$ctrl_q;                               //控管
+        $c_type_s =($c_type_q==null ||$c_type_q=='-1')?'%':$c_type_q;                       //合作種類
+        $room_count_s =($room_count_q==null ||$room_count_q=='-1')?'%':$room_count_q;       //房間數量
+        $room_arr =array();
+        if($room_count_s =='100'){
+            $room_arr=array(100,999);
+        }else if($room_count_s =='50-99'){
+            $room_arr=array(50,99);
+        }else if($room_count_s =='15-49'){
+            $room_arr=array(15,49);
+        }else if($room_count_s =='1-14'){
+            $room_arr=array(1,14);
+        }else{
+            $room_arr=array(1,999);
+        }
+        $search_s =($search_q==null ||$search_q=='-1')?'%':$search_q;                       //關鍵字
+               // exit;
         //讀取飯店清單
         $page_row = 5;
-        $Hotel =Hotel::leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')
-        ->select('hotel_list.*' ,'manager_list.name as m_name', 'manager_list.department')
-        ->OrderBy('hotel_list.state','asc')->OrderBy('hotel_list.nokey','desc')->paginate($page_row);
+        // $Hotel =Hotel::leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')
+        // ->select('hotel_list.*' ,'manager_list.name as m_name', 'manager_list.department')
+        // ->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
         // $Hotel = DB::table('hotel_list')->leftJoin('manager_list', 'manager_list.id', '=', 'hotel_list.created_manager_id')->OrderBy('state','asc')->OrderBy('hotel_list.nokey','desc')->paginate($page_row);
-        // $Hotel = Hotel::OrderBy('state','asc')->OrderBy('nokey','desc')->paginate($page_row);
+        $Hotel = Hotel::where('state','LIKE',$state_s)->where('version','LIKE',$ver_s)->where('area_level1','LIKE',$country_s)->where('area_level2','LIKE',$area2_s)->where('area_level3','LIKE',$area3_s)->where('control','LIKE',$ctrl_s)->where('control','LIKE',$ctrl_s)->where('cooperation','LIKE',$c_type_s)->whereBetween('type_room',$room_arr)->where('name','LIKE','%'.$search_s.'%')->OrderBy('nokey','desc')->paginate($page_row)->appends($queryString);
+        
+        //帶入縣市
+        //二級清單
+        $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //二級區域
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -40,6 +77,8 @@ class HotelController extends Controller
             'Auths' => $auth_array,
             'Country' => $country,
             'Hotels' => $Hotel,
+            'Areas_level2' => $Areas_level2,
+            'QueryArray' => $queryString,
         ];
         return view('auth.hotel_list', $binding);
     }
@@ -378,6 +417,66 @@ class HotelController extends Controller
         $hotel->save();
 
         return redirect()->to('/'. $country .'/auth/manager/hotel_list');
+    }
+// 飯店瀏覽介面View
+    public function browse($country,$hotelKey){
+        $auth_key ='3'; //權限碼
+        //讀取管理者資訊
+        $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+        $auth_array =explode(',', session()->get('manager_auth'));
+        if(!in_array($auth_key,$auth_array)){
+            $errors =['權限不足返回'];
+            $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
+            $binding =[
+                'Title' => $this->menu_item_text,
+                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Manager' => $Manager,
+                'Country' => $country,
+            ];
+            return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
+            //exit;
+        }
+        // 讀取飯店資料
+        $Hotel =Hotel::where('nokey',$hotelKey)->firstOrFail();
+        //帶入縣市
+        //二級清單
+        $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //二級區域
+        //帶入已選行政區域(飯店地址)
+        $Addr_level3 =Areas::where('area_parent',$Hotel->area_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //三級區域
+        //帶入已選行政區域
+        $Login_addr_level3 =Areas::where('area_parent',$Hotel->login_addr_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //三級區域
+        //切聯絡人csv
+        $contact_column_count =7;
+        $contact_arr =explode(',', $Hotel->contact_text);
+        $contact_arr_rang =floor(count($contact_arr)/$contact_column_count)-1;  //計算機本維度(減一去除空行)
+        $Contact_Array =array();
+        //切割生成多維聯絡人陣列
+        for($i=0; $i<$contact_arr_rang; $i++){
+            for($j=0; $j<$contact_column_count; $j++){
+                if($i==0){
+                    $Contact_Array[$i][$j] = $contact_arr[$j];
+                }else{
+                    $Contact_Array[$i][$j] = $contact_arr[($j+($i*$contact_column_count))];
+                }
+                
+            }
+        }
+        // print_r($Hotel->contact_text);
+        // exit;
+        //
+        $binding =[
+            'Title' => $this->menu_item_text,
+            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+            'Manager' => $Manager,
+            'Auths' => $auth_array,
+            'Country' => $country,
+            'Areas_level2' => $Areas_level2,
+            'Hotel' => $Hotel,
+            'Addr_level3' => $Addr_level3,
+            'Login_addr_level3' => $Login_addr_level3,
+            'Contact' => $Contact_Array,
+        ];
+        return view('auth.hotel_browse', $binding);
     }
 //Ajax 關閉飯店
     public function disableAjax($country,$hotelKey){

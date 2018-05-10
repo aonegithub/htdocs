@@ -84,7 +84,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">官方網站</span>
 		  </div>
-		  <input type="text" id="url" name="url" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->url}}">
+		  <input type="text" id="url" name="url" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->url}}" placeholder="輸入完整網址">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -547,8 +547,8 @@
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
 			</div>
 			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
-			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
-			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-5" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
+			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
+			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-4" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
 			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
 		</div>
 		<!-- ** -->
@@ -617,10 +617,10 @@
 		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control clone_contact" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886">
+		    	<input type="text" class="form-control clone_contact" id="contact_tel" name="contact_tel" placeholder="請輸入電話" value="+886-">
 		    </td>
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control clone_contact" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886">
+		    	<input type="text" class="form-control clone_contact" id="contact_mobile" name="contact_mobile" placeholder="請輸入手機" value="+886-">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control clone_contact" id="contact_line" name="contact_line" placeholder="請輸入LineID" value="">
@@ -829,7 +829,7 @@
 						    <label for="login_is_group1">是</label>
 						</div>
 						<input type="text" class="form-control" id="login_group_name" name="login_group_name" placeholder="集團名稱" value="{{$Hotel->login_group_name}}">與
-						<input type="text" class="form-control" id="login_group_url" name="login_group_url" placeholder="" value="{{$Hotel->login_group_url}}">
+						<input type="text" class="form-control" id="login_group_url" name="login_group_url" placeholder="輸入完整網址" value="{{$Hotel->login_group_url}}">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm col-md-6">
@@ -864,7 +864,7 @@
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">瀏覽人數</span>
 			</div>
-			<span class="form-control">今日:88／昨日:77／前日:88／總計:6500</span>
+			<span class="form-control">今日:88　昨日:77　前日:88　總計:6500</span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -1019,7 +1019,7 @@ var level_global=1;
 			alert('合作種類未選擇');
 			return false;
 		}
-		if($('#tel1').val()=='+886'){
+		if($('#tel1').val()=='+886-'){
 			alert('飯店電話未填寫');
 			return false;
 		}

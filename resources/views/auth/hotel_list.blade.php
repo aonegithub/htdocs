@@ -31,76 +31,79 @@
 <div class="row search_row">
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="state" name="state">
-		  <option value='-1'>狀態</option>
-		  <option value='0'>上線</option>
-		  <option value='1'>下線</option>
-		  <option value='2'>關閉</option>
+		  <option value='-1'@if($QueryArray['state']=='-1') selected="" @endif>狀態</option>
+		  <option value='0'@if($QueryArray['state']=='0') selected="" @endif>上線</option>
+		  <option value='1'@if($QueryArray['state']=='1') selected="" @endif>下線</option>
+		  <option value='2'@if($QueryArray['state']=='2') selected="" @endif>關閉</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="ver" name="ver">
-		  <option value='-1'>版本</option>
-		  <option value='A'>A</option>
-		  <option value='B'>B</option>
-		  <option value='C'>C</option>
-		  <option value='D'>D</option>
-		  <option value='G'>G</option>
-		  <option value='A,CA'>A,CA</option>
-		  <option value='B,C'>B,C</option>
-		  <option value='BG,G'>BG,G</option>
-		  <option value='D,C'>D,C</option>
-		  <option value='DG,G'>DG,G</option>
-		  <option value='DA,CA'>DA,CA</option>
-		  <option value='A,CA,DA'>A,CA,DA</option>
-		  <option value='B,C,D'>B,C,D</option>
-		  <option value='BG,G,DG'>BG,G,DG</option>
+		  <option value='-1'@if($QueryArray['ver']=='-1') selected="" @endif>版本</option>
+		  <option value='A'@if($QueryArray['ver']=='A') selected="" @endif>A</option>
+		  <option value='B'@if($QueryArray['ver']=='B') selected="" @endif>B</option>
+		  <option value='C'@if($QueryArray['ver']=='C') selected="" @endif>C</option>
+		  <option value='D'@if($QueryArray['ver']=='D') selected="" @endif>D</option>
+		  <option value='G'@if($QueryArray['ver']=='G') selected="" @endif>G</option>
+		  <option value='A,CA'@if($QueryArray['ver']=='A,CA') selected="" @endif>A,CA</option>
+		  <option value='B,C'@if($QueryArray['ver']=='B,C') selected="" @endif>B,C</option>
+		  <option value='BG,G'@if($QueryArray['ver']=='BG,G') selected="" @endif>BG,G</option>
+		  <option value='D,C'@if($QueryArray['ver']=='D,C') selected="" @endif>D,C</option>
+		  <option value='DG,G'@if($QueryArray['ver']=='DG,G') selected="" @endif>DG,G</option>
+		  <option value='DA,CA'@if($QueryArray['ver']=='DA,CA') selected="" @endif>DA,CA</option>
+		  <option value='A,CA,DA'@if($QueryArray['ver']=='A,CA,DA') selected="" @endif>A,CA,DA</option>
+		  <option value='B,C,D'@if($QueryArray['ver']=='B,C,D') selected="" @endif>B,C,D</option>
+		  <option value='BG,G,DG'@if($QueryArray['ver']=='BG,G,DG') selected="" @endif>BG,G,DG</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="country" name="country">
-		  <option value='-1'>國家</option>
-		  <option value='1'>台灣</option>
+		  <option value='-1'@if($QueryArray['country']=='-1') selected="" @endif>國家</option>
+		  <option value='1'@if($QueryArray['country']=='1') selected="" @endif>台灣</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
-		<select class="form-control" id="area1" name="area1">
+		<select class="form-control" id="area2" name="area2" onchange="chg_area(this,2)">
 		  <option value='-1'>地區/縣市</option>
+		  @foreach($Areas_level2 as $key=>$city)
+		  <option value='{{$city->nokey}}'@if($QueryArray['area2']==$city->nokey) selected="" @endif>{{$city->area_name}}</option>
+		  @endforeach
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
-		<select class="form-control" id="area2" name="area2">
+		<select class="form-control" id="area3" name="area3">
 		  <option value='-1'>鄉鎮/區</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="ctrl" name="ctrl">
-		  <option value='-1'>控管</option>
-		  <option value='0'>立即訂房</option>
-		  <option value='1'>客服訂房</option>
+		  <option value='-1'@if($QueryArray['ctrl']=='-1') selected="" @endif>控管</option>
+		  <option value='0'@if($QueryArray['ctrl']=='0') selected="" @endif>立即訂房</option>
+		  <option value='1'@if($QueryArray['ctrl']=='1') selected="" @endif>客服訂房</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="c_type" name="c_type">
-		  <option value='-1'>合作種類</option>
-		  <option value='合約'>合約</option>
-		  <option value='住宿卷'>住宿卷</option>
-		  <option value='約卷'>約卷</option>
+		  <option value='-1'@if($QueryArray['c_type']=='1') selected="" @endif>合作種類</option>
+		  <option value='合約'@if($QueryArray['c_type']=='合約') selected="" @endif>合約</option>
+		  <option value='住宿卷'@if($QueryArray['c_type']=='住宿卷') selected="" @endif>住宿卷</option>
+		  <option value='約卷'@if($QueryArray['c_type']=='約卷') selected="" @endif>約卷</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
 		<select class="form-control" id="room_count" name="room_count">
-		  <option value='-1'>房間數量</option>
-		  <option value='100'>100以上</option>
-		  <option value='50-99'>50-99</option>
-		  <option value='15-49'>15-49</option>
-		  <option value='1-14'>1-14</option>
+		  <option value='-1'@if($QueryArray['room_count']=='-1') selected="" @endif>房間數量</option>
+		  <option value='100'@if($QueryArray['room_count']=='100') selected="" @endif>100以上</option>
+		  <option value='50-99'@if($QueryArray['room_count']=='50-99') selected="" @endif>50-99</option>
+		  <option value='15-49'@if($QueryArray['room_count']=='15-49') selected="" @endif>15-49</option>
+		  <option value='1-14'@if($QueryArray['room_count']=='1-14') selected="" @endif>1-14</option>
 		</select>
 	</div>
 	<div class="col-md-2 search-padding">
-		<input type="text" class="form-control" id="search" name="search" placeholder="關鍵字搜尋" value="">
+		<input type="text" class="form-control" id="search" name="search" placeholder="關鍵字搜尋" value="{{$QueryArray['search']}}">
 	</div>
 	<div class="col-md-1 search-padding">
-		<span class="btn btn-secondary" style="width:100%;">搜尋</span>
+		<a href="javascript:search()" class="btn btn-secondary" style="width:100%;">搜尋</a>
 	</div>
 	<div class="col-md-1 search-padding">
 		<a class="btn btn-secondary" style="width:100%;" href="hotel_add">新增</a>
@@ -136,8 +139,8 @@
 			@else
 				<tr style="color:blue">
 	      	@endif
-		      <th scope="row">{{ sprintf("%05d",$hotel->nokey) }}</th>
-		      <td>{{ $hotel->name }}</td>
+		      <th scope="row">{{ $hotel->nokey }}</th>
+		      <td><a href="hotel_browse/{{ $hotel->nokey }}">{{ $hotel->name }}</a></td>
 		      <td>
 		      	@if($hotel->state==0)
 					上線
@@ -159,26 +162,14 @@
 		      <td>{{ $hotel->version }}</td>
 		      <td>--</td>
 		      <td>
-		      	@if($hotel->version=='CA')
 					{{$hotel->fees_c}}
-		      	@elseif($hotel->version=='AB')
-					{{$hotel->fees_ab}}
-				@else
-					{{$hotel->fees_d}}
-		      	@endif
 		      </td>
 		      <td>
-		      	@if($hotel->version=='CA')
 					{{$hotel->fees_c_bonus}}
-		      	@elseif($hotel->version=='AB')
-					{{$hotel->fees_ab_bonus}}
-				@else
-					{{$hotel->fees_d_bonus}}
-		      	@endif
 		      </td>
 		      <td>--</td>
 		      <td>{{$hotel->type_room}}</td>
-		      <td>--</td>
+		      <td>{{$hotel->cooperation}}</td>
 		      <td>
 		      	@if($hotel->control==0)
 					立即訂房
@@ -186,7 +177,7 @@
 					客服訂房
 		      	@endif
 		      </td>
-		      <td>--</td>
+		      <td>權限</td>
 		      <td>
 		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-secondary">修改</a>
 		      	<a href="javascript:disableHotel({{ $hotel->nokey }})" class="btn btn-secondary">關閉</a>
@@ -196,7 +187,8 @@
 	  </tbody>
 	</table>
 </div>
-<div id="nav_pagerow">
+
+<div id="nav_pagerow" class="row">
 {{ $Hotels->links('vendor.pagination.bootstrap-4') }}
 </div>
 
@@ -224,7 +216,71 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+// 搜尋組合字串
+	function search(){
+		qString='';
+		qString +='?state='+$('#state :selected').val();			//狀態
+		qString +='&ver='+$('#ver :selected').val();				//版本
+		qString +='&country='+$('#country :selected').val();		//國家
+		qString +='&area2='+$('#area2 :selected').val();			//縣市
+		qString +='&area3='+$('#area3 :selected').val();			//鄉鎮區域
+		qString +='&ctrl='+$('#ctrl :selected').val();				//控管
+		qString +='&c_type='+$('#c_type :selected').val();			//合作種類
+		qString +='&room_count='+$('#room_count :selected').val();	//房間數量
+		qString +='&search='+$('#search').val();					//飯店名稱
+		window.location.href=qString;
+	}
+// 切換選項時，level為該選項之級別值
+	function chg_area(sel_obj, level){
+		$("#area"+(level+1)).prop('disabled', true);
+		$("#area"+(level+1)+" option").remove();
+		sel_val =$(sel_obj).val();
 
+		if(sel_val == '-1'){
+			sel_val =$("#area"+(level-1)).val();
+			$("#area"+(level+1)).append($('<option>', {
+				    value: -1,
+				    text: '鄉鎮/區域'
+				}));
+			$("#area"+(level+1)).prop('disabled', false);
+		}
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'area_get',
+	        data: {level:sel_val},
+	        success: function(data) {
+	        	//填入下一級選項
+	        	fill_area(data,level);
+	    	}
+	    });
+	}
+	
+	//填入下級選項
+	function fill_area(data, level){
+		if(level <=4){
+			$("#area"+(level+1)+" option[value!='-1']").remove();
+			$("#area"+(level+1)).append($('<option>', {
+				    value: -1,
+				    text: '區域'
+				}));
+			if($("#area"+level).val() !='-1'){
+				for(i=0; i< data.length; i++){
+					$("#area"+(level+1)).append($('<option>', {
+					    value: data[i]['nokey'],
+					    text: data[i]['area_name']
+					}));
+				}
+			}
+			$("#area"+(level+1)).prop('disabled', false);
+			//如果區域已選，則自動選取區域
+			if({{$QueryArray['area3']}} !=-1){
+				$("#area"+(level+1)).val({{$QueryArray['area3']}}).change();
+			}
+		}
+	}
 //快捷關閉上線
 	function disableHotel(key){
 		<!-- $('#'+target).prop('disabled', true); -->
@@ -252,8 +308,10 @@
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 	$("body").css("margin-top",$("nav").height()+20);
-	//觸發縣市選單
-	$('#area_level2').val(-1).change();
+	//縣市不等於預設，則觸發
+	if($('#area2').val() !=-1){
+		$('#area2').val({{$QueryArray['area2']}}).change();
+	}
 	//停用完成跳出確認
 	@if(!is_null(session()->get('controll_back_msg')))
 		$('#okAlert').modal("toggle");
