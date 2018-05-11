@@ -552,7 +552,7 @@
 			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
+		<div class="input-group input-group-sm col-md-2">
 		  <div class="input-group-prepend">
 		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
 		  </div>
@@ -561,6 +561,24 @@
 			  <option value='住宿卷'@if($Hotel->cooperation=='住宿卷') selected="" @endif>住宿卷</option>
 			  <option value='約卷'@if($Hotel->cooperation=='約卷') selected="" @endif>約卷</option>
 		  </select>
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-4">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
+		  </div>
+		  <div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday0" value="0" name="holiday"@if($Hotel->holiday==0) checked="checked" @endif>
+				<label for="holiday0">未設</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday1" value="1" name="holiday"@if($Hotel->holiday==1) checked="checked" @endif>
+				<label for="holiday1">比照週六房價</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday2" value="2" name="holiday"@if($Hotel->holiday==2) checked="checked" @endif>
+				<label for="holiday2">高於周六房價</label>
+			</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -807,7 +825,7 @@
 					    <div class="input-group-prepend">
 						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">密碼</span>
 						</div>
-						<input type="text" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
+						<input type="password" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
 					</div>
 		    	</div>
 		    </td>

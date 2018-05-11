@@ -35,7 +35,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <span class="form-control" style="border: 0px;">@if($Hotel->name !='') {{$Hotel->name}} @endif</span>
+		  <span class="form-control" style="border: 0px;color:red;">@if($Hotel->name !='') {{$Hotel->name}} @endif</span>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -63,7 +63,7 @@
 		  <div class="input-group-prepend" style="@if($Hotel->url =='') display:none; @endif">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">官方網站</span>
 		  </div>
-		  <span class="form-control" style="border: 0px;">@if($Hotel->url !='') {{$Hotel->url}} @endif</span>
+		  <span class="form-control" style="border: 0px;"><a href="{{$Hotel->url}}" target="_blank">{{$Hotel->url}}</a></span>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -279,7 +279,7 @@
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3">
-		  <input id="app_wechat" name="app_wechat" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="WeChat" value="{{$Hotel->app_wechat}}" style="@if($Hotel->app_wechat=='')display:none;@endif">
+		  <span class="form-control" style="border: 0px;">{{$Hotel->app_wechat}}</span>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
@@ -517,14 +517,29 @@
 			{{$Hotel->cooperation}}
 		  </span>
 		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
+		  </div>
+		  <span class="form-control col-md-3" style="border: 0px;">
+		  	@if($Hotel->holday ==0)
+				未設
+		  	@elseif($Hotel->holday ==1)
+				比照周六房價
+		  	@else
+				高於周六房價
+		  	@endif
+		  </span>
+		</div>
 	</div>
 	<!-- ** -->
 	<div class="row">
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-12">
 			<div class="input-group-prepend" style="border: 0px;@if($Hotel->point=='')display:none;@endif">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店優點</span>
 			</div>
-			<span class="form-control col-md-6" style="border: 0px;">
+			<span class="form-control col-md-12" style="border: 0px;">
 				{{$Hotel->point}}
 			  </span>
 		</div>
@@ -781,7 +796,11 @@
 							@endif
 						</span>
 						<span class="form-control" style="border: 0px;@if($Hotel->login_is_group==0)display:none;@endif">
-							<a href="{{$Hotel->login_group_url}}" target="_blank">{{$Hotel->login_group_name}}</a>
+							@if($Hotel->login_group_url !='')
+								<a href="{{$Hotel->login_group_url}}" target="_blank">{{$Hotel->login_group_name}}</a>
+							@else
+								{{$Hotel->login_group_name}}
+							@endif
 						</span>
 					</div>
 					<!-- ** -->
@@ -822,7 +841,14 @@
 		</div>
 	</div>
 	<!-- ** -->
-	<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-secondary btn-lg btn-block" style="margin-top: 30px;">修改資料</a>
+	<div class="row">
+		<a href="javascript:window.history.go(-1);" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:7%;margin-right:5px;">上一頁</a>
+		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">修改資料</a>
+		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">特殊期間</a>
+		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">比價表</a>
+		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">合約書</a>
+	</div>
+	
 </form>
 
 @endsection

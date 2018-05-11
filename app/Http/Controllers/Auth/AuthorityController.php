@@ -33,7 +33,7 @@ class AuthorityController extends Controller
             //exit;
         }
         // 每頁筆數
-        $page_row =3;
+        $page_row =20;
         $Manager_pagerow =Managers::OrderBy('enable','desc')->OrderBy('nokey','desc')->paginate($page_row);
 
         $binding =[

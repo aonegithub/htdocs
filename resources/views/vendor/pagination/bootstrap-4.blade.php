@@ -1,3 +1,4 @@
+<div style="float:left;">
 @if ($paginator->hasPages())
     <ul class="pagination">
         {{-- Previous Page Link --}}
@@ -34,3 +35,5 @@
         @endif
     </ul>
 @endif
+</div>
+<div style="float:left;padding-top: 6px;padding-left: 15px;">共計：{{ $paginator->total() }}筆</div>

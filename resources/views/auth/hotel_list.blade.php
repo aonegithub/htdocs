@@ -99,15 +99,22 @@
 		  <option value='1-14'@if($QueryArray['room_count']=='1-14') selected="" @endif>1-14</option>
 		</select>
 	</div>
-	<div class="col-md-2 search-padding">
+	<div class="col-md-1 search-padding">
+		<select class="form-control" id="holiday" name="holiday">
+		  <option value='-1'@if($QueryArray['holiday']=='-1') selected="" @endif>連假房價</option>
+		  <option value='0'@if($QueryArray['holiday']=='0') selected="" @endif>未設</option>
+		  <option value='1'@if($QueryArray['holiday']=='1') selected="" @endif>比照週六</option>
+		  <option value='2'@if($QueryArray['holiday']=='2') selected="" @endif>高於周六</option>
+		</select>
+	</div>
+	<div class="col-md-1 search-padding" style="min-width: 194px;">
 		<input type="text" class="form-control" id="search" name="search" placeholder="關鍵字搜尋" value="{{$QueryArray['search']}}">
 	</div>
-	<div class="col-md-1 search-padding">
-		<a href="javascript:search()" class="btn btn-secondary" style="width:100%;">搜尋</a>
+	<div class="col-md-1 search-padding" style="min-width: 135px;">
+		<a href="javascript:search()" class="btn btn-primary">搜尋</a>
+		<a class="btn btn-primary" href="hotel_add">新增</a>
 	</div>
-	<div class="col-md-1 search-padding">
-		<a class="btn btn-secondary" style="width:100%;" href="hotel_add">新增</a>
-	</div>
+	
 </div>
 <!-- 清單內容 -->
 <div class="row">
@@ -132,15 +139,17 @@
 	  </thead>
 	  <tbody class="list_tr">
 	  	@foreach($Hotels as $key => $hotel)
-		  	@if($hotel->state==2)
-				<tr style="color:#aeaeae!important">
-	      	@elseif($hotel->state==1)
-				<tr>
-			@else
-				<tr style="color:blue">
-	      	@endif
+			<tr>
 		      <th scope="row">{{ $hotel->nokey }}</th>
-		      <td><a href="hotel_browse/{{ $hotel->nokey }}">{{ $hotel->name }}</a></td>
+		      <td>
+		      	@if($hotel->state==2)
+					<a href="hotel_browse/{{ $hotel->nokey }}" style="color:#aeaeae">{{ $hotel->name }}</a>
+		      	@elseif($hotel->state==1)
+					<a href="hotel_browse/{{ $hotel->nokey }}" style="color:#000">{{ $hotel->name }}</a>
+				@else
+					<a href="hotel_browse/{{ $hotel->nokey }}" style="color:blue">{{ $hotel->name }}</a>
+		      	@endif
+		      </td>
 		      <td>
 		      	@if($hotel->state==0)
 					上線
@@ -172,15 +181,15 @@
 		      <td>{{$hotel->cooperation}}</td>
 		      <td>
 		      	@if($hotel->control==0)
-					立即訂房
+					<span style="color: #dba502">立即訂房</span>
 				@else
 					客服訂房
 		      	@endif
 		      </td>
-		      <td>權限</td>
+		      <td><a href="#">權限</a></td>
 		      <td>
-		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-secondary">修改</a>
-		      	<a href="javascript:disableHotel({{ $hotel->nokey }})" class="btn btn-secondary">關閉</a>
+		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-primary">修改</a>
+		      	<a href="javascript:disableHotel({{ $hotel->nokey }})" class="btn btn-primary">關閉</a>
 		      </td>
 	    </tr>
 	    @endforeach
@@ -198,7 +207,7 @@
 	/** 分頁樣式 */
 	#nav_pagerow{
 		float: right;
-		left: -50%;
+		left: -35%;
 		position: relative;
 	}
 	#nav_pagerow > ul{
@@ -216,6 +225,17 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+//修改URI參數
+function updateQueryStringParameter(uri, key, value) {
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    return uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    return uri + separator + key + "=" + value;
+  }
+}
 // 搜尋組合字串
 	function search(){
 		qString='';
@@ -227,6 +247,7 @@
 		qString +='&ctrl='+$('#ctrl :selected').val();				//控管
 		qString +='&c_type='+$('#c_type :selected').val();			//合作種類
 		qString +='&room_count='+$('#room_count :selected').val();	//房間數量
+		qString +='&holiday='+$('#holiday :selected').val();		//連假房價
 		qString +='&search='+$('#search').val();					//飯店名稱
 		window.location.href=qString;
 	}
@@ -276,7 +297,7 @@
 			}
 			$("#area"+(level+1)).prop('disabled', false);
 			//如果區域已選，則自動選取區域
-			if({{$QueryArray['area3']}} !=-1){
+			if('{{$QueryArray['area3']}}' !=-1 && '{{$QueryArray['area3']}}' !=''){
 				$("#area"+(level+1)).val({{$QueryArray['area3']}}).change();
 			}
 		}
@@ -308,6 +329,8 @@
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 	$("body").css("margin-top",$("nav").height()+20);
+	//大幅跳頁字串
+	pags_uri=updateQueryStringParameter(window.location.search, 'page', '30');
 	//縣市不等於預設，則觸發
 	if($('#area2').val() !=-1){
 		$('#area2').val({{$QueryArray['area2']}}).change();
