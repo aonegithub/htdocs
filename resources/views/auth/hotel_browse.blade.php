@@ -842,11 +842,11 @@
 	</div>
 	<!-- ** -->
 	<div class="row">
-		<a href="javascript:window.history.go(-1);" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:7%;margin-right:5px;">上一頁</a>
-		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">修改資料</a>
-		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">特殊期間</a>
-		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">比價表</a>
-		<a href="#" class="btn btn-secondary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">合約書</a>
+		<a href="javascript:window.history.go(-1);" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:7%;margin-right:5px;">上一頁</a>
+		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">修改資料</a>
+		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">權限</a>
+		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">比價表</a>
+		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">合約書</a>
 	</div>
 	
 </form>
