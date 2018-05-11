@@ -986,6 +986,14 @@ var level_global=1;
 			valid_arr_msg.push('飯店名稱未填寫');
 			valid_arr_id.push('name_wrap');
 		}
+		if($('#area_level2 :selected').val()=='-1'){
+			valid_arr_msg.push('飯店地址縣市未選擇');
+			valid_arr_id.push('address_wrap');
+		}
+		if($('#area_level3 :selected').val()=='-1'){
+			valid_arr_msg.push('飯店地址區域未選擇');
+			valid_arr_id.push('address_wrap');
+		}
 		if($('#address').val()==''){
 			valid_arr_msg.push('飯店地址未填寫');
 			valid_arr_id.push('address_wrap');
@@ -1040,7 +1048,7 @@ var level_global=1;
 			alert(alert_msg);
 			//
 			$.each(valid_arr_id, function(key,val){
-				$('#'+val).css('border', '3px solid red');
+				$('#'+val).css('border', '2px solid red');
 			});
 			$('html,body').animate({ scrollTop: 0 }, 3000, 'easeOutExpo');
 			return false;
