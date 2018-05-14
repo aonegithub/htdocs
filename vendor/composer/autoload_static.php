@@ -108,7 +108,6 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
         'C' => 
         array (
             'Cron\\' => 5,
-            'Carbon\\' => 7,
         ),
         'B' => 
         array (
@@ -295,10 +294,6 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
         'Barryvdh\\Debugbar\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src',
@@ -307,6 +302,10 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -349,12 +348,16 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
     );
 
     public static $classMap = array (
+        'App\\Awugo\\Auth\\Areas' => __DIR__ . '/../..' . '/app/Awugo/Auth/Areas.php',
         'App\\Awugo\\Auth\\Authority' => __DIR__ . '/../..' . '/app/Awugo/Auth/Authority.php',
+        'App\\Awugo\\Auth\\Hotel' => __DIR__ . '/../..' . '/app/Awugo/Auth/Hotel.php',
         'App\\Awugo\\Auth\\Managers' => __DIR__ . '/../..' . '/app/Awugo/Auth/Managers.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Auth\\AreaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AreaController.php',
         'App\\Http\\Controllers\\Auth\\AuthorityController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthorityController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
+        'App\\Http\\Controllers\\Auth\\HotelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/HotelController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\ManagerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ManagerController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -2007,6 +2010,7 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -4189,6 +4193,7 @@ class ComposerStaticInite4c6e88426675a55321551253a6f4c93
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite4c6e88426675a55321551253a6f4c93::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite4c6e88426675a55321551253a6f4c93::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInite4c6e88426675a55321551253a6f4c93::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInite4c6e88426675a55321551253a6f4c93::$prefixesPsr0;
             $loader->classMap = ComposerStaticInite4c6e88426675a55321551253a6f4c93::$classMap;
 

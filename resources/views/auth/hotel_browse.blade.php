@@ -850,7 +850,7 @@
 	</div>
 	<!-- ** -->
 	<div class="row" style="margin-top: 30px;">
-		<a href="javascript:window.history.go(-1);" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">上一頁</a>
+		<a href="javascript:window.history.go(-1);" class="btn btn-primary col-md-2" style="margin-left:10px;margin-right:5px;max-width:16%;">上一頁</a>
 		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">修改資料</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">權限</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">比價表</a>
@@ -859,6 +859,25 @@
 	</div>
 	
 </form>
+<!-- 清單內容 -->
+<a href="javascript:alert('test')" class="btn btn-outline-primary" style="margin:10px;float:right;">新增協調內容</a>
+<table class="table table-hover" style="margin-top:10px;">
+  <thead class="thead-light">
+    <tr>
+	      <th scope="col" style="width:10%">登載日期</th>
+	      <th scope="col" style="width:10%">登載人員</th>
+	      <th scope="col" style="width:80%">協調事項</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+  		  <th>2018-05-14</th>
+  		  <td>A-One</td>
+  		  <td>sdfsdfsdfasdsdgasdgasdfsdfas</td>
+  	</tr>
+	  </tbody>
+</table>
+
 
 @endsection
 <!-- style內置區塊 -->

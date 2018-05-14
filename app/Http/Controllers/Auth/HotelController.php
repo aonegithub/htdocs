@@ -8,6 +8,7 @@ use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
 use App\Awugo\Auth\Areas;
+use Carbon\Carbon;
 // use Illuminate\Http\Request;
 use Request;
 use Image;
@@ -58,6 +59,7 @@ class HotelController extends Controller
             $room_arr=array(1,999);
         }
         $search_s =($search_q==null ||$search_q=='-1')?'%':$search_q;                       //關鍵字
+                \Debugbar::error(Carbon::now());
                // exit;
         //讀取飯店清單
         $page_row = 15;
