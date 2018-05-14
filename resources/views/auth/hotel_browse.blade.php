@@ -256,16 +256,27 @@
 		  <span class="form-control" style="border: 0px;">{{$Hotel->email2}}</span>
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-3">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
 		  </div>
-		  <span class="form-control" style="border: 0px;">
-			@if($Hotel->track=='0')
-				不追蹤
-			@else
-				追蹤／{{$Hotel->track_comm}}
-			@endif
+		  <span class="form-control col-md-3" style="border: 0px;">
+			{{$Hotel->cooperation}}
+		  </span>
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
+		  </div>
+		  <span class="form-control col-md-3" style="border: 0px;">
+		  	@if($Hotel->holday ==0)
+				未設
+		  	@elseif($Hotel->holday ==1)
+				比照周六房價
+		  	@else
+				高於周六房價
+		  	@endif
 		  </span>
 		</div>
 	</div>
@@ -390,15 +401,14 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
 		  </div>
-		  <span class="form-control col-md-6" style="border: 0px;">
-		  @if($Hotel->local_police==0)
-		  	不顯示 
-		  @else
-		  	顯示
-		  	／{{ $Hotel->local_police_comm }}
-		  @endif
+		  <span class="form-control" style="border: 0px;">
+			@if($Hotel->track=='0')
+				不追蹤
+			@else
+				追蹤／{{$Hotel->track_comm}}
+			@endif
 		  </span>
 		</div>
 	</div>
@@ -420,10 +430,17 @@
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
-		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
-			  </div>
-			  <span class="form-control col-md-6" style="border: 0px;">{{$Hotel->seo_title}}</span>
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		  </div>
+		  <span class="form-control col-md-6" style="border: 0px;">
+		  @if($Hotel->local_police==0)
+		  	不顯示 
+		  @else
+		  	顯示
+		  	／{{ $Hotel->local_police_comm }}
+		  @endif
+		  </span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -439,11 +456,9 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
 			  </div>
-			  <span class="form-control col-md-6" style="border: 0px;">
-			  	{{$Hotel->seo_descript}}
-			  </span>
+			  <span class="form-control col-md-6" style="border: 0px;">{{$Hotel->seo_title}}</span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -459,10 +474,10 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
 			  </div>
 			  <span class="form-control col-md-6" style="border: 0px;">
-				  	{{$Hotel->seo_keyword}}
+			  	{{$Hotel->seo_descript}}
 			  </span>
 		</div>
 	</div>
@@ -485,17 +500,11 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
-			</div>
-			<span class="form-control col-md-6" style="border: 0px;">
-				@if($Hotel->display_tel==0)
-					不顯示
-				@elseif($Hotel->display_tel==1)
-					顯示飯店電話
-				@else
-					顯示awugo電話
-				@endif
-			</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			  </div>
+			  <span class="form-control col-md-6" style="border: 0px;">
+				  	{{$Hotel->seo_keyword}}
+			  </span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -509,28 +518,19 @@
 			</span>
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
-		  </div>
-		  <span class="form-control col-md-3" style="border: 0px;">
-			{{$Hotel->cooperation}}
-		  </span>
-		</div>
-		<!-- ** -->
-		<div class="input-group input-group-sm col-md-3">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
-		  </div>
-		  <span class="form-control col-md-3" style="border: 0px;">
-		  	@if($Hotel->holday ==0)
-				未設
-		  	@elseif($Hotel->holday ==1)
-				比照周六房價
-		  	@else
-				高於周六房價
-		  	@endif
-		  </span>
+		<div class="input-group input-group-sm col-md-6">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
+			</div>
+			<span class="form-control col-md-6" style="border: 0px;">
+				@if($Hotel->display_tel==0)
+					不顯示
+				@elseif($Hotel->display_tel==1)
+					顯示飯店電話
+				@else
+					顯示awugo電話
+				@endif
+			</span>
 		</div>
 	</div>
 	<!-- ** -->
@@ -824,12 +824,20 @@
 	<!-- ** -->
 	<div class="row">
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-3">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">合約到期日</span>
 			</div>
 			<span class="form-control" style="border: 0px;">
 				{{$Hotel->expire}}
+			</span>
+		</div>
+		<div class="input-group input-group-sm col-md-3" id="contract_no_wrap">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">合約編號</span>
+			</div>
+			<span class="form-control" style="border: 0px;">
+				{{$Hotel->contract_no}}
 			</span>
 		</div>
 		<!-- ** -->
@@ -841,12 +849,13 @@
 		</div>
 	</div>
 	<!-- ** -->
-	<div class="row">
-		<a href="javascript:window.history.go(-1);" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:7%;margin-right:5px;">上一頁</a>
-		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">修改資料</a>
-		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">權限</a>
-		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">比價表</a>
-		<a href="#" class="btn btn-primary btn-lg btn-block col-md-2" style="margin-top: 30px;margin-left:5px;margin-right:5px;">合約書</a>
+	<div class="row" style="margin-top: 30px;">
+		<a href="javascript:window.history.go(-1);" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">上一頁</a>
+		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">修改資料</a>
+		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">權限</a>
+		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">比價表</a>
+		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">合約書</a>
+		<a href="#" class="btn btn-primary col-md-2" style="">awugo<->飯店留言</a>
 	</div>
 	
 </form>

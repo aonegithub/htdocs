@@ -16,7 +16,7 @@ class Hotel extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'url', 'area_level1', 'area_level2', 'area_level3', 'area_level4', 'address', 
+        'contract_no','name', 'url', 'area_level1', 'area_level2', 'area_level3', 'area_level4', 'address', 
         'tel1', 'tel2', 'fax1', 'fax2', 'email1','email2','app_line','app_wechat','license_hotel',
         'license_homestay','lincense_hospitable','type_scale','type_level','type_room','invoice',
         'reg_name','reg_no','credit_card','bank_name','bank_code','bank_account',

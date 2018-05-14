@@ -37,7 +37,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()" >
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()" onpaste="setTimeout(name2seo(), 4)" >
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;" id="ver_wrap">
@@ -285,19 +285,34 @@
 		  <input id="email2" name="email2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-2" id="cooperation_wrap">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
+		  </div>
+		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
+		  	  <option value='-1'>選擇合作種類</option>
+			  <option value='合約' selected="">合約</option>
+			  <option value='住宿卷'>住宿卷</option>
+			  <option value='約卷'>約卷</option>
+		  </select>
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-4" id="cooperation_wrap">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track0" value="0" name="track" checked="">
-		        <label for="track0">不追蹤</label>
-		  </div>
-		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track1" value="1" name="track">
-		        <label for="track1">追蹤</label>
-		  </div>
-		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-6" placeholder="追蹤事由" style="margin-left: 10px;">
+				<input type="radio" id="holiday0" value="0" name="holiday" checked="">
+				<label for="holiday0">未設</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday1" value="1" name="holiday">
+				<label for="holiday1">比照週六房價</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday2" value="2" name="holiday">
+				<label for="holiday2">高於周六房價</label>
+			</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -431,17 +446,17 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police0" value="0" name="local_police" checked="">
-		        <label for="local_police0">不顯示</label>
+		        <input type="radio" id="track0" value="0" name="track" checked="">
+		        <label for="track0">不追蹤</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police1" value="1" name="local_police">
-		        <label for="local_police1">顯示</label>
+		        <input type="radio" id="track1" value="1" name="track">
+		        <label for="track1">追蹤</label>
 		  </div>
-		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;">
+		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-6" placeholder="追蹤事由" style="margin-left: 10px;">
 		</div>
 	</div>
 	<!-- ** -->
@@ -465,10 +480,18 @@
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
-		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
-			  </div>
-			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		  </div>
+		  <div class="radio radio-inline align-middle">
+		        <input type="radio" id="local_police0" value="0" name="local_police" checked="">
+		        <label for="local_police0">不顯示</label>
+		  </div>
+		  <div class="radio radio-inline align-middle">
+		        <input type="radio" id="local_police1" value="1" name="local_police">
+		        <label for="local_police1">顯示</label>
+		  </div>
+		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;">
 		</div>
 	</div>
 	<!-- ** -->
@@ -482,9 +505,9 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
 			  </div>
-			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
 		</div>
 	</div>
 	<!-- ** -->
@@ -498,9 +521,9 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
 			  </div>
-			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
+			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
 		</div>
 	</div>
 	<!-- ** -->
@@ -523,22 +546,11 @@
 			</div>
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6" id="display_tel_wrap">
+		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
-			</div>
-			<div class="radio radio-inline align-middle">
-				<input type="radio" id="display_tel0" value="0" name="display_tel">
-				<label for="display_tel0">不顯示</label>
-			</div>
-			<div class="radio radio-inline align-middle">
-				<input type="radio" id="display_tel1" value="1" name="display_tel">
-				<label for="display_tel1">顯示飯店電話</label>
-			</div>
-			<div class="radio radio-inline align-middle">
-				<input type="radio" id="display_tel2" value="2" name="display_tel">
-				<label for="display_tel2">顯示awugo電話</label>
-			</div>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			  </div>
+			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
 		</div>
 	</div>
 	<!-- ** -->
@@ -553,33 +565,21 @@
 			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-2" id="cooperation_wrap">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
-		  </div>
-		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
-		  	  <option value='-1'>選擇合作種類</option>
-			  <option value='合約'>合約</option>
-			  <option value='住宿卷'>住宿卷</option>
-			  <option value='約卷'>約卷</option>
-		  </select>
-		</div>
-		<!-- ** -->
-		<div class="input-group input-group-sm col-md-4" id="cooperation_wrap">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
-		  </div>
-		  <div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday0" value="0" name="holiday" checked="">
-				<label for="holiday0">未設</label>
+		<div class="input-group input-group-sm col-md-6" id="display_tel_wrap">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
 			</div>
 			<div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday1" value="1" name="holiday">
-				<label for="holiday1">比照週六房價</label>
+				<input type="radio" id="display_tel0" value="0" name="display_tel">
+				<label for="display_tel0">不顯示</label>
 			</div>
 			<div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday2" value="2" name="holiday">
-				<label for="holiday2">高於周六房價</label>
+				<input type="radio" id="display_tel1" value="1" name="display_tel">
+				<label for="display_tel1">顯示飯店電話</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="display_tel2" value="2" name="display_tel" checked="">
+				<label for="display_tel2">顯示awugo電話</label>
 			</div>
 		</div>
 	</div>
@@ -591,6 +591,7 @@
 			</div>
 			<input id="point" name="point" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="">
 		</div>
+		
 	</div>
 	<!-- ** -->
 	<div class="row" style="margin-top:30px;">
@@ -846,11 +847,17 @@
 	<!-- ** -->
 	<div class="row">
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-3">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">合約到期日</span>
 			</div>
-			<input type="text" class="form-control" id="expire" name="expire" placeholder="" value="2020-09-19">
+			<input type="text" class="form-control" id="expire" name="expire" placeholder="" value="">
+		</div>
+		<div class="input-group input-group-sm col-md-3" id="contract_no_wrap">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">合約編號</span>
+			</div>
+			<input type="text" class="form-control" id="contract_no" name="contract_no" placeholder="" value="">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
@@ -1038,6 +1045,10 @@ var level_global=1;
 			valid_arr_msg.push('飯店電話未填寫');
 			valid_arr_id.push('tel1_wrap');
 		}
+		if($('#contract_no').val()==''){
+			valid_arr_msg.push('合約編號未填寫');
+			valid_arr_id.push('contract_no_wrap');
+		}
 
 		//判斷是否有驗證錯誤訊息
 		if((valid_arr_msg.length+valid_arr_id.length) >0){
@@ -1050,7 +1061,7 @@ var level_global=1;
 			$.each(valid_arr_id, function(key,val){
 				$('#'+val).css('border', '2px solid red');
 			});
-			$('html,body').animate({ scrollTop: 0 }, 3000, 'easeOutExpo');
+			$('html,body').animate({ scrollTop: 0 }, 2000, 'easeOutExpo');
 			return false;
 		}
 		if(confirm('確定要新增嗎？')){

@@ -127,6 +127,7 @@
 	      <th scope="col">發票</th>
 	      <th scope="col">版本</th>
 	      <th scope="col">比價表</th>
+	      <th scope="col">訂金</th>
 	      <th scope="col">服務費</th>
 	      <th scope="col">紅利</th>
 	      <th scope="col">開房年月</th>
@@ -140,8 +141,8 @@
 	  <tbody class="list_tr">
 	  	@foreach($Hotels as $key => $hotel)
 			<tr>
-		      <th scope="row">{{ $hotel->nokey }}</th>
-		      <td>
+		      <th style="cursor: pointer;" onclick="window.location.href='hotel_browse/{{ $hotel->nokey }}'" scope="row">{{ $hotel->nokey }}</th>
+		      <td style="cursor: pointer;" onclick="window.location.href='hotel_browse/{{ $hotel->nokey }}'">
 		      	@if($hotel->state==2)
 					<a href="hotel_browse/{{ $hotel->nokey }}" style="color:#aeaeae">{{ $hotel->name }}</a>
 		      	@elseif($hotel->state==1)
@@ -170,11 +171,12 @@
 		      </td>
 		      <td>{{ $hotel->version }}</td>
 		      <td>--</td>
+		      <td>{{$hotel->deposit}}%</td>
 		      <td>
-					{{$hotel->fees_c}}
+					{{$hotel->fees_c}}%
 		      </td>
 		      <td>
-					{{$hotel->fees_c_bonus}}
+					{{$hotel->fees_c_bonus}}%
 		      </td>
 		      <td>--</td>
 		      <td>{{$hotel->type_room}}</td>
@@ -189,7 +191,6 @@
 		      <td><a href="#">權限</a></td>
 		      <td>
 		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-primary">修改</a>
-		      	<a href="javascript:disableHotel({{ $hotel->nokey }})" class="btn btn-primary">關閉</a>
 		      </td>
 	    </tr>
 	    @endforeach

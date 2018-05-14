@@ -60,12 +60,12 @@ class HotelController extends Controller
         $search_s =($search_q==null ||$search_q=='-1')?'%':$search_q;                       //關鍵字
                // exit;
         //讀取飯店清單
-        $page_row = 10;
+        $page_row = 15;
         // $Hotel =Hotel::leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')
         // ->select('hotel_list.*' ,'manager_list.name as m_name', 'manager_list.department')
         // ->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
         // $Hotel = DB::table('hotel_list')->leftJoin('manager_list', 'manager_list.id', '=', 'hotel_list.created_manager_id')->OrderBy('state','asc')->OrderBy('hotel_list.nokey','desc')->paginate($page_row);
-        $Hotel = Hotel::where('hotel_list.state','LIKE',$state_s)->where('hotel_list.version','LIKE',$ver_s)->where('hotel_list.area_level1','LIKE',$country_s)->where('hotel_list.area_level2','LIKE',$area2_s)->where('hotel_list.area_level3','LIKE',$area3_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.cooperation','LIKE',$c_type_s)->where('hotel_list.holiday','LIKE',$holiday_s)->whereBetween('hotel_list.type_room',$room_arr)->where('hotel_list.name','LIKE','%'.$search_s.'%')->leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')->select('hotel_list.nokey','hotel_list.name','hotel_list.state','hotel_list.invoice_type','hotel_list.version','hotel_list.fees_c','hotel_list.fees_c_bonus','hotel_list.type_room','hotel_list.cooperation','hotel_list.control')->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
+        $Hotel = Hotel::where('hotel_list.state','LIKE',$state_s)->where('hotel_list.version','LIKE',$ver_s)->where('hotel_list.area_level1','LIKE',$country_s)->where('hotel_list.area_level2','LIKE',$area2_s)->where('hotel_list.area_level3','LIKE',$area3_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.cooperation','LIKE',$c_type_s)->where('hotel_list.holiday','LIKE',$holiday_s)->whereBetween('hotel_list.type_room',$room_arr)->where('hotel_list.name','LIKE','%'.$search_s.'%')->leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')->select('hotel_list.nokey','hotel_list.name','hotel_list.state','hotel_list.invoice_type','hotel_list.version','hotel_list.fees_c','hotel_list.fees_c_bonus','hotel_list.type_room','hotel_list.cooperation','hotel_list.control', 'hotel_list.deposit')->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
         
         //帶入縣市
         //二級清單
@@ -124,6 +124,7 @@ class HotelController extends Controller
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail();
         $hotel =new Hotel;
+        $hotel->contract_no=$request['contract_no'];                    //合約編號
         $hotel->name=$request['name'];                                  //飯店名稱
         $hotel->version=$request['ver'];                                //合作模式版本
         $hotel->cooperation=$request['cooperation'];                    //合作種類
@@ -307,6 +308,7 @@ class HotelController extends Controller
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail();
         $hotel =Hotel::find($hotelKey);
+        $hotel->contract_no=$request['contract_no'];                    //合約編號
         $hotel->name=$request['name'];                                  //飯店名稱
         $hotel->version=$request['ver'];                                //合作模式版本
         $hotel->cooperation=$request['cooperation'];                    //合作種類

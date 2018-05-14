@@ -285,19 +285,33 @@
 		  <input id="email2" name="email2" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Hotel->email2}}">
 		</div>
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-2">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
+		  </div>
+		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
+			  <option value='合約'@if($Hotel->cooperation=='合約') selected="" @endif>合約</option>
+			  <option value='住宿卷'@if($Hotel->cooperation=='住宿卷') selected="" @endif>住宿卷</option>
+			  <option value='約卷'@if($Hotel->cooperation=='約卷') selected="" @endif>約卷</option>
+		  </select>
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-4">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track0" value="0" name="track"@if($Hotel->track==0) checked="checked" @endif>
-		        <label for="track0">不追蹤</label>
-		  </div>
-		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="track1" value="1" name="track"@if($Hotel->track==1) checked="checked" @endif>
-		        <label for="track1">追蹤</label>
-		  </div>
-		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-6" placeholder="追蹤事由" style="margin-left: 10px;" value="{{$Hotel->track_comm}}">
+				<input type="radio" id="holiday0" value="0" name="holiday"@if($Hotel->holiday==0) checked="checked" @endif>
+				<label for="holiday0">未設</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday1" value="1" name="holiday"@if($Hotel->holiday==1) checked="checked" @endif>
+				<label for="holiday1">比照週六房價</label>
+			</div>
+			<div class="radio radio-inline align-middle">
+				<input type="radio" id="holiday2" value="2" name="holiday"@if($Hotel->holiday==2) checked="checked" @endif>
+				<label for="holiday2">高於周六房價</label>
+			</div>
 		</div>
 	</div>
 	<!-- ** -->
@@ -430,17 +444,17 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		    <span class="input-group-text" id="inputGroup-sizing-sm">追蹤管理</span>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police0" value="0" name="local_police"@if($Hotel->local_police==0) checked="checked" @endif>
-		        <label for="local_police0">不顯示</label>
+		        <input type="radio" id="track0" value="0" name="track"@if($Hotel->track==0) checked="checked" @endif>
+		        <label for="track0">不追蹤</label>
 		  </div>
 		  <div class="radio radio-inline align-middle">
-		        <input type="radio" id="local_police1" value="1" name="local_police"@if($Hotel->local_police==1) checked="checked" @endif>
-		        <label for="local_police1">顯示</label>
+		        <input type="radio" id="track1" value="1" name="track"@if($Hotel->track==1) checked="checked" @endif>
+		        <label for="track1">追蹤</label>
 		  </div>
-		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;" value="{{ $Hotel->local_police_comm }}">
+		  <input id="track_comm" name="track_comm" type="text" class="form-control col-md-6" placeholder="追蹤事由" style="margin-left: 10px;" value="{{$Hotel->track_comm}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -464,10 +478,18 @@
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
-		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
-			  </div>
-			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_title}}">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-sm">警察單位</span>
+		  </div>
+		  <div class="radio radio-inline align-middle">
+		        <input type="radio" id="local_police0" value="0" name="local_police"@if($Hotel->local_police==0) checked="checked" @endif>
+		        <label for="local_police0">不顯示</label>
+		  </div>
+		  <div class="radio radio-inline align-middle">
+		        <input type="radio" id="local_police1" value="1" name="local_police"@if($Hotel->local_police==1) checked="checked" @endif>
+		        <label for="local_police1">顯示</label>
+		  </div>
+		  <input id="local_police_comm" name="local_police_comm" type="text" class="form-control col-md-6" placeholder="當地警察單位與聯繫方式" style="margin-left: 10px;" value="{{ $Hotel->local_police_comm }}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -481,9 +503,9 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO標題</span>
 			  </div>
-			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_descript}}">
+			  <input id="seo_title" name="seo_title" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_title}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -497,9 +519,9 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
-			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO描述</span>
 			  </div>
-			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_keyword}}">
+			  <input id="seo_descript" name="seo_descript" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_descript}}">
 		</div>
 	</div>
 	<!-- ** -->
@@ -524,6 +546,25 @@
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
 		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">SEO關鍵字</span>
+			  </div>
+			  <input id="seo_keyword" name="seo_keyword" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->seo_keyword}}">
+		</div>
+	</div>
+	<!-- ** -->
+	<div class="row">
+		<div class="input-group input-group-sm col-md-6">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
+			</div>
+			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
+			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
+			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-4" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
+			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
+		</div>
+		<!-- ** -->
+		<div class="input-group input-group-sm col-md-6">
+		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">前台電話</span>
 			</div>
 			<div class="radio radio-inline align-middle">
@@ -543,52 +584,12 @@
 	<!-- ** -->
 	<div class="row">
 		<div class="input-group input-group-sm col-md-6">
-		    <div class="input-group-prepend">
-			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳戶資訊</span>
-			</div>
-			<input id="bank_name" name="bank_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="銀行名稱" value="{{$Hotel->bank_name}}">
-			<input id="bank_code" name="bank_code" type="text" class="form-control col-md-2" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="代碼" value="{{$Hotel->bank_code}}">
-			<input id="bank_account" name="bank_account" type="text" class="form-control col-md-4" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="帳號" value="{{$Hotel->bank_account}}">
-			<input id="bank_account_name" name="bank_account_name" type="text" class="form-control col-md-3" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="戶名" value="{{$Hotel->bank_account_name}}">
-		</div>
-		<!-- ** -->
-		<div class="input-group input-group-sm col-md-2">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">合作種類</span>
-		  </div>
-		  <select class="form-control" id="cooperation" name="cooperation" style="max-width: 200px;">
-			  <option value='合約'@if($Hotel->cooperation=='合約') selected="" @endif>合約</option>
-			  <option value='住宿卷'@if($Hotel->cooperation=='住宿卷') selected="" @endif>住宿卷</option>
-			  <option value='約卷'@if($Hotel->cooperation=='約卷') selected="" @endif>約卷</option>
-		  </select>
-		</div>
-		<!-- ** -->
-		<div class="input-group input-group-sm col-md-4">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-sm">連假房價</span>
-		  </div>
-		  <div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday0" value="0" name="holiday"@if($Hotel->holiday==0) checked="checked" @endif>
-				<label for="holiday0">未設</label>
-			</div>
-			<div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday1" value="1" name="holiday"@if($Hotel->holiday==1) checked="checked" @endif>
-				<label for="holiday1">比照週六房價</label>
-			</div>
-			<div class="radio radio-inline align-middle">
-				<input type="radio" id="holiday2" value="2" name="holiday"@if($Hotel->holiday==2) checked="checked" @endif>
-				<label for="holiday2">高於周六房價</label>
-			</div>
-		</div>
-	</div>
-	<!-- ** -->
-	<div class="row">
-		<div class="input-group input-group-sm col-md-6">
 			<div class="input-group-prepend">
 			    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店優點</span>
 			</div>
 			<input id="point" name="point" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="" value="{{$Hotel->point}}">
 		</div>
+		
 	</div>
 	<!-- ** -->
 	<div class="row" style="margin-top:30px;">
@@ -871,11 +872,17 @@
 	<!-- ** -->
 	<div class="row">
 		<!-- ** -->
-		<div class="input-group input-group-sm col-md-6">
+		<div class="input-group input-group-sm col-md-3">
 		    <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">合約到期日</span>
 			</div>
 			<input type="text" class="form-control" id="expire" name="expire" placeholder="" value="{{$Hotel->expire}}">
+		</div>
+		<div class="input-group input-group-sm col-md-3" id="contract_no_wrap">
+		    <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-sm">合約編號</span>
+			</div>
+			<input type="text" class="form-control" id="contract_no" name="contract_no" placeholder="" value="{{$Hotel->contract_no}}">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-6">
