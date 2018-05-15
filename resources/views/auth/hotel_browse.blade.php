@@ -855,12 +855,24 @@
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">權限</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">比價表</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">合約書</a>
-		<a href="#" class="btn btn-primary col-md-2" style="">awugo<->飯店留言</a>
+		<a href="#" class="btn btn-primary col-md-2" style="">awugo＜-＞飯店留言</a>
 	</div>
 	
 </form>
 <!-- 清單內容 -->
-<a href="javascript:alert('test')" class="btn btn-outline-primary" style="margin:10px;float:right;">新增協調內容</a>
+<div class="row">
+	<div class="col-md">
+		<a href="javascript:open_hotel_comm()" class="btn btn-sm btn-outline-primary pull-right" style="margin:10px;float:right !important;">新增協調紀錄內容</a>
+	</div>
+</div>
+<div class="row" id="hotel_comm" style="display: none;">
+	<div class="col-md-11">
+		<textarea id="hotel_comm_text" name="hotel_comm_text" class="form-control" style="width: 100%;height: 60px;"></textarea>
+	</div>
+	<div class="col-md-1">
+		<a href="javascript:addHotelComm()" class="btn btn-sm btn-outline-primary">新增紀錄</a>
+	</div>
+</div>
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
@@ -870,11 +882,13 @@
     </tr>
   </thead>
   <tbody>
+  	@foreach($Hotel_Comm as $key => $comm)
   	<tr>
-  		  <th>2018-05-14</th>
-  		  <td>A-One</td>
-  		  <td>sdfsdfsdfasdsdgasdgasdfsdfas</td>
+  		  <th>{{$comm->updated_at->format('Y-m-d (H:i)')}}</th>
+  		  <td>{{$comm->write_name}}</td>
+  		  <td>{{$comm->comm}}</td>
   	</tr>
+  	@endforeach
 	  </tbody>
 </table>
 
@@ -909,6 +923,25 @@
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+//打開協調輸入欄
+function open_hotel_comm(){
+	$('#hotel_comm').slideToggle();
+}
+//新增協調紀錄
+function addHotelComm(){
+	$.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: '../hotel_comm_add/{{$Hotel->nokey}}',
+        data: {comm:$('#hotel_comm_text').val()},
+        success: function(data) {
+        	sessionStorage.setItem("scroll", window.pageYOffset);
+        	window.location.reload();
+    	}
+    });
+}
 //現存級別
 var level_global=1;
 	//版本切換
@@ -1168,6 +1201,15 @@ var level_global=1;
 	}
 $(window).resize(function(){
 	$("body").css("margin-top",$("nav").height()+20);
+});
+$(window).on('load', function(){
+	topObj =(window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
+	//回到卷軸原本位置
+	const scrollBy = sessionStorage.getItem("scroll");    
+	if (scrollBy != null) {
+	 //window.scrollTo(scrollBy,0);
+	 topObj.scrollTop(scrollBy);
+	}
 });
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->

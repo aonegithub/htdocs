@@ -49,6 +49,11 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('hotel_edit/{hotelkey}', 'Auth\HotelController@editPost');
 			Route::post('hotel_disable/{hotelkey}', 'Auth\HotelController@disableAjax'); //異步關閉(ajax)
 			Route::get('hotel_browse/{hotelkey}', 'Auth\HotelController@browse');
+			Route::post('hotel_comm_add/{hotelkey}', 'Auth\HotelController@addCommAjax'); //異步寫入備註(協調內容)(ajax)
+
+		//設施與服務
+			Route::get('service', 'Auth\ServiceController@main');
+			Route::post('service_add', 'Auth\ServiceController@addPost');
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){

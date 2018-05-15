@@ -1189,6 +1189,11 @@ $(window).resize(function(){
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//綁定貼上 fix IE11滑鼠貼上無效問題
+	$('#name').bind('paste',function(){
+		setTimeout(function(){ name2seo(); }, 300);
+		//setTimeout(alert(1), 4);
+	});
 	//預設將版本傭金項目關閉
 	ver_close();
 	$('#ver').change();

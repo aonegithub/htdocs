@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
+use App\Awugo\Auth\Hotel_Comm;
 use App\Awugo\Auth\Areas;
 use Carbon\Carbon;
 // use Illuminate\Http\Request;
@@ -445,6 +446,8 @@ class HotelController extends Controller
             return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
             //exit;
         }
+        // 讀取飯店備註
+        $Hotel_Comm =Hotel_Comm::where('hotel_id',$hotelKey)->OrderBy('updated_at','desc')->get();
         // 讀取飯店資料
         $Hotel =Hotel::where('nokey',$hotelKey)->firstOrFail();
         //帶入縣市
@@ -484,6 +487,7 @@ class HotelController extends Controller
             'Addr_level3' => $Addr_level3,
             'Login_addr_level3' => $Login_addr_level3,
             'Contact' => $Contact_Array,
+            'Hotel_Comm' => $Hotel_Comm,
         ];
         return view('auth.hotel_browse', $binding);
     }
@@ -492,6 +496,17 @@ class HotelController extends Controller
         $hotel =Hotel::find($hotelKey);
         $hotel->state =2;
         $hotel->save();
+        return 'OK';
+    }
+//Ajax 寫入飯店歷程記錄
+    public function addCommAjax($country,$hotelKey){
+        $request =request()->all();
+        $hotel_comm =new Hotel_Comm;
+        $hotel_comm->hotel_id =$hotelKey;
+        $hotel_comm->comm =$request['comm'];
+        $hotel_comm->write_id =session()->get('manager_id');
+        $hotel_comm->write_name =session()->get('manager_name');
+        $hotel_comm->save();
         return 'OK';
     }
 }
