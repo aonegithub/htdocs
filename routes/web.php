@@ -53,7 +53,9 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 
 		//設施與服務
 			Route::get('service', 'Auth\ServiceController@main');
-			Route::post('service_add', 'Auth\ServiceController@addPost');
+			Route::post('service_add', 'Auth\ServiceController@addPost'); 	//ajax
+			Route::post('service_edit', 'Auth\ServiceController@editPost'); //ajax
+			Route::post('service_del', 'Auth\ServiceController@delPost'); 	//ajax
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){
