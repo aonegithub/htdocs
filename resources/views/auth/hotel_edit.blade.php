@@ -630,7 +630,7 @@
 		  @endforeach
 		  <tr id="contact_row">
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
+		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)" onpaste="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">

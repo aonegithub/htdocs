@@ -121,7 +121,7 @@
 			    <a data-nokey='43' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-43" href="/{{$Country}}/auth/manager/area_list">地區管理</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-15" href="#">電子報　</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-16" href="#">熱門地點</a>
-			    <a data-nokey='44' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-17" href="/{{$Country}}/auth/manager/service">設施服務</a>
+			    <a data-nokey='44' class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-44" href="/{{$Country}}/auth/manager/service">設施服務</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-18" href="#">客房設施</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-19" href="#">傳真紀錄</a>
 			    <a class="btn btn-outline-secondary btn-no-border btn-sm" role="button" aria-pressed="true" id="top-nav-20" href="#">住宿評鑑</a>

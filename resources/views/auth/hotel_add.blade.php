@@ -37,7 +37,7 @@
 		  <div class="input-group-prepend">
 		    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店名稱</span>
 		  </div>
-		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()" onpaste="setTimeout(name2seo(), 4)" >
+		  <input id="name" name="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="color:red;" onkeyup="name2seo()">
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;" id="ver_wrap">
@@ -607,7 +607,7 @@
 		  </tr>
 		  <tr id="contact_row">
 		    <td style="height:45px;">
-		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)">
+		    	<input type="text" class="form-control clone_contact" id="contact_name" name="contact_name" placeholder="請輸入姓名" value="" onkeyup="cloneTr(this)" onpaste="cloneTr(this)">
 		    </td>
 		    <td style="height:45px;">
 		    	<input type="text" class="form-control clone_contact" id="contact_job" name="contact_job" placeholder="請輸入職稱" value="">
@@ -1094,9 +1094,10 @@ var level_global=1;
 	//無限增加聯絡人
 	function cloneTr(obj){
 		objClone =$(obj).parent().parent().clone();
-		$(obj).removeAttr('onkeyup');
 		objClone.find('input').val("");
 		objClone.appendTo('.tg');
+		$(obj).removeAttr('onkeyup');
+		$(obj).removeAttr('onpaste');
 	}
 	//切換三級選單取得郵遞區號
 	function chg_zip_code(obj,target){
