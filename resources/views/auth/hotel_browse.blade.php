@@ -884,7 +884,7 @@
   <tbody>
   	@foreach($Hotel_Comm as $key => $comm)
   	<tr>
-  		  <th>{{$comm->updated_at->format('Y-m-d (H:i)')}}</th>
+  		  <th>{{$comm->updated_at->format('Y-m-d')}}</th>
   		  <td>{{$comm->write_name}}</td>
   		  <td>{{$comm->comm}}</td>
   	</tr>

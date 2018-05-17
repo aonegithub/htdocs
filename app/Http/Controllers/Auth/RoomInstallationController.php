@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
-use App\Awugo\Auth\Service;
+use App\Awugo\Auth\Room_Installation;
 use App\Awugo\Auth\Areas;
 use Carbon\Carbon;
 // use Illuminate\Http\Request;
@@ -17,10 +17,10 @@ use View;
 use DB;
 use Validator;
 
-class ServiceController extends Controller
+class RoomInstallationController extends Controller
 {
-    private $menu_item_code =44;
-    private $menu_item_text ='設施與服務';
+    private $menu_item_code =48;
+    private $menu_item_text ='客房設施';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 服務管理預設清單
     public function main(Request $request,$country){
@@ -47,13 +47,13 @@ class ServiceController extends Controller
         $group_s2 =($group_q =='-2')?'-1':'%';         //如果為群組瀏覽模式
         $queryString =['group'=>$group_q];
         //讀取設施與服務(群組)
-        $Service_Groups =Service::where('service_list.is_group','1')->select('service_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `service_list` as sl WHERE sl.`parent`=`service_list`.`nokey`) as `child_count`'))->get();
+        $Room_Installation_Groups =Room_Installation::where('room_installation_list.is_group','1')->select('room_installation_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `room_installation_list` as sl WHERE sl.`parent`=`room_installation_list`.`nokey`) as `child_count`'))->get();
         //讀取設施與服務(項目)
-        $Service_Items ='';
+        $Room_Installation_Items ='';
         if($group_q =='-2'){
-            $Service_Items =Service::where('service_list.parent','LIKE',$group_s2)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s2)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
         }else{
-            $Service_Items =Service::where('service_list.parent','LIKE',$group_s1)->orWhere('service_list.nokey','LIKE',$group_s1)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s1)->orWhere('room_installation_list.nokey','LIKE',$group_s1)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
         }
         //
         $binding =[
@@ -62,11 +62,11 @@ class ServiceController extends Controller
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Country' => $country,
-            'Service_Groups' => $Service_Groups,
-            'Service_Items' => $Service_Items,
+            'Room_Installation_Groups' => $Room_Installation_Groups,
+            'Room_Installation_Items' => $Room_Installation_Items,
             'Group_Query' => $group_q,
         ];
-        return view('auth.service_list', $binding);
+        return view('auth.room_installation_list', $binding);
     }
 // 新增服務 ajax
     public function addPost(Request $request,$country){

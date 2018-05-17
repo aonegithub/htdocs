@@ -57,7 +57,7 @@
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有服務設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有群組</option>
-		  @foreach($Service_Groups as $key => $group)
+		  @foreach($Room_Installation_Groups as $key => $group)
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
@@ -71,7 +71,7 @@
 	<div style="float:right;margin:5px;">
 		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif>
 		  <option value='-1'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
-		  @foreach($Service_Groups as $key => $group)
+		  @foreach($Room_Installation_Groups as $key => $group)
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
@@ -95,7 +95,7 @@
   </thead>
   
   <tbody class="list_tr">
-	@foreach($Service_Items as $key => $item)
+	@foreach($Room_Installation_Items as $key => $item)
 		<tr>
 			<td>{{$item->service_name}}</td>
 			<td>
@@ -116,7 +116,7 @@
 
 </table>
 <div id="nav_pagerow" class="row">
-{{ $Service_Items->links('vendor.pagination.bootstrap-4') }}
+{{ $Room_Installation_Items->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection
