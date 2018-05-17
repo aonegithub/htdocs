@@ -40,7 +40,11 @@
 	      <div class="modal-body">
 	      	請輸入新名稱：
 	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" style="display:none;">
+<<<<<<< HEAD
 	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" required="required">
+=======
+	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱">
+>>>>>>> master
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -49,6 +53,7 @@
 	  </div>
 	</div>
 <!-- ** -->
+<<<<<<< HEAD
 <div class="row" style="height: 40px;">
 	<div style="margin:5px;">
 	</div>
@@ -73,23 +78,55 @@
 		  <option value='-1'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
 		  @foreach($Service_Groups as $key => $group)
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
+=======
+<div style="text-align:right;height: 40px;">
+	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="float: right;">新增設施與服務</a>
+	<div style="float:right;margin-right:5px;">
+		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
+		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>-切換群組-</option>
+		  @foreach($Service_Groups as $key => $group)
+			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}</option>
+		  @endforeach
+		</select>
+	</div>
+</div>
+<!-- 新增設施服務介面 -->
+<div class="row" style="clear: both;display: none;margin: auto;width: 40%;" id="service_interface">
+	<div style="float:right;margin:5px;">
+		<select class="form-control" id="add_group_sel" name="add_group_sel">
+		  <option value='-1'>新增為群組</option>
+		  @foreach($Service_Groups as $key => $group)
+			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}</option>
+>>>>>>> master
 		  @endforeach
 		</select>
 	</div>
 	<div style="float:right;margin:5px;">
+<<<<<<< HEAD
 		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入名稱" required="required">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
 		<a href="javascript:toggle_service_interface()" class="btn btn-primary">取消</a>
+=======
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱">
+	</div>
+	<div style="float:right;margin:5px;">
+		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
+>>>>>>> master
 	</div>
 </div>
 <!-- 清單內容 -->
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
+<<<<<<< HEAD
       <th scope="col">設施服務名稱</th>
       <th scope="col">所屬群組</th>
+=======
+      <th scope="col">所屬群組</th>
+      <th scope="col">設施服務名稱</th>
+>>>>>>> master
       <th scope="col"></th>
     </tr>
   </thead>
@@ -97,7 +134,10 @@
   <tbody class="list_tr">
 	@foreach($Service_Items as $key => $item)
 		<tr>
+<<<<<<< HEAD
 			<td>{{$item->service_name}}</td>
+=======
+>>>>>>> master
 			<td>
 				@if(!$item->is_group)
 					{{$item->sl_name}}
@@ -106,6 +146,10 @@
 				@endif
 
 			</td>
+<<<<<<< HEAD
+=======
+			<td>{{$item->service_name}}</td>
+>>>>>>> master
 			<td>
 				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
 				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})" class="btn btn-primary">刪除</a>
@@ -151,6 +195,7 @@ function del_service(key,is_group){
 function edit_service(){
 //	alert($('#new_service_name').val());
 //	alert($('#service_nokey').val());
+<<<<<<< HEAD
 	if($('#new_service_name').val() ==''){
 		alert('請填寫名稱');
 	}else{
@@ -172,6 +217,25 @@ function edit_service(){
 	    	}
 	    });
 	}
+=======
+	$.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: 'service_edit',
+        data: {name:$('#new_service_name').val(),nokey:$('#service_nokey').val()},
+        success: function(data) {
+        	if(data=='no'){
+	        	alert('權限不足或系統異常');
+	        	window.location.href='main';
+	        }else{
+		        window.location.reload();
+		    }
+        	
+    	}
+    });
+>>>>>>> master
 }
 //打開修改視窗
 function open_edit_interface(service_name, key){
@@ -185,6 +249,7 @@ function chg_group(obj){
 }
 //新增設施服務或群組
 function add_service(){
+<<<<<<< HEAD
 	if($('#add_service_text').val() ==''){
 		alert('請填寫名稱');
 	}else{
@@ -206,6 +271,25 @@ function add_service(){
 	    	}
 	    });
 	}
+=======
+	$.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: 'service_add',
+        data: {name:$('#add_service_text').val(),parent:$('#add_group_sel :selected').val()},
+        success: function(data) {
+        	if(data=='no'){
+	        	alert('權限不足或系統異常');
+	        	window.location.href='/tw/auth/manager/main';
+	        }else{
+		        window.location.reload();
+		    }
+        	
+    	}
+    });
+>>>>>>> master
 }
 //切換設施服務輸入介面
 function toggle_service_interface(){
