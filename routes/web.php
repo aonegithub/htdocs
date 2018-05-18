@@ -59,6 +59,9 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 
 		//客房設施
 			Route::get('room_installation', 'Auth\RoomInstallationController@main');
+			Route::post('room_installation_add', 'Auth\RoomInstallationController@addPost'); 	//ajax
+			Route::post('room_installation_edit', 'Auth\RoomInstallationController@editPost'); //ajax
+			Route::post('room_installation_del', 'Auth\RoomInstallationController@delPost'); 	//ajax
 
 	});
 });

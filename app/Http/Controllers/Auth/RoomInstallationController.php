@@ -46,9 +46,9 @@ class RoomInstallationController extends Controller
         $group_s1 =($group_q !='-1')?$group_q:'%';
         $group_s2 =($group_q =='-2')?'-1':'%';         //如果為群組瀏覽模式
         $queryString =['group'=>$group_q];
-        //讀取設施與服務(群組)
+        //讀取客房設施(群組)
         $Room_Installation_Groups =Room_Installation::where('room_installation_list.is_group','1')->select('room_installation_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `room_installation_list` as sl WHERE sl.`parent`=`room_installation_list`.`nokey`) as `child_count`'))->get();
-        //讀取設施與服務(項目)
+        //讀取客房設施(項目)
         $Room_Installation_Items ='';
         if($group_q =='-2'){
             $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s2)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
@@ -70,7 +70,7 @@ class RoomInstallationController extends Controller
     }
 // 新增服務 ajax
     public function addPost(Request $request,$country){
-        $auth_key =45; //權限碼
+        $auth_key =49; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -105,7 +105,7 @@ class RoomInstallationController extends Controller
     }
 // 編輯服務 ajax
     public function editPost(Request $request,$country){
-        $auth_key =46; //權限碼
+        $auth_key =50; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -130,7 +130,7 @@ class RoomInstallationController extends Controller
     }
 // 刪除服務 ajax
     public function delPost(Request $request,$country){
-        $auth_key =47; //權限碼
+        $auth_key =51; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
