@@ -39,8 +39,8 @@
 	      </div>
 	      <div class="modal-body">
 	      	請輸入新名稱：
-	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" style="display:none;">
-	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" required="required">
+	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" style="display:none;">
+	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" required="required">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -49,11 +49,8 @@
 	  </div>
 	</div>
 <!-- ** -->
-<div class="row" style="height: 40px;display: block;">
-	<div style="margin-right:5px;float:right;">
-		<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
-	</div>
-	<div style="margin-right:5px;float:right;">
+<div class="row" style="height: 40px;">
+	<div style="margin-right:5px;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有服務設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有群組</option>
@@ -61,6 +58,9 @@
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
+	</div>
+	<div style="margin-right:5px;">
+		<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
 	</div>
 </div>
 <!-- 新增設施服務介面 -->
@@ -76,7 +76,7 @@
 		</select>
 	</div>
 	<div style="float:right;margin:5px;">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入名稱" required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>

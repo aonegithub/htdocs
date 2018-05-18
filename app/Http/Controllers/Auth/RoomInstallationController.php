@@ -55,7 +55,12 @@ class RoomInstallationController extends Controller
         }else{
             $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s1)->orWhere('room_installation_list.nokey','LIKE',$group_s1)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
         }
-        //
+        //ORM test
+        // $tt =Room_Installation::where(function($query){
+        //     $query->where('nokey','>',0)->where('is_group',1);
+        // })->orWhere(function($query){
+        //     $query->where('nokey','>',1)->where('is_group',0);
+        // })->get();
         $binding =[
             'Title' => $this->menu_item_text,
             'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
@@ -87,7 +92,7 @@ class RoomInstallationController extends Controller
         }
         $request =request()->all();
         //
-        $service =new Service;
+        $service =new Room_Installation;
         $service->service_name = $request['name'];
         //C版手續費
         $request['parent']=(!empty($request['parent']))?$request['parent']:'-1';  
@@ -122,7 +127,7 @@ class RoomInstallationController extends Controller
         }
         $request =request()->all();
         //
-        $service =Service::where('nokey',$request['nokey'])->firstOrFail();
+        $service =Room_Installation::where('nokey',$request['nokey'])->firstOrFail();
         $service->service_name = $request['name'];
         $service->save();
 
@@ -150,9 +155,9 @@ class RoomInstallationController extends Controller
         $is_group =($request['group'])?1:0;
         $service =null;
         if($is_group){
-            $service =Service::where('nokey',$request['nokey'])->orWhere('parent',$request['nokey']);
+            $service =Room_Installation::where('nokey',$request['nokey'])->orWhere('parent',$request['nokey']);
         }else{
-            $service =Service::where('nokey',$request['nokey'])->firstOrFail();
+            $service =Room_Installation::where('nokey',$request['nokey'])->firstOrFail();
         }
 
         $service->delete();
