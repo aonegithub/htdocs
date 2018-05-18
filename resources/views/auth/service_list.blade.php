@@ -49,11 +49,11 @@
 	  </div>
 	</div>
 <!-- ** -->
-<div class="row" style="height: 40px;">
-	<div style="margin:5px;">
+<div class="row" style="height: 40px;display: block;">
+	<div style="margin-right:5px;float:right;">
+		<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
 	</div>
-	
-	<div style="margin-right:5px;">
+	<div style="margin-right:5px;float:right;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有服務設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有群組</option>
@@ -62,7 +62,6 @@
 		  @endforeach
 		</select>
 	</div>
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
 </div>
 <!-- 新增設施服務介面 -->
 <div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
