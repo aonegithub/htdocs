@@ -1087,8 +1087,18 @@ var level_global=1;
 	function toggleInput(objID){
 		if($('#'+objID).prop('disabled')){
 			$('#'+objID).prop('disabled',false);
+			//C版開關
+			if(objID =='fees_sale_bonus'){
+				$('#fees_c_bonus').val('0').prop('disabled',true);
+				$('#fees_c').val('0').prop('disabled',true);
+			}
 		}else{
 			$('#'+objID).prop('disabled',true);
+			//C版開關
+			if(objID =='fees_sale_bonus'){
+				$('#fees_c_bonus').val('0').prop('disabled',false);
+				$('#fees_c').val('0').prop('disabled',false);
+			}
 		}
 	}
 	//無限增加聯絡人

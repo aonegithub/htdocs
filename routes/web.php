@@ -56,6 +56,13 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('service_add', 'Auth\ServiceController@addPost'); 	//ajax
 			Route::post('service_edit', 'Auth\ServiceController@editPost'); //ajax
 			Route::post('service_del', 'Auth\ServiceController@delPost'); 	//ajax
+
+		//客房設施
+			Route::get('room_installation', 'Auth\RoomInstallationController@main');
+			Route::post('room_installation_add', 'Auth\RoomInstallationController@addPost'); 	//ajax
+			Route::post('room_installation_edit', 'Auth\RoomInstallationController@editPost'); //ajax
+			Route::post('room_installation_del', 'Auth\RoomInstallationController@delPost'); 	//ajax
+
 	});
 });
 Route::group(['prefix'=>'/{country}/auth'], function(){

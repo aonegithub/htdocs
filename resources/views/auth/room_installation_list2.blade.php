@@ -39,7 +39,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	請輸入新名稱：
-	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" style="display:none;">
+	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" style="display:none;">
 	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" required="required">
 	      </div>
 	      <div class="modal-footer">
@@ -50,18 +50,19 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
+	<div style="margin:5px;">
+	</div>
+	
 	<div style="margin-right:5px;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有服務設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有群組</option>
-		  @foreach($Service_Groups as $key => $group)
+		  @foreach($Room_Installation_Groups as $key => $group)
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
 	</div>
-	<div style="margin-right:5px;">
-		<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
-	</div>
+	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
 </div>
 <!-- 新增設施服務介面 -->
 <div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
@@ -70,13 +71,13 @@
 	<div style="float:right;margin:5px;">
 		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif>
 		  <option value='-1'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
-		  @foreach($Service_Groups as $key => $group)
+		  @foreach($Room_Installation_Groups as $key => $group)
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
 	</div>
 	<div style="float:right;margin:5px;">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入名稱" required="required">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
@@ -94,7 +95,7 @@
   </thead>
   
   <tbody class="list_tr">
-	@foreach($Service_Items as $key => $item)
+	@foreach($Room_Installation_Items as $key => $item)
 		<tr>
 			<td>{{$item->service_name}}</td>
 			<td>
@@ -115,7 +116,7 @@
 
 </table>
 <div id="nav_pagerow" class="row">
-{{ $Service_Items->links('vendor.pagination.bootstrap-4') }}
+{{ $Room_Installation_Items->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection
