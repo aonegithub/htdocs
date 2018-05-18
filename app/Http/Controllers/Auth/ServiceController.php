@@ -40,11 +40,9 @@ class ServiceController extends Controller
             //exit;
         }
         //每頁筆數
-<<<<<<< HEAD
+
         $page_row = 30;
-=======
-        $page_row = 15;
->>>>>>> master
+
         //
         $group_q =Request::input('group');            //群組查詢
         $group_s1 =($group_q !='-1')?$group_q:'%';
@@ -53,16 +51,14 @@ class ServiceController extends Controller
         //讀取設施與服務(群組)
         $Service_Groups =Service::where('service_list.is_group','1')->select('service_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `service_list` as sl WHERE sl.`parent`=`service_list`.`nokey`) as `child_count`'))->get();
         //讀取設施與服務(項目)
-<<<<<<< HEAD
+
         $Service_Items ='';
         if($group_q =='-2'){
             $Service_Items =Service::where('service_list.parent','LIKE',$group_s2)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
         }else{
             $Service_Items =Service::where('service_list.parent','LIKE',$group_s1)->orWhere('service_list.nokey','LIKE',$group_s1)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
         }
-=======
-        $Service_Items =Service::where('service_list.parent','LIKE',$group_s)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
->>>>>>> master
+
         //
         $binding =[
             'Title' => $this->menu_item_text,
