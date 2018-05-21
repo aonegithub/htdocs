@@ -86,7 +86,7 @@ class RoomNameController extends Controller
 
         return 'ok';
     }
-// 編輯服務 ajax
+// 編輯服務 ajax，以ajax背景傳輸方式執行
     public function editPost(Request $request,$country){
         $auth_key =54; //權限碼
         //讀取管理者資訊
