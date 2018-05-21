@@ -18,7 +18,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        已刪除此服務
+	        已刪除此此房型名稱
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
@@ -32,15 +32,15 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">修改名稱</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">修改房型名稱</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body">
 	      	請輸入新名稱：
-	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入服務名稱" style="display:none;">
-	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" required="required">
+	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入房型名稱" style="display:none;">
+	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入新房型名稱" required="required">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -50,34 +50,15 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
-	<div style="margin:5px;">
-	</div>
-	
-	<div style="margin-right:5px;">
-		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
-		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有服務設施與群組</option>
-		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有群組</option>
-		  @foreach($Room_Installation_Groups as $key => $group)
-			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
-		  @endforeach
-		</select>
-	</div>
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增設施與服務或群組</a>
+	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 5px;">新增房型名稱</a>
+	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-primary" style="">客房設施管理</a>
 </div>
 <!-- 新增設施服務介面 -->
 <div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
 	<div style="float:right;margin:5px;">
 	</div>
 	<div style="float:right;margin:5px;">
-		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif>
-		  <option value='-1'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
-		  @foreach($Room_Installation_Groups as $key => $group)
-			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
-		  @endforeach
-		</select>
-	</div>
-	<div style="float:right;margin:5px;">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入名稱" required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="房型名稱" required="required">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
@@ -88,27 +69,18 @@
 <table class="table table-hover" style="margin-top:10px;">
   <thead class="thead-light">
     <tr>
-      <th scope="col">設施服務名稱</th>
-      <th scope="col">所屬群組</th>
+      <th scope="col">房型名稱</th>
       <th scope="col"></th>
     </tr>
   </thead>
   
   <tbody class="list_tr">
-	@foreach($Room_Installation_Items as $key => $item)
+	@foreach($Room_Name_Items as $key => $item)
 		<tr>
-			<td>{{$item->service_name}}</td>
+			<td>{{$item->name}}</td>
 			<td>
-				@if(!$item->is_group)
-					{{$item->sl_name}}
-				@else
-					<span style="color: #dba502">設施群組名稱</span>
-				@endif
-
-			</td>
-			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
-				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})" class="btn btn-primary">刪除</a>
+				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
+				<a href="#" onclick="del_service({{$item->nokey}})" class="btn btn-primary">刪除</a>
 			</td>
 		</tr>
 	@endforeach
@@ -116,16 +88,15 @@
 
 </table>
 <div id="nav_pagerow" class="row">
-{{ $Room_Installation_Items->links('vendor.pagination.bootstrap-4') }}
+{{ $Room_Name_Items->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
 //執行刪除
-function del_service(key,is_group){
-	confirm_text =(is_group)?"確定要刪除此群組及所屬設施？":"確定要刪除此設施？";
-	if(confirm(confirm_text)){
+function del_service(key){
+	if(confirm('確定要刪除房型名稱？')){
 		//do ajax
 		//console.log(confirm_text+'='+is_group);
 		$.ajax({
@@ -133,8 +104,8 @@ function del_service(key,is_group){
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'service_del',
-	        data: {group:is_group,nokey:key},
+	        url: 'room_name_del',
+	        data: {nokey:key},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');
@@ -159,7 +130,7 @@ function edit_service(){
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'service_edit',
+	        url: 'room_name_edit',
 	        data: {name:$('#new_service_name').val(),nokey:$('#service_nokey').val()},
 	        success: function(data) {
 	        	if(data=='no'){
@@ -179,22 +150,18 @@ function open_edit_interface(service_name, key){
 	$('#service_nokey').val(key);
 	$('#editWindow').modal("toggle");
 }
-//切換群組查看
-function chg_group(obj){
-	window.location.href='?group='+$(obj).val();
-}
 //新增設施服務或群組
 function add_service(){
 	if($('#add_service_text').val() ==''){
-		alert('請填寫名稱');
+		alert('請填寫房型名稱');
 	}else{
 		$.ajax({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'service_add',
-	        data: {name:$('#add_service_text').val(),parent:$('#add_group_sel :selected').val()},
+	        url: 'room_name_add',
+	        data: {name:$('#add_service_text').val()},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');

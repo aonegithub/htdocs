@@ -50,8 +50,6 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
-	<div style="margin:5px;">
-	</div>
 	
 	<div style="margin-right:5px;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
@@ -62,7 +60,8 @@
 		  @endforeach
 		</select>
 	</div>
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="">新增客房設施或群組</a>
+	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 5px;">新增客房設施或群組</a>
+	<a href="javascript:window.location.href='room_name'" class="btn btn btn-primary" style="">房型名稱管理</a>
 </div>
 <!-- 新增設施服務介面 -->
 <div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
