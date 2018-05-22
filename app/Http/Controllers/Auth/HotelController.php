@@ -34,7 +34,7 @@ class HotelController extends Controller
         $c_type_q =Request::input('c_type');            //合作
         $room_count_q =Request::input('room_count');    //房間
         $holiday_q =Request::input('holiday');          //連假房價
-        $search_q =Request::input('search');            //關鍵字
+        $search_q =trim(Request::input('search'));      //關鍵字
         $queryString =['state'=>$state_q,'ver'=>$ver_q,'country'=>$country_q,'area2'=>$area2_q,'area3'=>$area3_q,'ctrl'=>$ctrl_q,'c_type'=>$c_type_q,'room_count'=>$room_count_q,'holiday'=>$holiday_q,'search'=>$search_q];
         // 資料庫用
         $state_s =($state_q==null ||$state_q=='-1')?'%':$state_q;                           //狀態
