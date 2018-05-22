@@ -50,6 +50,13 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('hotel_disable/{hotelkey}', 'Auth\HotelController@disableAjax'); //異步關閉(ajax)
 			Route::get('hotel_browse/{hotelkey}', 'Auth\HotelController@browse');
 			Route::post('hotel_comm_add/{hotelkey}', 'Auth\HotelController@addCommAjax'); //異步寫入備註(協調內容)(ajax)
+		//飯店管理/內部人員權限管理
+			Route::get('hotel_auth_list/{hotel_key}', 'Auth\HotelAuthController@main');
+			Route::get('hotel_auth_add/{hotel_key}', 'Auth\HotelAuthController@add');
+			Route::post('hotel_auth_add/{hotel_key}', 'Auth\HotelAuthController@addPost');
+			Route::get('hotel_auth_edit/{hotel_key}/{mem_key}', 'Auth\HotelAuthController@edit'); 
+			Route::post('hotel_auth_edit/{hotel_key}/{mem_key}', 'Auth\HotelAuthController@editPost'); 
+			Route::post('hotel_auth_del/{hotel_key}/{mem_key}', 'Auth\HotelAuthController@delPost'); 
 
 		//設施與服務
 			Route::get('service', 'Auth\ServiceController@main');
