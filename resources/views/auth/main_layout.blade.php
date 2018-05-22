@@ -154,7 +154,7 @@
 				<div id="top_count" style="float:right;width: 340px;height: 45px;transform: translateY(30%);clear: both;">
 					<span class="align-middle" role="button" aria-pressed="true" id="top-nav-36" href="#">今日:88　昨日:77　前日:88　總計:6500</span>
 				</div>
-			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司</p>
+			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司　v0.2.1</p>
 		</footer>
 	<!-- Modal -->
 	<div class="modal fade" id="logoutAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
