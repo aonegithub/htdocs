@@ -19,6 +19,7 @@ class Hotel_Comm extends Model
         'hotel_id', 'comm', 'write_id', 'write_name',
     ];
 
+
     // *
     //  * The attributes that should be hidden for arrays.
     //  *

@@ -41,6 +41,8 @@
 	      	請輸入新名稱：
 	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入房型名稱" style="display:none;">
 	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入新房型名稱" required="required">
+	        排序
+	        <input id="new_service_sort" name="new_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -50,12 +52,15 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 5px;">新增房型名稱</a>
-	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-primary" style="">客房設施管理</a>
+	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 260px;">新增房型名稱</a>
+	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-primary" style="margin-right: 5px;">客房設施管理</a>
+	<a href="javascript:window.location.href='room_name'" class="btn btn btn-danger" style="margin-right: 5px;">房型名稱管理</a>
+	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
 </div>
 <!-- 新增設施服務介面 -->
-<div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
+<div class="row" style="clear: both;margin: auto;width: 60%;" id="service_interface">
 	<div style="float:right;margin:5px;">
+		<input id="add_service_sort" name="add_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0" required="required" style="width:60px;">
 	</div>
 	<div style="float:right;margin:5px;">
 		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="房型名稱" required="required">
@@ -70,6 +75,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">房型名稱</th>
+      <th scope="col">排序值</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -78,8 +84,9 @@
 	@foreach($Room_Name_Items as $key => $item)
 		<tr>
 			<td>{{$item->name}}</td>
+			<td>{{$item->sort}}</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
+				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}},{{$item->sort}})" class="btn btn-primary">修改</a>
 				<a href="#" onclick="del_service({{$item->nokey}})" class="btn btn-primary">刪除</a>
 			</td>
 		</tr>
@@ -131,7 +138,7 @@ function edit_service(){
 	        },
 	        type: "POST",
 	        url: 'room_name_edit',
-	        data: {name:$('#new_service_name').val(),nokey:$('#service_nokey').val()},
+	        data: {name:$('#new_service_name').val(),sort:$('#new_service_sort').val(),nokey:$('#service_nokey').val()},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');
@@ -145,8 +152,9 @@ function edit_service(){
 	}
 }
 //打開修改視窗
-function open_edit_interface(service_name, key){
+function open_edit_interface(service_name, key, sort){
 	$('#new_service_name').val(service_name);
+	$('#new_service_sort').val(sort);
 	$('#service_nokey').val(key);
 	$('#editWindow').modal("toggle");
 }
@@ -161,7 +169,7 @@ function add_service(){
 	        },
 	        type: "POST",
 	        url: 'room_name_add',
-	        data: {name:$('#add_service_text').val()},
+	        data: {name:$('#add_service_text').val(),sort:$('#add_service_sort').val()},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');

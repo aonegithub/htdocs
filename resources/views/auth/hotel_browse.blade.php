@@ -852,7 +852,7 @@
 	<div class="row" style="margin-top: 30px;">
 		<a href="javascript:window.history.go(-1);" class="btn btn-primary col-md-2" style="margin-left:10px;margin-right:5px;max-width:16%;">上一頁</a>
 		<a href="../hotel_edit/{{$Hotel->nokey}}" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">修改資料</a>
-		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">權限</a>
+		<a href="../hotel_auth_list/152" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">權限</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">比價表</a>
 		<a href="#" class="btn btn-primary col-md-2" style="margin-right:5px;max-width:16%;">合約書</a>
 		<a href="#" class="btn btn-primary col-md-2" style="">awugo＜-＞飯店留言</a>

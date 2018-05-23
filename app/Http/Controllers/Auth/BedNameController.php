@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
-use App\Awugo\Auth\Room_Name;
+use App\Awugo\Auth\Bed_Name;
 use App\Awugo\Auth\Areas;
 use Carbon\Carbon;
 // use Illuminate\Http\Request;
@@ -17,14 +17,14 @@ use View;
 use DB;
 use Validator;
 
-class RoomNameController extends Controller
+class BedNameController extends Controller
 {
     private $menu_item_code =48;
-    private $menu_item_text ='客房設施／房型名稱';
+    private $menu_item_text ='客房設施／床型名稱';
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 服務管理預設清單
     public function main(Request $request,$country){
-        $auth_key =52; //權限碼
+        $auth_key =56; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -42,9 +42,9 @@ class RoomNameController extends Controller
         //每頁筆數
         $page_row = 30;
         //讀取客房設施(項目)
-        $Room_Name_Items =Room_Name::OrderBy('room_name_list.sort','desc')->OrderBy('room_name_list.nokey','desc')->paginate($page_row);
+        $Bed_Name_Items =Bed_Name::OrderBy('bed_name_list.sort','desc')->OrderBy('bed_name_list.nokey','desc')->paginate($page_row);
         //ORM test
-        // $tt =Room_Installation::where(function($query){
+        // $tt =Bed_Installation::where(function($query){
         //     $query->where('nokey','>',0)->where('is_group',1);
         // })->orWhere(function($query){
         //     $query->where('nokey','>',1)->where('is_group',0);
@@ -55,13 +55,13 @@ class RoomNameController extends Controller
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Country' => $country,
-            'Room_Name_Items' => $Room_Name_Items,
+            'Bed_Name_Items' => $Bed_Name_Items,
         ];
-        return view('auth.room_name_list', $binding);
+        return view('auth.bed_name_list', $binding);
     }
 // 新增服務 ajax
     public function addPost(Request $request,$country){
-        $auth_key =53; //權限碼
+        $auth_key =57; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -78,7 +78,7 @@ class RoomNameController extends Controller
         }
         $request =request()->all();
         //
-        $service =new Room_Name;
+        $service =new Bed_Name;
         $service->name = $request['name'];
         $service->sort = $request['sort'];
         $service->created_id = session()->get('manager_id');
@@ -89,7 +89,7 @@ class RoomNameController extends Controller
     }
 // 編輯服務 ajax，以ajax背景傳輸方式執行
     public function editPost(Request $request,$country){
-        $auth_key =54; //權限碼
+        $auth_key =58; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -106,7 +106,7 @@ class RoomNameController extends Controller
         }
         $request =request()->all();
         //
-        $service =Room_Name::where('nokey',$request['nokey'])->firstOrFail();
+        $service =Bed_Name::where('nokey',$request['nokey'])->firstOrFail();
         $service->name = $request['name'];
         $service->sort = $request['sort'];
         $service->save();
@@ -115,7 +115,7 @@ class RoomNameController extends Controller
     }
 // 刪除服務 ajax
     public function delPost(Request $request,$country){
-        $auth_key =55; //權限碼
+        $auth_key =59; //權限碼
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -132,7 +132,7 @@ class RoomNameController extends Controller
         }
         $request =request()->all();
         //
-        $service =Room_Name::where('nokey',$request['nokey'])->firstOrFail();
+        $service =Bed_Name::where('nokey',$request['nokey'])->firstOrFail();
 
         $service->delete();
 

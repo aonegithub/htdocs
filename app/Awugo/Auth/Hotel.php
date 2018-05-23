@@ -32,6 +32,10 @@ class Hotel extends Model
         'login_group_url','login_group_count','expire', 'booking_day', 'cooperation', 'd_display_tel', 'sort', 'holiday', 'created_manager_id', 'created_manager_name',
     ];
 
+    public function getManager(){
+        return $this->hasMany('App\Awugo\Auth\HotelManagers');
+    }
+
     // *
     //  * The attributes that should be hidden for arrays.
     //  *

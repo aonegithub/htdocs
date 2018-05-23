@@ -4,23 +4,20 @@ namespace App\Awugo\Auth;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HotelManagers extends Model
+class Bed_Name extends Model
 {
     //資料表
-    protected $table ='hotel_manager_list';
+    protected $table ='bed_name_list';
     //主鍵
     protected $primaryKey = 'nokey';
-    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      * 可大量異動的欄位
      * @var array
      */
     protected $fillable = [
-        'id', 'hotel_list_id','passwd', 'name', 'department', 'auth' ,
+        'name', 'created_id','created_name',
     ];
-
-    
 
     // *
     //  * The attributes that should be hidden for arrays.
@@ -30,4 +27,5 @@ class HotelManagers extends Model
     // protected $hidden = [
     //     'password', 'remember_token',
     // ];
+    // 
 }

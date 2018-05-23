@@ -50,6 +50,7 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('hotel_disable/{hotelkey}', 'Auth\HotelController@disableAjax'); //異步關閉(ajax)
 			Route::get('hotel_browse/{hotelkey}', 'Auth\HotelController@browse');
 			Route::post('hotel_comm_add/{hotelkey}', 'Auth\HotelController@addCommAjax'); //異步寫入備註(協調內容)(ajax)
+
 		//飯店管理/內部人員權限管理
 			Route::get('hotel_auth_list/{hotel_key}', 'Auth\HotelAuthController@main');
 			Route::get('hotel_auth_add/{hotel_key}', 'Auth\HotelAuthController@add');
@@ -69,11 +70,16 @@ Route::group(['prefix'=>'/{country}/auth/manager'], function(){
 			Route::post('room_installation_add', 'Auth\RoomInstallationController@addPost'); 	//ajax
 			Route::post('room_installation_edit', 'Auth\RoomInstallationController@editPost'); //ajax
 			Route::post('room_installation_del', 'Auth\RoomInstallationController@delPost'); 	//ajax
-		//客房名稱
+		//房型名稱
 			Route::get('room_name', 'Auth\RoomNameController@main');
 			Route::post('room_name_add', 'Auth\RoomNameController@addPost'); 	//ajax
 			Route::post('room_name_edit', 'Auth\RoomNameController@editPost'); //ajax
 			Route::post('room_name_del', 'Auth\RoomNameController@delPost'); 	//ajax
+		//床型名稱
+			Route::get('bed_name', 'Auth\BedNameController@main');
+			Route::post('bed_name_add', 'Auth\BedNameController@addPost'); 	//ajax
+			Route::post('bed_name_edit', 'Auth\BedNameController@editPost'); //ajax
+			Route::post('bed_name_del', 'Auth\BedNameController@delPost'); 	//ajax
 
 	});
 });
