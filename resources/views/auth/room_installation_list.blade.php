@@ -50,8 +50,14 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
-	
-	<div style="margin-right:5px;">
+	<div style="margin-right: 15px;"></div>
+	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-danger" style="margin-right: 5px;">客房設施管理</a>
+	<a href="javascript:window.location.href='room_name'" class="btn btn btn-primary" style="margin-right: 5px;">房型名稱管理</a>
+	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
+</div>
+<!-- 新增設施服務介面 -->
+<div class="row" style="clear: both;margin: auto;width: 60%;" id="service_interface">
+	<div style="margin-right:5px;padding-top: 5px;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有客房設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>所有客房設施群組</option>
@@ -59,15 +65,6 @@
 			<option value='{{$group->nokey}}'@if($Group_Query==$group->nokey) selected=""  @endif>{{$group->service_name}}（{{$group->child_count}}）</option>
 		  @endforeach
 		</select>
-	</div>
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 15px;">新增客房設施或群組</a>
-	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-danger" style="margin-right: 5px;">客房設施管理</a>
-	<a href="javascript:window.location.href='room_name'" class="btn btn btn-primary" style="margin-right: 5px;">房型名稱管理</a>
-	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
-</div>
-<!-- 新增設施服務介面 -->
-<div class="row" style="clear: both;margin: auto;width: 60%;" id="service_interface">
-	<div style="float:right;margin:5px;">
 	</div>
 	<div style="float:right;margin:5px;">
 		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif>
@@ -78,11 +75,11 @@
 		</select>
 	</div>
 	<div style="float:right;margin:5px;">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required" style="width: 245px;">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
-		<a href="javascript:toggle_service_interface()" class="btn btn-primary">取消</a>
+		<a href="javascript:toggle_service_interface()" class="btn btn-primary">關閉</a>
 	</div>
 </div>
 <!-- 清單內容 -->

@@ -52,7 +52,7 @@
 	</div>
 <!-- ** -->
 <div class="row" style="height: 40px;">
-	<a href="javascript:toggle_service_interface()" class="btn btn btn-primary" style="margin-right: 260px;">新增房型名稱</a>
+	<div style="margin-right: 15px;"></div>
 	<a href="javascript:window.location.href='room_installation'" class="btn btn btn-primary" style="margin-right: 5px;">客房設施管理</a>
 	<a href="javascript:window.location.href='room_name'" class="btn btn btn-danger" style="margin-right: 5px;">房型名稱管理</a>
 	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
@@ -63,11 +63,11 @@
 		<input id="add_service_sort" name="add_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0" required="required" style="width:60px;">
 	</div>
 	<div style="float:right;margin:5px;">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="房型名稱" required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="新增房型名稱" required="required" style="width: 245px;">
 	</div>
 	<div style="float:right;margin:5px;">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
-		<a href="javascript:toggle_service_interface()" class="btn btn-primary">取消</a>
+		<a href="javascript:toggle_service_interface()" class="btn btn-primary">關閉</a>
 	</div>
 </div>
 <!-- 清單內容 -->
