@@ -58,9 +58,9 @@
 	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
 </div>
 <!-- 新增設施服務介面 -->
-<div class="row" style="clear: both;margin: auto;width: 60%;" id="service_interface">
+<div class="row" style="clear: both;width: 60%;padding-left:10px" id="service_interface">
 	<div style="float:right;margin:5px;">
-		<input id="add_service_sort" name="add_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="0" required="required" style="width:60px;">
+		<input id="add_service_sort" name="add_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" required="required" style="width:60px;" placeholder="排序">
 	</div>
 	<div style="float:right;margin:5px;">
 		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="新增房型名稱" required="required" style="width: 245px;">
@@ -86,8 +86,8 @@
 			<td>{{$item->name}}</td>
 			<td>{{$item->sort}}</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}},{{$item->sort}})" class="btn btn-primary">修改</a>
-				<a href="#" onclick="del_service({{$item->nokey}})" class="btn btn-primary">刪除</a>
+				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}},{{$item->sort}})">修改</a>
+				<a href="#" onclick="del_service({{$item->nokey}})">刪除</a>
 			</td>
 		</tr>
 	@endforeach

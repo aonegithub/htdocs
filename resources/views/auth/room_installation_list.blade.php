@@ -56,7 +56,7 @@
 	<a href="javascript:window.location.href='bed_name'" class="btn btn btn-primary" style="margin-right: 5px;">床型名稱管理</a>
 </div>
 <!-- 新增設施服務介面 -->
-<div class="row" style="clear: both;margin: auto;width: 60%;" id="service_interface">
+<div class="row" style="clear: both;width: 60%;margin-left:1px;" id="service_interface">
 	<div style="margin-right:5px;padding-top: 5px;">
 		<select class="form-control" id="group_sel" name="group_sel" onchange="chg_group(this)">
 		  <option value='-1'@if($Group_Query=='-1') selected=""  @endif>所有客房設施與群組</option>
@@ -105,8 +105,8 @@
 
 			</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
-				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})" class="btn btn-primary">刪除</a>
+				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})">修改</a>
+				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})">刪除</a>
 			</td>
 		</tr>
 	@endforeach

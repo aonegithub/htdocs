@@ -188,9 +188,9 @@
 					客服訂房
 		      	@endif
 		      </td>
-		      <td><a href="#">權限</a></td>
+		      <td><a href="hotel_auth_list/{{ $hotel->nokey }}">權限</a></td>
 		      <td>
-		      	<a href="hotel_edit/{{ $hotel->nokey }}" class="btn btn-primary">修改</a>
+		      	<a href="hotel_edit/{{ $hotel->nokey }}">修改</a>
 		      </td>
 	    </tr>
 	    @endforeach

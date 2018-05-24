@@ -40,7 +40,7 @@ class RoomNameController extends Controller
             //exit;
         }
         //每頁筆數
-        $page_row = 30;
+        $page_row = 20;
         //讀取客房設施(項目)
         $Room_Name_Items =Room_Name::OrderBy('room_name_list.sort','desc')->OrderBy('room_name_list.nokey','desc')->paginate($page_row);
         //ORM test

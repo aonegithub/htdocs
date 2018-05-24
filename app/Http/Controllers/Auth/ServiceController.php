@@ -41,7 +41,7 @@ class ServiceController extends Controller
         }
         //每頁筆數
 
-        $page_row = 30;
+        $page_row = 20;
 
         //
         $group_q =Request::input('group');            //群組查詢

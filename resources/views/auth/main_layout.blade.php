@@ -77,6 +77,9 @@
 			.input-group-text{
 				color:#000;
 			}
+			.table td, .table th {
+				padding:.2rem;
+			}
 			@yield('instyle')
 		</style>
         

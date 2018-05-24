@@ -63,7 +63,7 @@ class HotelController extends Controller
                 \Debugbar::error(Carbon::now());
                // exit;
         //讀取飯店清單
-        $page_row = 30;
+        $page_row = 20;
         // $Hotel =Hotel::leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')
         // ->select('hotel_list.*' ,'manager_list.name as m_name', 'manager_list.department')
         // ->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);

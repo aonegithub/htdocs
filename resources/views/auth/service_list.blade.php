@@ -64,10 +64,8 @@
 	</div>
 </div>
 <!-- 新增設施服務介面 -->
-<div class="row" style="clear: both;display: none;margin: auto;width: 60%;" id="service_interface">
-	<div style="float:right;margin:5px;">
-	</div>
-	<div style="float:right;margin:5px;">
+<div class="row" style="clear: both;width: 60%;" id="service_interface">
+	<div style="float:right;margin:5px;margin-left: 0px;">
 		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif>
 		  <option value='-1'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
 		  @foreach($Service_Groups as $key => $group)
@@ -106,8 +104,8 @@
 
 			</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" class="btn btn-primary">修改</a>
-				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})" class="btn btn-primary">刪除</a>
+				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" >修改</a>
+				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})">刪除</a>
 			</td>
 		</tr>
 	@endforeach

@@ -40,7 +40,7 @@ class BedNameController extends Controller
             //exit;
         }
         //每頁筆數
-        $page_row = 30;
+        $page_row = 20;
         //讀取客房設施(項目)
         $Bed_Name_Items =Bed_Name::OrderBy('bed_name_list.sort','desc')->OrderBy('bed_name_list.nokey','desc')->paginate($page_row);
         //ORM test
