@@ -18,62 +18,59 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        新增完成，回到新增頁面繼續新增
+	        修改完成
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href='/{{$Country}}/auth/manager/authority_list'">OK！</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 @endif
-<div class="row" style="margin-bottom: 10px;">
-	<div style="text-align:left;" class="col-md-6">
-		<a href="/{{$Country}}/auth/manager/hotel_browse/{{$Hotel->nokey}}">{{$Hotel->name}}</a>／<a href="/{{$Country}}/auth/manager/hotel_auth_list/{{$Hotel->nokey}}">權限管理</a>／新增帳號
-	</div>
-	<div style="text-align:right;" class="col-md-6">
-		<a href="javascript:alert('/{{$Country}}/hotel_admin/{{$Hotel->nokey}}')" class="btn btn-secondary">進入{{$Hotel->name}}後台</a>
-		<a href="/{{$Country}}/auth/manager/hotel_auth_add/{{$Hotel->nokey}}" class="btn btn-secondary">新增帳號</a>
-		<a href="/{{$Country}}/auth/manager/hotel_auth_list/{{$Hotel->nokey}}" class="btn btn-secondary">返回清單</a>
-	</div>
+<div style="text-align:right;">
+	<a href="javascript:alert('/{{$Country}}/hotel_admin/{{$Manager->hotel_list_id}}')" class="btn btn-secondary">進入後台</a>
+	<a href="/{{$Country}}/auth/manager/hotel_auth_add/{{$Manager->hotel_list_id}}" class="btn btn-secondary">新增帳號</a>
+	<a href="/{{$Country}}/auth/manager/hotel_auth_list/{{$Manager->hotel_list_id}}" class="btn btn-secondary">返回清單</a>
 </div>
-	<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_auth_add/{{$Hotel->nokey}}">
+	<form method="POST" role="form" action="/{{$Country}}/auth/manager/hotel_auth_edit/{{$Manager->hotel_list_id}}/{{$Manager->nokey}}">
 		{{ csrf_field() }}
 		<!-- 會員資料 -->
-		<div class="form-group row">
-		    <label for="inputID" class="col-sm-1 col-form-label">登入帳號</label>
-		    <div class="col-sm-11">
-		    	<input type="text" class="form-control" id="inputID" name="inputID" placeholder="登入帳號" value="">
-		    </div>
+		<div class="form-group">
+		    <label for="inputID">登入帳號為</label>
+		    <h3>{{ $Manager->id }}</h3>
 	  	</div>
 		<div class="form-group row">
 		    <label for="inputUserID" class="col-sm-1 col-form-label">使用人</label>
 		    <div class="col-sm-11">
-		    	<input type="text" class="form-control" id="inputUserID" name="inputUserID" placeholder="使用者姓名" value="">
+		    	<input type="text" class="form-control" id="inputUserID" name="inputUserID" placeholder="使用者姓名" value="{{ $Manager->name }}">
 			</div>
 	  	</div>
-	  	<div class="pwdChg">
+	  	<div class="pwdChg" style="display:none;">
 			<div class="form-group row">
-			    <label for="exampleInputPassword1" class="col-sm-1 col-form-label">輸入密碼</label>
+			    <label for="exampleInputPassword1" class="col-sm-1 col-form-label">新密碼</label>
 			    <div class="col-sm-11">
 			    	<input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" placeholder="輸入密碼">
-			    </div>
+				</div>
 			</div>
 			<div class="form-group row">
-			    <label for="exampleInputPassword2" class="col-sm-1 col-form-label">確認密碼</label>
+			    <label for="exampleInputPassword2" class="col-sm-1 col-form-label">確認新密碼</label>
 			    <div class="col-sm-11">
 			    	<input type="password" class="form-control" name="exampleInputPassword2" id="exampleInputPassword2" placeholder="請重複密碼">
 			    </div>
 			</div>
 		</div>
+		<label class="custom-control custom-checkbox" style="text-align: right;">
+		    <input name="editPW" id="editPW" type="checkbox" class="custom-control-input" value="editPW" onchange="togglePwd()">
+		    <span class="custom-control-indicator"></span>修改密碼
+		</label>
 	  	<div class="form-group row">
 		    <label for="inputDepartment" class="col-sm-1 col-form-label">部門</label>
 		    <div class="col-sm-11">
-		    	<input type="text" class="form-control" id="inputDepartment" name="inputDepartment" placeholder="所屬部門" value="">
+		    	<input type="text" class="form-control" id="inputDepartment" name="inputDepartment" placeholder="所屬部門" value="{{ $Manager->department }}">
 		    </div>
 	  	</div>
 	  	<label class="custom-control custom-checkbox" style="text-align: right;">
-		    <input name="enableAccount" id="enableAccount" type="checkbox" class="custom-control-input" value="enableAccount" checked="checked">
+		    <input name="enableAccount" id="enableAccount" type="checkbox" class="custom-control-input" value="enableAccount">
 		    <span class="custom-control-indicator"></span>啟動帳號
 		</label>
 		<!-- 全選權限 -->
@@ -108,15 +105,22 @@
 		@endif
 			@endforeach
 		</div>
-		<button type="submit" class="btn btn-secondary btn-lg btn-block">確定新增</button>
+		<button type="submit" class="btn btn-secondary btn-lg btn-block">修改確定</button>
 	</form>
 @endsection
 
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
+function togglePwd(){
+	$(".pwdChg").slideToggle();
+}
 @endsection
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+	//隱藏權限不符的系統按鈕
+	@if(!in_array('33',$Auths))
+    	$("#top-nav-29").hide();
+    @endif
 	//小群組全選
 	$("input[data-type='root']").change(function(){
 		//alert(0);
@@ -136,8 +140,16 @@
 			$("input[data-all=auth]").prop("checked", false);
 		}
 	});
-	//新增完成跳出確認
+	//修改完成跳出確認
 	@if(!is_null(session()->get('controll_back_msg')))
 		$('#okAlert').modal("toggle");
 	@endif
+	//自動勾選是否已經啟動帳號
+	//顯示自動勾選已擁有的權限
+	@foreach($Manager_auth as $auth_id)
+		@if($Manager->enable)
+			$("#enableAccount").attr("checked", "checked");
+		@endif
+		$(".auth_chk_{{ $auth_id }}").attr("checked", "checked");
+	@endforeach
 @endsection

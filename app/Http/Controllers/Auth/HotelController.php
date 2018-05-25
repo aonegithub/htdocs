@@ -8,6 +8,8 @@ use App\Awugo\Auth\Authority;
 use App\Awugo\Auth\Managers;
 use App\Awugo\Auth\Hotel;
 use App\Awugo\Auth\Hotel_Comm;
+use App\Awugo\Auth\HotelManagers;
+use App\Awugo\Auth\HotelAuthority;
 use App\Awugo\Auth\Areas;
 use Carbon\Carbon;
 // use Illuminate\Http\Request;
@@ -241,7 +243,30 @@ class HotelController extends Controller
         $hotel->created_manager_name=session()->get('manager_name');    //寫入者
         $hotel->created_manager_id=session()->get('manager_id');        //寫入者外鍵
         $hotel->save();
-
+        //寫入權限管理員表
+        if ($request['login_id'] !='') {
+            //取得權限總索引
+            $h_auth =HotelAuthority::get(['nokey'])->toArray();
+            $auth_string='';
+            //因為產生無法Array to String的例外，改用手動組拚
+            foreach($h_auth as $auth){
+                $auth_string .=$auth['nokey'].',';
+            }
+            $auth_string =substr($auth_string,0,-1);                     //去除最後的逗號(手動組拚的缺陷)
+            // echo $auth_string;
+            //
+            $hotel_menager =new HotelManagers;
+            $hotel_menager->id=$request['login_id'];
+            $hotel_menager->passwd=Hash::make($request['login_passwd']);
+            $hotel_menager->hotel_list_id=$hotel->nokey;
+            $hotel_menager->name=$request['login_name'];
+            $hotel_menager->department=$request['login_com'];
+            $hotel_menager->auth=$auth_string;
+            $hotel_menager->ip=Request::ip();
+            $hotel_menager->created_id=session()->get('manager_id');
+            $hotel_menager->created_name=session()->get('manager_name');
+            $hotel_menager->save();
+        }
         return redirect()->to('/'. $country .'/auth/manager/hotel_add')->with('controll_back_msg', 'ok');
     }
 // 飯店管理編輯介面View
@@ -410,11 +435,7 @@ class HotelController extends Controller
         $hotel->login_tel=$request['login_tel'];                        //登錄者電話
         $hotel->login_mobile=$request['login_mobile'];                  //登錄者手機
         $hotel->login_email=$request['login_email'];                    //登錄者信箱
-        $hotel->login_id=$request['login_id'];                          //登錄者帳號
-        if(!empty($request['login_passwd'])){
-            $request['login_passwd']=Hash::make($request['login_passwd']);
-            $hotel->login_passwd=$request['login_passwd'];                  //登錄者密碼HASH
-        }
+        
         $hotel->login_is_group=$request['login_is_group'];              //登錄者是否集團
         $hotel->login_group_name=$request['login_group_name'];          //登錄者集團名稱
         $hotel->login_group_url=$request['login_group_url'];            //登錄者集團網址

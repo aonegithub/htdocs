@@ -17,7 +17,7 @@ class HotelManagers extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'hotel_list_id','passwd', 'name', 'department', 'auth' ,
+        'id', 'hotel_list_id','passwd', 'name', 'department', 'auth', 'ip', 'created_name', 'created_id' ,
     ];
 
     

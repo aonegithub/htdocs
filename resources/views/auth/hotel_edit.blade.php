@@ -815,19 +815,6 @@
 						<input type="text" class="form-control" id="login_email" name="login_email" placeholder="" value="{{$Hotel->login_email}}">
 					</div>
 					<!-- ** -->
-					<div class="input-group input-group-sm col-md-2">
-					    <div class="input-group-prepend">
-						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">帳號</span>
-						</div>
-						<input type="text" class="form-control" id="login_id" name="login_id" placeholder="" value="{{$Hotel->login_id}}">
-					</div>
-					<!-- ** -->
-					<div class="input-group input-group-sm col-md-2">
-					    <div class="input-group-prepend">
-						    <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">密碼</span>
-						</div>
-						<input type="password" class="form-control" id="login_passwd" name="login_passwd" placeholder="" value="">
-					</div>
 		    	</div>
 		    </td>
 		  </tr>

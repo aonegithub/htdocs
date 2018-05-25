@@ -18,7 +18,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        已停用此帳號
+	        處理完成
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
@@ -32,6 +32,7 @@
 		<a href="/{{$Country}}/auth/manager/hotel_browse/{{$Hotel->nokey}}">{{$Hotel->name}}</a>／權限管理
 	</div>
 	<div style="text-align:right;" class="col-md-6">
+		<a href="javascript:alert('/{{$Country}}/hotel_admin/{{$Hotel->nokey}}')" class="btn btn-secondary">進入{{$Hotel->name}}後台</a>
 		<a href="/{{$Country}}/auth/manager/hotel_auth_add/{{$Hotel->nokey}}" class="btn btn-secondary">新增飯店管理帳號</a>
 	</div>
 </div>
@@ -42,7 +43,9 @@
       <th scope="col">帳號</th>
       <th scope="col">使用者</th>
       <th scope="col">部門</th>
-      <th scope="col">最後登入</th>
+      <th scope="col">操作人員</th>
+      <th scope="col">操作人IP</th>
+      <th scope="col">最後更動時間</th>
       <th scope="col">啟用狀態</th>
     </tr>
   </thead>
@@ -52,6 +55,8 @@
       <th scope="row" onclick="window.location.href='../hotel_auth_edit/{{$Hotel->nokey}}/{{$Manager->nokey}}'">{{$Manager->id}}</th>
       <td onclick="window.location.href='../hotel_auth_edit/{{$Hotel->nokey}}/{{$Manager->nokey}}'">{{$Manager->name}}</td>
       <td onclick="window.location.href='../hotel_auth_edit/{{$Hotel->nokey}}/{{$Manager->nokey}}'">{{$Manager->department}}</td>
+      <td>{{$Manager->created_name}}</td>
+      <td><a href="https://zh-hant.ipshu.com/ip_map?ip={{$Manager->ip}}" target='_blank'>{{$Manager->ip}}</a></td>
       <td onclick="window.location.href='../hotel_auth_edit/{{$Hotel->nokey}}/{{$Manager->nokey}}'">{{$Manager->updated_at->format('Y-m-d H:i')}}</td>
       <td>
       	<!-- 預設啟動狀態 -->
