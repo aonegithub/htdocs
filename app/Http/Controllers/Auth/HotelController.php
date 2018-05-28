@@ -471,6 +471,8 @@ class HotelController extends Controller
         $Hotel_Comm =Hotel_Comm::where('hotel_id',$hotelKey)->OrderBy('updated_at','desc')->get();
         // 讀取飯店資料
         $Hotel =Hotel::where('nokey',$hotelKey)->firstOrFail();
+        //紀錄瀏覽的飯店編號
+        session()->put('manager_hotel_id',$Hotel->nokey);
         //帶入縣市
         //二級清單
         $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //二級區域

@@ -89,7 +89,24 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 	Route::get('logout', 'SignController@logout');
 });
 
+//業者後台
+Route::group(['prefix'=>'/{country}/auth'], function(){
+	//防空門訪問
+	Route::get('/', function(){
+		return view('errors.404');
+	});
+	//登入塊
+		Route::get('{hotel_id}/', 'HotelAuth\SignController@login');
+		Route::post('{hotel_id}/', 'HotelAuth\SignController@login_post');
+		// Route::post('{hotel_id}/login', 'HotelAuth\SignController@login_post');
+		Route::get('{hotel_id}/logout', 'HotelAuth\SignController@logout');
+	//業者後台主route
+	Route::group(['middleware'=>'auth.hotel.login'], function(){
 
+	// 儀表板(最新消息)
+		Route::get('{hotel_id}/main', 'HotelAuth\ManagerController@main');
+	});
+});
 
 Route::get('/dt', function () {
     return date("Y-m-d H:i:s");
