@@ -54,7 +54,7 @@ class SignController extends Controller
         // 加密密碼用於比對
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
         try {
-          $Manager =HotelManagers::where('id',$input['inputID'])->where('hotel_list_id',substr($hotel_id, 1))->firstOrFail()->toArray();
+          $Manager =HotelManagers::where('id',$input['inputID'])->where('hotel_list_id',substr($hotel_id, 1))->where('enable',1)->firstOrFail()->toArray();
             //判斷是否為管理者
             $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
             if($Manager['if_manager'] && $Manager['enable']=='1'){
@@ -89,7 +89,7 @@ class SignController extends Controller
         //     'Manager' => $Manager,
         // ];
         
-    	return redirect()->to('/'. session()->get('manager_country') .'/auth/'.$hotel_id.'/main');
+    	return redirect()->to('/'. $country .'/auth/'.$hotel_id.'/main');
     	// return var_dump(DB::getQueryLog());
     }
     // 登出口
@@ -101,7 +101,8 @@ class SignController extends Controller
          * 2018-05-03 
          * by A-One
          */
+        session()->put('hotel_country', $country);
         session()->put('manager_country', $country);
-    	return redirect()->to('/'. $country .'/auth/'.$hotel_id.'/main');
+    	return redirect()->to('/'. $country .'/auth/'.$hotel_id);
     }
 }

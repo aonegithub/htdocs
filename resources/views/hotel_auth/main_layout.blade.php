@@ -63,7 +63,7 @@
 			}
 			#sys_btn ul > li{
 				display:inline-block;
-				width:12.2%;
+				width:7.4%;
 				color:#000;
 				border: 0px;
 			}
@@ -107,9 +107,10 @@
 		<div class="container" style="background: #C1E1EE;max-width: 100%;padding-left: 15px;padding-right: 15px;height: 70px;">
 			<div style="float: left;width:125px;height:62px;margin-right: 10px;"><img src="/pic/auth_layout_logo.png" alt=""></div>
 			<div style="float: left;margin-top:15px;font-size: 20px;font-weight: bold;">@yield('hotel_name')管理系統</div>
-			<div id="top_nav" style="width:500px;float: right;">
+			<div id="top_nav" style="float: right;">
 				<ul>
-					<li>選單管理</li>
+					<li>房間管理</li>
+					<li id="top_nav_item_menu">選單管理</li>
 					<li>權限設定</li>
 					<li>合約書</li>
 					<li>awugo<->飯店留言</li>
@@ -128,6 +129,11 @@
 				<li class="btn btn-info"><a href="#">訂單留言</a></li>
 				<li class="btn btn-info"><a href="#">客戶評鑑</a></li>
 				<li class="btn btn-info"><a href="#">訪客留言</a></li>
+				<li class="btn btn-info"><a href="#">最新消息</a></li>
+				<li class="btn btn-info"><a href="#">網路相簿</a></li>
+				<li class="btn btn-info"><a href="#">活動剪影</a></li>
+				<li class="btn btn-info"><a href="#">影音分享</a></li>
+				<li class="btn btn-info"><a href="#">媒體報導</a></li>
 			</ul>
 		</div>
 		<div id="subsys_btn" style="margin-bottom: 5px;margin-top: -4px;">
@@ -148,6 +154,29 @@
 		<footer>
 			<p class="mt-5 mb-3 text-center text-muted" style="clear: both;">© 2017-2018 長龍科技股份有限公司　v0.2.1</p>
 		</footer>
+	<!-- ** -->
+	<div style="width:350px;height:290px;position: absolute;top:0;background-color: #FFF;display: none;box-shadow: 0 6px 6px 2px #cacaca;" id="menu_manage_layout">
+	    <div class="row" style="margin:0px;padding:5px;background-color: #B8CCE4;height: 30px;font-weight: 800;">勾選下列選單代表開啟功能，反之即關閉</div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]">最新消息
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]" checked="">訪客留言
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]">網路相簿
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]">活動剪影
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]">影音分享
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: center;display: block;">
+	    	<input type="checkbox" id="menu_manage[]" name="menu_manage[]">媒體報導
+	    </div>
+	    <div class="row" style="margin:0px;padding:5px;text-align: right;display: block;margin:5px;"><a href="#" class="btn btn-primary">確認</a></div>
+	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="logoutAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -177,9 +206,21 @@
 
     <script type="text/javascript">
     	@yield('custom_script')
+    	function setMenuManagePosition(){
+    		mLeft =$('#top_nav_item_menu').offset().left-($('#menu_manage_layout').width()/2);
+    		mTop =($('#top_nav_item_menu').height()+$('#top_nav_item_menu').offset().top)+2;
+    		$('#menu_manage_layout').css('left',mLeft).css('top',mTop);
+    	}
     	$(function(){
+    		//調整選單管理位置
+    		setMenuManagePosition();
+    		$('#top_nav_item_menu').hover(function(){
+    			$('#menu_manage_layout').slideDown(1000,'easeOutElastic');
+    		});
+    		$('#menu_manage_layout').hover(null,function(){
+    			$('#menu_manage_layout').slideUp(1000,'easeInOutElastic');
+    		});
     		@yield('custom_ready_script')
-			
     	});
     </script>
 </body>

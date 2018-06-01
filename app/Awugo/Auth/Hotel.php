@@ -20,7 +20,7 @@ class Hotel extends Model
         'tel1', 'tel2', 'fax1', 'fax2', 'email1','email2','app_line','app_wechat','license_hotel',
         'license_homestay','lincense_hospitable','type_scale','type_level','type_room','invoice',
         'reg_name','reg_no','credit_card','bank_name','bank_code','bank_account',
-        'bank_account_name','point','version','state','deposit','control','fees_c','fees_c_bonus',
+        'bank_account_name','point', 'introduction', 'traffic_info','version','state','deposit','control','fees_c','fees_c_bonus',
         'fees_ab','fees_ab_bonus','fees_d','fees_d_bonus','fees_sale','fees_sale_bonus','fees_roll',
         'fees_roll_bonus','track','track_comm','checkout','invoice_type','coordinate',
         'local_police','local_police_comm','seo_title','seo_descript','seo_keyword','contact_name',

@@ -2,12 +2,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>地图</title>
- <script type="text/javascript" src="http://ditu.google.cn/maps/api/js?sensor=true&language=zh"></script> 
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDixIeGc4BlnfXin0URu6MPkMTrnP-l33M&language=zh-TW"></script> 
     <script type="text/javascript">
      var map; //地图
   var markerTip ; //图标
   var markerArr = [] ;//图标展示数组
-  var zoom = 14; //地图初始化缩放大小
+  var zoom = 17; //地图初始化缩放大小
   var markerJson = []; //marker的json对象
   var geocoder;
   var searchMarker; //搜索图标
@@ -15,7 +15,21 @@
   var defLat = 22.541984; //深圳纬度
   var defLng = 114.04023400000005; //深圳经度
   function initialize() {
-   var mapCenter = new google.maps.LatLng(defLat, defLng);
+   var mapCenter = new google.maps.Geocoder();
+   mapCenter.geocode( { 'address': '台南市新化區那拔林87-7號'}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+		  icon: '/pic/hotel_point.png',
+          position: results[0].geometry.location,
+		  draggable : true//可拖动标记
+      });
+    }
+	google.maps.event.addListener(marker, "dragend", function(event) {
+      marker_change_Location(marker);
+     });
+  });
    var mapOptions = {
     zoom: zoom,
     center: mapCenter,
@@ -225,7 +239,7 @@
  </script>
 </head>
 <body onload="initialize();" style="margin:0;background:#e3e9f7; background-attachment:fixed;">
-    <div id="map" style="width:100%; height:90%;"></div>
+    <div id="map" style="width:500px; height:500px;"></div>
  
  <input type="button" value="图标展示" onclick="test1();"/>
  <input type="text" id="city" />

@@ -32,7 +32,7 @@
 		<a href="/{{$Country}}/auth/manager/hotel_browse/{{$Hotel->nokey}}">{{$Hotel->name}}</a>／權限管理
 	</div>
 	<div style="text-align:right;" class="col-md-6">
-		<a href="javascript:alert('/{{$Country}}/hotel_admin/{{$Hotel->nokey}}')" class="btn btn-secondary">進入{{$Hotel->name}}後台</a>
+		<a href="/{{$Country}}/auth/h{{$Hotel->nokey}}" class="btn btn-secondary">進入{{$Hotel->name}}後台</a>
 		<a href="/{{$Country}}/auth/manager/hotel_auth_add/{{$Hotel->nokey}}" class="btn btn-secondary">新增飯店管理帳號</a>
 	</div>
 </div>
