@@ -123,6 +123,14 @@ Route::group(['prefix'=>'/{country}/api'], function(){
 	Route::post('getArea4/{parent}', 'Api\AreaApiController@getArea4');		
 	//取得郵遞區號		
 	Route::post('getZipCode/{area_key}', 'Api\AreaApiController@getZipCode');		
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+	//上傳圖片接收(POST)
+	Route::get('up', 'Api\UploadApiController@imageUploadView');
+	Route::post('image', 'Api\UploadApiController@imageUpload');
+	//上傳檔案接收(POST)
+	Route::post('file', 'Api\UploadApiController@fileUpload');
 });
 
 

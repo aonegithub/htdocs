@@ -128,7 +128,7 @@
             </div>
             <!-- ** -->
             <div class="input-group input-group col-md-6" style="padding:0;">
-              <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址" value="{{$Hotel->address}}" onkeyup="initialize(1);">
+              <input id="address" name="address" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="請輸入地址" value="{{$Hotel->address}}" onkeyup="initialize(1);" onblur="initialize(1);">
             </div>
         </div>
     </div>
@@ -268,8 +268,8 @@
             <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">設定飯店所在位置</span>
         </div>
         <span class="form-control">請用滑鼠拖曳圖標至正確精準位置，將用於周邊資訊及房客導航</span>
-        經度：<input type="text" class="form-control" id="mapy" name="mapy" value="{{$Hotel->mapy}}" />
-        緯度：<input type="text" class="form-control" id="mapx" name="mapx" value="{{$Hotel->mapx}}" />
+        經度：<input type="text" id="mapy" name="mapy" value="{{$Hotel->mapy}}" />
+        緯度：<input type="text" id="mapx" name="mapx" value="{{$Hotel->mapx}}" />
     </div>
 </div>
 <!-- ** -->
