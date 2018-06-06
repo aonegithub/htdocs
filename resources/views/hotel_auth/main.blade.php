@@ -4,6 +4,7 @@
 @section('title', $Title)
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
+@section('sub_fun', 'main')
 
 @section('content')
 @if(!is_null(session()->get('controll_back_msg')))

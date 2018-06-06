@@ -7,6 +7,7 @@
         <title>@yield('hotel_name') 管理後台 - @yield('title')</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
         <link rel="stylesheet" href="/css/checkbox.css">
 		<style type="text/css">
 			html{
@@ -137,11 +138,11 @@
 			</ul>
 		</div>
 		<div id="subsys_btn" style="margin-bottom: 5px;margin-top: -4px;">
-			<ul class="container_padding" style="margin-bottom: 0px;margin-top: 0px;">
-				<li class="btn btn-warning"><a href="#">基本資料</a></li>
-				<li class="btn"><a href="#">照片上傳</a></li>
-				<li class="btn"><a href="#">設施與服務</a></li>
-				<li class="btn"><a href="#">客房設定</a></li>
+			<ul id="hotel_subsys_ul" class="container_padding" style="margin-bottom: 0px;margin-top: 0px;">
+				<li id="hotel_subsys-main" class="btn"><a href="main">基本資料</a></li>
+				<li id="hotel_subsys-photos" class="btn"><a href="photos">照片上傳</a></li>
+				<li id="hotel_subsys-service" class="btn"><a href="#">設施與服務</a></li>
+				<li id="hotel_subsys-room" class="btn"><a href="#">客房設定</a></li>
 			</ul>
 		</div>
 	</header>
@@ -200,6 +201,7 @@
 	<!-- jQuery331 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
@@ -220,6 +222,9 @@
     		$('#menu_manage_layout').hover(null,function(){
     			$('#menu_manage_layout').slideUp(1000,'easeInOutElastic');
     		});
+    		//子選單亮按鈕 @yield('sub_fun')
+    		$('#hotel_subsys_ul li').removeClass('btn-warning');
+    		$("#hotel_subsys-@yield('sub_fun')").addClass('btn-warning');
     		@yield('custom_ready_script')
     	});
     </script>

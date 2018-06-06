@@ -108,6 +108,10 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 	// 飯店管理(基本資料)
 		Route::get('{hotel_id}/main', 'HotelAuth\ManagerController@main');
 		Route::post('{hotel_id}/main', 'HotelAuth\ManagerController@mainPost');
+	// 照片上傳
+		Route::get('{hotel_id}/photos', 'HotelAuth\PhotoController@main');
+		Route::get('{hotel_id}/photos_plan', 'HotelAuth\PhotoController@plan');
+		Route::post('{hotel_id}/photos', 'HotelAuth\PhotoController@mainPost');
 	});
 });
 
@@ -135,5 +139,5 @@ Route::group(['prefix'=>'/{country}/api'], function(){
 
 
 Route::get('/dt', function () {
-    return date("Y-m-d H:i:s");
+    return date("YmdHis").'_512_'.explode(' ', microtime())[0]*100000000;
 });

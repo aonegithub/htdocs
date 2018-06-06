@@ -16,7 +16,7 @@ class Picture extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'picture_type', 'hotel_list_id', 'title', 'description', 'created_id', 'created_name', 'updated_at', 'created_at',
+        'name', 'picture_type', 'hotel_list_id', 'title', 'description', 'sort', 'category', 'created_id', 'created_name', 'updated_at', 'created_at',
     ];
 
 

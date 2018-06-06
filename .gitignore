@@ -12,3 +12,6 @@
 /desktop.ini
 /.env
 /*.sublime*
+/public/photos/*.jpg
+/public/photos/*/*.jpg
+/public/test_pic/*.jpg
