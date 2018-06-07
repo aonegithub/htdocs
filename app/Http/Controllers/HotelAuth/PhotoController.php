@@ -14,6 +14,7 @@ use DB;
 use Validator;
 use Debugbar;
 use Carbon;
+use File;
 
 class PhotoController extends Controller
 {
@@ -22,7 +23,7 @@ class PhotoController extends Controller
         // exit;
         $Manager =HotelManagers::where('id',session()->get('hotel_manager_id'))->firstOrFail()->toArray();
         // 取出照片
-        $Photos =Picture::where('hotel_list_id',substr(session()->get('hotel_id'),1))->get();
+        $Photos =Picture::where('hotel_list_id',substr(session()->get('hotel_id'),1))->Orderby('sort','desc')->Orderby('updated_at')->get();
         // 取出飯店檔案
         $Hotel =Hotel::find(substr($hotel_id, 1));
         //切分帳號權限
@@ -47,5 +48,29 @@ class PhotoController extends Controller
     // 上傳照片POST
     public function mainPost($country, $hotel_id){
         
+    }
+    // 照片刪除
+    public function delPic($country, $hotel_id){
+        $request =request()->all();
+        $Photos = Picture::find($request['nokey']);
+        $file_name =$Photos->name.'.'.$Photos->picture_type;
+        $photos_path1 = public_path('/photos/100/'.$file_name);
+        $photos_path2 = public_path('/photos/250/'.$file_name);
+        $photos_path3 = public_path('/photos/800/'.$file_name);
+        $photos_path4 = public_path('/photos/'.$file_name);
+        $del_photos =array($photos_path1,$photos_path2,$photos_path3,$photos_path4);
+        File::delete($del_photos);
+        $Photos->delete();
+        return 1;
+    }
+    // 照片資訊修改
+    public function editPic($country, $hotel_id){
+        $request =request()->all();
+        $Photos = Picture::find($request['nokey']);
+        $Photos->title =$request['title'];
+        $Photos->sort =$request['sort'];
+        $Photos->save();
+
+        return 1;
     }
 }
