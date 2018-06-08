@@ -114,6 +114,8 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 		Route::post('{hotel_id}/photos', 'HotelAuth\PhotoController@mainPost');
 		Route::post('{hotel_id}/photos_del', 'HotelAuth\PhotoController@delPic');
 		Route::post('{hotel_id}/photos_edit', 'HotelAuth\PhotoController@editPic');
+		Route::get('{hotel_id}/photos_editplan', 'HotelAuth\PhotoController@editPlan');
+		Route::post('{hotel_id}/photos_cate', 'HotelAuth\PhotoController@changeCate');
 	});
 });
 
