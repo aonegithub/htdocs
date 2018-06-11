@@ -7,8 +7,18 @@
         <title>@yield('hotel_name') 管理後台 - @yield('title')</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+        <!-- jQuery331 -->
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/libs/fancy/jquery.mousewheel.pack.js?v=3.1.3"></script>
+		<script type="text/javascript" src="/libs/fancy/jquery.fancybox.pack.js?v=2.1.5"></script>
+		<link rel="stylesheet" type="text/css" href="/libs/fancy/jquery.fancybox.css?v=2.1.5" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/libs/fancy/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+		<script type="text/javascript" src="/libs/fancy/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+		<link rel="stylesheet" type="text/css" href="/libs/fancy/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+		<script type="text/javascript" src="/libs/fancy/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+		<script type="text/javascript" src="/libs/fancy/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
         <link rel="stylesheet" href="/css/checkbox.css">
+
 		<style type="text/css">
 			html{
 
@@ -198,15 +208,14 @@
 	    </div>
 	  </div>
 	</div>
-	<!-- jQuery331 -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 
     <script type="text/javascript">
+
     	@yield('custom_script')
     	function setMenuManagePosition(){
     		mLeft =$('#top_nav_item_menu').offset().left-($('#menu_manage_layout').width()/2);

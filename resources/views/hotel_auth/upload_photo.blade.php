@@ -63,7 +63,7 @@
 		<li>
 			<div style="width: 250px;height: 250px;">
 				<div style="width:250px;height:150px;overflow: hidden;box-shadow:-5px -5px 10px #ebebeb;" id="pic_div{{$photo->nokey}}">
-					<a data-fancybox data-type="iframe" data-src="photos_editplan?id={{$photo->nokey}}" href="javascript:;" data-toggle="lightbox">
+					<a class="fancybox fancybox.iframe" data-type="iframe" data-src="photos_editplan?id={{$photo->nokey}}" href="photos_editplan?id={{$photo->nokey}}" data-toggle="lightbox">
 					<img src="/photos/250/{{$photo->name}}.{{$photo->picture_type}}" alt="">
 					</a>
 				</div>
@@ -256,15 +256,7 @@ function selPic(id){
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 //啟動lightbox效果
-$("[data-fancybox]").fancybox({
-	'width': 800,
-    'height': 700,
-    'transitionIn': 'elastic', // this option is for v1.3.4
-    'transitionOut': 'elastic', // this option is for v1.3.4
-    // if using v2.x AND set class fancybox.iframe, you may not need this
-    'type': 'iframe',
-    // if you want your iframe always will be 600x250 regardless the viewport size
-    'fitToView' : false,  // use autoScale for v1.3.4
+$(".fancybox").fancybox({
     afterClose  : function() { 
     	//關閉後自動重整
         window.location.reload();
