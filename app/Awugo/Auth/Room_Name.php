@@ -16,7 +16,7 @@ class Room_Name extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'created_id','created_name',
+        'name', 'upload', 'created_id','created_name',
     ];
 
     // *

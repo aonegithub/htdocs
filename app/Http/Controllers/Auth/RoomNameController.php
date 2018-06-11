@@ -80,6 +80,7 @@ class RoomNameController extends Controller
         //
         $service =new Room_Name;
         $service->name = $request['name'];
+        $service->upload = $request['upload'];
         $service->sort = $request['sort'];
         $service->created_id = session()->get('manager_id');
         $service->created_name = session()->get('manager_name');
@@ -108,6 +109,7 @@ class RoomNameController extends Controller
         //
         $service =Room_Name::where('nokey',$request['nokey'])->firstOrFail();
         $service->name = $request['name'];
+        $service->upload = $request['upload'];
         $service->sort = $request['sort'];
         $service->save();
 

@@ -16,7 +16,7 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'service_name', 'is_group', 'parent', 'created_id','created_name',
+        'service_name', 'upload', 'is_group', 'parent', 'created_id','created_name',
     ];
 
     // *

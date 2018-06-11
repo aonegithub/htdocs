@@ -41,8 +41,11 @@
 	      	請輸入新名稱：
 	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入房型名稱" style="display:none;">
 	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="請輸入新房型名稱" required="required">
-	        排序
+	        排序：
 	        <input id="new_service_sort" name="new_service_sort" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="" required="required">
+	        是否提供上傳照片：
+	        <input type="radio" id="upload0" value="1" name="upload">是
+	        <input type="radio" id="upload1" value="0" name="upload">否
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -75,6 +78,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">房型名稱</th>
+      <th scope="col">上傳開放</th>
       <th scope="col">排序值</th>
       <th scope="col"></th>
     </tr>
@@ -84,9 +88,14 @@
 	@foreach($Room_Name_Items as $key => $item)
 		<tr>
 			<td>{{$item->name}}</td>
+			<td>
+				@if($item->upload =='1')
+					是
+				@endif
+			</td>
 			<td>{{$item->sort}}</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}},{{$item->sort}})">修改</a>
+				<a href="#" onclick="open_edit_interface('{{$item->name}}',{{$item->nokey}},{{$item->sort}},{{$item->upload}})">修改</a>
 				<a href="#" onclick="del_service({{$item->nokey}})">刪除</a>
 			</td>
 		</tr>
@@ -129,6 +138,10 @@ function del_service(key){
 function edit_service(){
 //	alert($('#new_service_name').val());
 //	alert($('#service_nokey').val());
+	upload_state =0;
+	if($('#upload0').prop('checked')){
+		upload_state =1;
+	}
 	if($('#new_service_name').val() ==''){
 		alert('請填寫名稱');
 	}else{
@@ -138,7 +151,7 @@ function edit_service(){
 	        },
 	        type: "POST",
 	        url: 'room_name_edit',
-	        data: {name:$('#new_service_name').val(),sort:$('#new_service_sort').val(),nokey:$('#service_nokey').val()},
+	        data: {name:$('#new_service_name').val(),sort:$('#new_service_sort').val(),nokey:$('#service_nokey').val(),upload:upload_state},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');
@@ -152,10 +165,16 @@ function edit_service(){
 	}
 }
 //打開修改視窗
-function open_edit_interface(service_name, key, sort){
+function open_edit_interface(service_name, key, sort, upload){
 	$('#new_service_name').val(service_name);
 	$('#new_service_sort').val(sort);
 	$('#service_nokey').val(key);
+	if(upload=='1'){
+		$('#upload0').prop('checked',true);
+	}else{
+		$('#upload1').prop('checked',true);
+	}
+
 	$('#editWindow').modal("toggle");
 }
 //新增設施服務或群組

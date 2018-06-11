@@ -41,6 +41,9 @@
 	      	請輸入新名稱：
 	      	<input id="service_nokey" name="service_nokey" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" style="display:none;">
 	        <input id="new_service_name" name="new_service_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder="在此輸入新名稱" required="required">
+	        是否提供上傳照片：
+	        <input type="radio" id="upload0" value="1" name="upload">是
+	        <input type="radio" id="upload1" value="0" name="upload">否
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="edit_service()">確定修改</button>
@@ -86,6 +89,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">設施服務名稱</th>
+      <th scope="col">上傳開放</th>
       <th scope="col">所屬群組</th>
       <th scope="col"></th>
     </tr>
@@ -96,6 +100,11 @@
 		<tr>
 			<td>{{$item->service_name}}</td>
 			<td>
+				@if($item->upload =='1')
+					是
+				@endif
+			</td>
+			<td>
 				@if(!$item->is_group)
 					{{$item->sl_name}}
 				@else
@@ -104,7 +113,7 @@
 
 			</td>
 			<td>
-				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}})" >修改</a>
+				<a href="#" onclick="open_edit_interface('{{$item->service_name}}',{{$item->nokey}},{{$item->upload}})" >修改</a>
 				<a href="#" onclick="del_service({{$item->nokey}},{{$item->is_group}})">刪除</a>
 			</td>
 		</tr>
@@ -148,6 +157,10 @@ function del_service(key,is_group){
 function edit_service(){
 //	alert($('#new_service_name').val());
 //	alert($('#service_nokey').val());
+	upload_state =0;
+	if($('#upload0').prop('checked')){
+		upload_state =1;
+	}
 	if($('#new_service_name').val() ==''){
 		alert('請填寫名稱');
 	}else{
@@ -157,7 +170,7 @@ function edit_service(){
 	        },
 	        type: "POST",
 	        url: 'service_edit',
-	        data: {name:$('#new_service_name').val(),nokey:$('#service_nokey').val()},
+	        data: {name:$('#new_service_name').val(),nokey:$('#service_nokey').val(),upload:upload_state},
 	        success: function(data) {
 	        	if(data=='no'){
 		        	alert('權限不足或系統異常');
@@ -171,10 +184,15 @@ function edit_service(){
 	}
 }
 //打開修改視窗
-function open_edit_interface(service_name, key){
+function open_edit_interface(service_name, key, upload){
 	$('#new_service_name').val(service_name);
 	$('#service_nokey').val(key);
 	$('#editWindow').modal("toggle");
+	if(upload=='1'){
+		$('#upload0').prop('checked',true);
+	}else{
+		$('#upload1').prop('checked',true);
+	}
 }
 //切換群組查看
 function chg_group(obj){
