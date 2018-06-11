@@ -102,6 +102,7 @@ class RoomInstallationController extends Controller
         }
         $service->parent = $request['parent'];
         $service->is_group = $is_group;
+        $service->upload = $request['upload'];
         $service->created_id = session()->get('manager_id');
         $service->created_name = session()->get('manager_name');
         $service->save();
@@ -129,6 +130,7 @@ class RoomInstallationController extends Controller
         //
         $service =Room_Installation::where('nokey',$request['nokey'])->firstOrFail();
         $service->service_name = $request['name'];
+        $service->upload = $request['upload'];
         $service->save();
 
         return 'ok';
