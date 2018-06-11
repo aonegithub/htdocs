@@ -41,6 +41,8 @@ class PhotoController extends Controller
         $Photo_count[3] =Picture::where('hotel_list_id',substr(session()->get('hotel_id'),1))->where('category',4)->count();
         // 取得其他數量
         $Photo_count[4] =Picture::where('hotel_list_id',substr(session()->get('hotel_id'),1))->where('category',-1)->count();
+        // 取得所有照片數量
+        $Photo_count[5] =Picture::where('hotel_list_id',substr(session()->get('hotel_id'),1))->count();
         // 取出飯店檔案
         $Hotel =Hotel::find(substr($hotel_id, 1));
         //切分帳號權限

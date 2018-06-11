@@ -31,7 +31,7 @@
 <div style="width: 98%;text-align: center;margin: auto;">
 	<div id="photo_category" style="float:left;">
 		<ul>
-			<li><a href="photos">所有照片( {{$Photos->count()}} )</a></li>
+			<li><a href="photos">所有照片( {{$Category_Counts[5]}} )</a></li>
 			<li><a href="photos?cate=1">環境設施( {{$Category_Counts[0]}} )</a></li>
 			<li><a href="photos?cate=2">餐飲( {{$Category_Counts[1]}} )</a></li>
 			<li><a href="photos?cate=3">溫泉SPA( {{$Category_Counts[2]}} )</a></li>
@@ -40,21 +40,21 @@
 		</ul>
 	</div>
 	<div style="float:right; width: 140px;height: 50px;">
-		<a data-fancybox data-type="iframe" data-src="photos_plan" href="javascript:;" class="btn btn-primary btn-sm" data-toggle="lightbox">批次上傳圖片</a>
+		<a data-type="iframe" data-src="photos_plan" href="photos_plan" class="btn btn-primary btn-sm fancybox fancybox.iframe" data-toggle="lightbox">批次上傳照片</a>
 	</div>
 </div>
 <div class="selItemFunRow" style="clear:both;text-align:right;margin: auto;margin-right: 35px;">
 <!-- 		<a href="javascript:editPics()" class="btn btn-success btn-sm">修改照片資訊</a> -->
 		<a href="javascript:delPics()" class="btn btn-danger btn-sm">刪除所勾選照片</a>
 		將勾選的照片歸類到
-		<select id="ver" name="ver">
+		<select id="cate_sel_up" name="cate_sel_up">
 	  	  	<option value='1'>環境設施</option>
 		    <option value='2'>餐飲</option>
 		    <option value='3'>溫泉SPA</option>
 		    <option value='4'>客房</option>
 		    <option value='-1'>其他</option>
 	  	</select>
-	  	<a href="javascript:void(0)" class="btn btn-primary btn-sm">確定</a>
+	  	<a href="javascript:groupChg('cate_sel_up')" class="btn btn-primary btn-sm">確定</a>
 	</div>
 <div class="row" id="photo_gallery" name="photo_gallery" style="width: 98%;margin: auto;">
 	<form action="">
@@ -110,14 +110,14 @@
 <!-- 		<a href="javascript:editPics()" class="btn btn-success btn-sm">修改照片資訊</a> -->
 		<a href="javascript:delPics()" class="btn btn-danger btn-sm">刪除所勾選照片</a>
 		將勾選的照片歸類到
-		<select id="ver" name="ver">
+		<select id="cate_sel_bottom" name="cate_sel_bottom">
 	  	  	<option value='1'>環境設施</option>
 		    <option value='2'>餐飲</option>
 		    <option value='3'>溫泉SPA</option>
 		    <option value='4'>客房</option>
 		    <option value='-1'>其他</option>
 	  	</select>
-	  	<a href="javascript:void(0)" class="btn btn-primary btn-sm">確定</a>
+	  	<a href="javascript:groupChg('cate_sel_bottom')" class="btn btn-primary btn-sm">確定</a>
 	</div>
 	</form>
 </div>
@@ -159,6 +159,32 @@ function numcheck(id,time){
 		alert("只能輸入數字");
 	  	document.getElementById(id).value="0";
 	}
+}
+//群組修改照片
+function groupChg(selID){
+	toCate =$('#'+selID).val();
+	var count = $('input:checkbox:checked[name="sel_pic"]').length;
+	if(count >0){
+		alert('開始移動照片，請稍後');
+	}
+	$('input:checkbox:checked[name="sel_pic"]').each(function(i) { 
+		key =$(this).data('id');
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'photos_cate',
+    		data: {nokey:key,cate:toCate},
+	        success: function(data) {
+				//結束提示
+			    if (i+1 === count) {
+			    	alert('全數移動完成');
+			        window.location.reload();
+			    }
+	    	}
+	    });
+	});
 }
 //修改照片分類
 function changeCate(key,obj){
