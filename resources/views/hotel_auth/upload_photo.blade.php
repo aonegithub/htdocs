@@ -63,17 +63,20 @@
 		<li>
 			<div style="width: 250px;height: 250px;">
 				<div style="width:250px;height:150px;overflow: hidden;box-shadow:-5px -5px 10px #ebebeb;" id="pic_div{{$photo->nokey}}">
-					<a class="fancybox fancybox.iframe" data-type="iframe" data-src="photos_editplan?id={{$photo->nokey}}" href="photos_editplan?id={{$photo->nokey}}" data-toggle="lightbox">
-					<img src="/photos/250/{{$photo->name}}.{{$photo->picture_type}}" alt="">
-					</a>
-				</div>
-				<div style="height:100px;">
-					<div style="float:left;padding-left: 10px;margin-top:5px;margin-bottom: 5px;">
+					<div>
+						<a class="fancybox fancybox.iframe" data-type="iframe" data-src="photos_editplan?id={{$photo->nokey}}" href="photos_editplan?id={{$photo->nokey}}" data-toggle="lightbox">
+						<img src="/photos/250/{{$photo->name}}.{{$photo->picture_type}}" alt="">
+						</a>
+						<div style="position: relative;top:-150px;float:left;padding-left: 10px;margin-top:5px;margin-bottom: 5px;">
 						<input class="form-check-input" type="checkbox" value="{{$photo->nokey}}" name="sel_pic" id="sel_pic{{$photo->nokey}}" data-id="{{$photo->nokey}}" onchange="selPic({{$photo->nokey}})" style="position: relative;margin-left: 0;">
 						<label class="form-check-label" for="sel_pic{{$photo->nokey}}" style="cursor: pointer;">
 						    選擇圖片
 						</label>
 					</div>
+					</div>
+				</div>
+				<div style="height:100px;">
+					
 					<div style="float:right;padding-right: 5px;margin-top:5px;margin-bottom: 5px;">
 						<a href="javascript:delPic({{$photo->nokey}})">刪除</a>
 					</div>

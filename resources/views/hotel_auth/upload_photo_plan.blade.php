@@ -9,7 +9,6 @@
 </style>
 </head>
 <body style="overflow:hidden;max-width: 800px;max-height: 700px;height: 400px;">
- 
  <div style="max-width: 800px;max-height: 700px;height: 400px; padding: 15px;">
 <h2 align="center">拖拉式照片上傳</h2>
  
@@ -21,8 +20,14 @@
  </div>
  
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="/js/dropzone.js"></script>
 <script type="text/javascript">
+$(function(){
+	setTimeout(function(){$( "#form1" ).trigger( "click" );}, 3000);
+	setTimeout(function(){ $("#form1").click()}, 4000);
+});
+
 var fileCountOver =false;
 Dropzone.options.form1 = {
 	maxFilesize: 5,

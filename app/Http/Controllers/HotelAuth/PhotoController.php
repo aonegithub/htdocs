@@ -63,7 +63,7 @@ class PhotoController extends Controller
     }
     //上傳照片平台
     public function plan($country, $hotel_id){
-        app('debugbar')->disable();
+        // app('debugbar')->disable();
         return view('hotel_auth.upload_photo_plan');
     }
     // 上傳照片POST
@@ -86,7 +86,7 @@ class PhotoController extends Controller
     }
     // 照片獨立修改介面
     public function editPlan($country, $hotel_id){
-        app('debugbar')->disable();
+        // app('debugbar')->disable();
         $photo_id =Request::input('id');
         $request =request()->all();
         $Photo = Picture::where('nokey',$photo_id)->where('hotel_list_id',substr($hotel_id,1))->firstOrFail();

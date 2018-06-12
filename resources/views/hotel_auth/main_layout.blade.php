@@ -74,7 +74,7 @@
 			}
 			#sys_btn ul > li{
 				display:inline-block;
-				width:7.4%;
+				width: 110px;
 				color:#000;
 				border: 0px;
 			}

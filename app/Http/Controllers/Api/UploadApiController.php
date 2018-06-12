@@ -97,6 +97,7 @@ class UploadApiController extends Controller
             $picture->name = $name;
             $picture->picture_type = $sub_name;
             $picture->hotel_list_id = $hotel_id;
+            $picture->sort = 0;
             $picture->created_id = $created_id;
             $picture->created_name = $created_name;
             $picture->save();
