@@ -25,13 +25,14 @@
 			}
 			body{
 				font-family: Microsoft JhengHei;
+				min-width: 1440px;
 			}
 			header{
 				
 			}
 			.container{
 				max-width: 1440px;color:#000;
-				min-width: 98%;
+				min-width: 100%;
 				padding: 0px;
 				margin:auto;
 			}
@@ -74,7 +75,7 @@
 			}
 			#sys_btn ul > li{
 				display:inline-block;
-				width: 110px;
+				min-width: 100px;
 				color:#000;
 				border: 0px;
 			}
@@ -83,7 +84,7 @@
 			}
 			#subsys_btn{
 				width:100%;
-				height:70px;
+				height:50px;
 			}
 			#subsys_btn ul{
 				margin-bottom:5px;

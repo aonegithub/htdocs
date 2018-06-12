@@ -23,16 +23,14 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="/js/dropzone.js"></script>
 <script type="text/javascript">
-$(function(){
-	setTimeout(function(){$( "#form1" ).trigger( "click" );}, 3000);
-	setTimeout(function(){ $("#form1").click()}, 4000);
-});
+
 
 var fileCountOver =false;
 Dropzone.options.form1 = {
 	maxFilesize: 5,
 	maxFiles: 10,
 	uploadMultiple: true,
+	clickable: true,
 	acceptedFiles: ".png, .jpg",
 	accept: function(file, done) {
             console.log(file);
@@ -42,6 +40,7 @@ Dropzone.options.form1 = {
             else { done(); }
         },
   	init: function() {
+
 	    this.on("queuecomplete", function(file) { 
 	    	if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
 		        alert('全部上傳完成'); 
@@ -58,6 +57,7 @@ Dropzone.options.form1 = {
 	    });
 	  }
 };
+
 </script>
 
 </html>

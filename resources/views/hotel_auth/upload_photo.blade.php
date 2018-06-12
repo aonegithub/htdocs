@@ -65,14 +65,18 @@
 				<div style="width:250px;height:150px;overflow: hidden;box-shadow:-5px -5px 10px #ebebeb;" id="pic_div{{$photo->nokey}}">
 					<div>
 						<a class="fancybox fancybox.iframe" data-type="iframe" data-src="photos_editplan?id={{$photo->nokey}}" href="photos_editplan?id={{$photo->nokey}}" data-toggle="lightbox">
-						<img src="/photos/250/{{$photo->name}}.{{$photo->picture_type}}" alt="">
+							<img src="/photos/250/{{$photo->name}}.{{$photo->picture_type}}" alt="">
 						</a>
 						<div style="position: relative;top:-150px;float:left;padding-left: 10px;margin-top:5px;margin-bottom: 5px;">
-						<input class="form-check-input" type="checkbox" value="{{$photo->nokey}}" name="sel_pic" id="sel_pic{{$photo->nokey}}" data-id="{{$photo->nokey}}" onchange="selPic({{$photo->nokey}})" style="position: relative;margin-left: 0;">
-						<label class="form-check-label" for="sel_pic{{$photo->nokey}}" style="cursor: pointer;">
-						    選擇圖片
-						</label>
-					</div>
+							<input class="form-check-input" type="checkbox" value="{{$photo->nokey}}" name="sel_pic" id="sel_pic{{$photo->nokey}}" data-id="{{$photo->nokey}}" onchange="selPic({{$photo->nokey}})" style="position: relative;margin-left: 0;visibility: hidden;">
+							<label class="form-check-label" for="sel_pic{{$photo->nokey}}" style="cursor: pointer;">
+								<img id="pic_chk_yes{{$photo->nokey}}" width="32" height="32" src="/pic/photos_checked.png" alt="" style="display:none;">
+							    <img id="pic_chk_no{{$photo->nokey}}" width="32" height="32" src="/pic/photos_check.png" alt="" onmouseover="this.src='/pic/photos_check_hover.png'" onmouseout="this.src='/pic/photos_check.png'">
+							</label>
+						</div>
+						<div class="pic_flag" style="position: relative;top:-170px;left:10px;display:none;">
+							<img src="/pic/cover_flag.png" alt="">
+						</div>
 					</div>
 				</div>
 				<div style="height:100px;">
@@ -87,7 +91,7 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text" id="inputGroup-sizing-sm">排序值</span>
 					  </div>
-					  <input type="number" id="pic_sort{{$photo->nokey}}" name="pic_sort{{$photo->nokey}}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$photo->sort}}" onblur="editPics()" onkeyup="numcheck(this.id,this)">
+					  <input type="number" id="pic_sort{{$photo->nokey}}" name="pic_sort{{$photo->nokey}}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$photo->sort}}" onblur="numcheck(this.id,this)">
 					</div>
 					<!-- ** -->
 					<div class="input-group input-group-sm" style="margin-top: 5px;">
@@ -129,13 +133,17 @@
 @endsection
 
 @section('instyle')
+
 #photo_gallery > form > ul{
 	padding:0;
 	margin:0;
+	min-width: 1460px;
 }
 #photo_gallery > form > ul > li{
 	display:inline-block;
 	margin:19px;
+	max-width: 250px;
+    max-height: 250px;
 }
 #photo_category > ul{
 	padding:0;
@@ -144,9 +152,10 @@
 #photo_category > ul > li{
 	display:inline-block;
 	margin:19px;
+	margin-top: 5px;
 }
 .sel_pic{
-	border: 2px solid red;
+	border: 3px solid #2E75B6;
 }
 .selItemFunRow{
 	display:none;
@@ -161,6 +170,8 @@ function numcheck(id,time){
 	if (!re.test(time.value)){
 		alert("只能輸入數字");
 	  	document.getElementById(id).value="0";
+	}else{
+		editPics();
 	}
 }
 //群組修改照片
@@ -270,6 +281,11 @@ function selPic(id){
 	$('#pic_div'+id).removeClass('sel_pic');
 	if($('#sel_pic'+id).prop("checked")){
 		$('#pic_div'+id).addClass('sel_pic');
+		$('#pic_chk_yes'+id).show();
+		$('#pic_chk_no'+id).hide();
+	}else{
+		$('#pic_chk_no'+id).show();
+		$('#pic_chk_yes'+id).hide();
 	}
 	//selItemFunRow
 	var count = $('input:checkbox:checked[name="sel_pic"]').length;
@@ -284,6 +300,7 @@ function selPic(id){
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+$("#photo_gallery > form > ul > li:first-of-type .pic_flag").show();
 //啟動lightbox效果
 $(".fancybox").fancybox({
     afterClose  : function() { 
