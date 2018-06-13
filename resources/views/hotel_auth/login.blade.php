@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" content="IE=9">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>飯店後台管理_登入</title>
+        <title>Awugo飯店後台管理_登入</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/signin.css">
         <style type="text/css">
@@ -23,7 +23,7 @@
         <div class="container" style="max-width:100%;">
             <form class="form-signin" method="POST" role="form" action="{{$Hotel_ID}}">
                 {{ csrf_field() }}
-              <h1 class="h3 mb-3 font-weight-normal">飯店管理後台</h1>
+              <h1 class="h3 mb-3 font-weight-normal">Awugo飯店管理後台</h1>
               <label for="inputID" class="sr-only">請輸入帳號</label>
               <input type="text" id="inputID" name="inputID" class="form-control" placeholder="輸入帳號" value="{{ old('inputID') }}" required autofocus>
               <label for="inputPassword" class="sr-only">請輸入密碼</label>

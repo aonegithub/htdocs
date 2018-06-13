@@ -18,6 +18,7 @@ class AuthHotelMiddleware
         //預防國籍資訊丟失session
         if(is_null(session()->get('manager_country'))){
             session()->put('manager_country','tw');
+            session()->put('hotel_country','tw');
         }
         //驗證非總管理過來、總管理身分、飯店管理員身分都導向404
         if(is_null(session()->get('manager_id')) && is_null(session()->get('manager_hotel_id')) && is_null(session()->get('hotel_id')) && is_null($hotel_id)){

@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// app('debugbar')->disable();
+if(strrpos($_SERVER['HTTP_HOST'], "awugo.com")){
+	app('debugbar')->disable();
+}
 Route::get('/', 'IndexController@main');
 // 總管理區路由
 // 中介層驗證登入資訊
@@ -103,11 +105,43 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 	//業者後台主route
 	Route::group(['middleware'=>'auth.hotel.login'], function(){
 
-	// 儀表板(最新消息)
+	// 飯店管理(基本資料)
 		Route::get('{hotel_id}/main', 'HotelAuth\ManagerController@main');
+		Route::post('{hotel_id}/main', 'HotelAuth\ManagerController@mainPost');
+	// 照片上傳
+		Route::get('{hotel_id}/photos', 'HotelAuth\PhotoController@main');
+		Route::get('{hotel_id}/photos_plan', 'HotelAuth\PhotoController@plan');
+		Route::post('{hotel_id}/photos', 'HotelAuth\PhotoController@mainPost');
+		Route::post('{hotel_id}/photos_del', 'HotelAuth\PhotoController@delPic');
+		Route::post('{hotel_id}/photos_edit', 'HotelAuth\PhotoController@editPic');
+		Route::get('{hotel_id}/photos_editplan', 'HotelAuth\PhotoController@editPlan');
+		Route::post('{hotel_id}/photos_cate', 'HotelAuth\PhotoController@changeCate');
 	});
 });
 
+//API
+Route::group(['prefix'=>'/{country}/api'], function(){
+	//取得地區層級1(如國家)
+	Route::post('getArea1', 'Api\AreaApiController@getArea1');		
+	//取得地區層級2(如縣市)	
+	Route::post('getArea2/{in_country}', 'Api\AreaApiController@getArea2');	
+	//取得地區層級3(如區域)
+	Route::post('getArea3/{parent}', 'Api\AreaApiController@getArea3');	
+	//取得地區層級4(區域蛋黃區)		
+	Route::post('getArea4/{parent}', 'Api\AreaApiController@getArea4');		
+	//取得郵遞區號		
+	Route::post('getZipCode/{area_key}', 'Api\AreaApiController@getZipCode');		
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+	//上傳圖片接收(POST)
+	Route::get('up', 'Api\UploadApiController@imageUploadView');
+	Route::post('image', 'Api\UploadApiController@imageUpload');
+	//上傳檔案接收(POST)
+	Route::post('file', 'Api\UploadApiController@fileUpload');
+});
+
+
 Route::get('/dt', function () {
-    return date("Y-m-d H:i:s");
+    return date("YmdHis").'_512_'.explode(' ', microtime())[0]*100000000;
 });

@@ -596,7 +596,7 @@
 			    <span class="input-group-text" id="inputGroup-sizing-sm">後台網址</span>
 			</div>
 			<span class="form-control" style="border: 0px;">
-				{{$Hotel->manage_url}}
+				<a href='http://www.awugo.com/tw/auth/h{{$Hotel->nokey}}/' target='_blank'>http://www.awugo.com/tw/auth/h{{$Hotel->nokey}}/</a>
 			</span>
 		</div>
 		<!-- ** -->
