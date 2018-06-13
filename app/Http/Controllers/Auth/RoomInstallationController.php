@@ -51,9 +51,9 @@ class RoomInstallationController extends Controller
         //讀取客房設施(項目)
         $Room_Installation_Items ='';
         if($group_q =='-2'){
-            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s2)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s2)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.parent','desc')->paginate($page_row)->appends($queryString);
         }else{
-            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s1)->orWhere('room_installation_list.nokey','LIKE',$group_s1)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s1)->orWhere('room_installation_list.nokey','LIKE',$group_s1)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.parent','desc')->paginate($page_row)->appends($queryString);
         }
         //ORM test
         // $tt =Room_Installation::where(function($query){

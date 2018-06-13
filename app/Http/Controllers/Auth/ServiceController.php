@@ -54,9 +54,9 @@ class ServiceController extends Controller
 
         $Service_Items ='';
         if($group_q =='-2'){
-            $Service_Items =Service::where('service_list.parent','LIKE',$group_s2)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Service_Items =Service::where('service_list.parent','LIKE',$group_s2)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.parent','desc')->paginate($page_row)->appends($queryString);
         }else{
-            $Service_Items =Service::where('service_list.parent','LIKE',$group_s1)->orWhere('service_list.nokey','LIKE',$group_s1)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.updated_at','desc')->paginate($page_row)->appends($queryString);
+            $Service_Items =Service::where('service_list.parent','LIKE',$group_s1)->orWhere('service_list.nokey','LIKE',$group_s1)->leftjoin('service_list as sl','sl.nokey', '=', 'service_list.parent')->select('service_list.*', 'sl.service_name as sl_name')->OrderBy('service_list.parent','desc')->paginate($page_row)->appends($queryString);
         }
 
         //
