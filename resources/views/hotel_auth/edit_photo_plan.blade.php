@@ -8,18 +8,14 @@
 
 </style>
 </head>
-<body style="overflow:hidden;max-width: 800px;max-height: 600px;height: 600px;">
+<body style="overflow:hidden;max-width: 850px;max-height: 600px;height: 600px;">
  
-<div style="max-width: 800px;max-height: 600px;height: 600px; ">
-	<div style="max-width: 800px;max-height: 500px;overflow: hidden; ">
+<div style="max-width: 850px;max-height: 600px;height: 600px; ">
+	<div style="max-width: 850px;max-height: 500px;overflow: hidden;text-align: center; ">
 		<img src="/photos/800/{{$Photo->name}}.{{$Photo->picture_type}}" alt="" style="max-width: 800px;">
 	</div>
-	<div style="max-width: 800px;max-height: 100px;height: 100px;padding: 10px;margin-top:10px;">
-		<div style="max-height: 100px;">
-			照片標題：
-			<input id="pic_title{{$Photo->nokey}}" name="pic_title{{$Photo->nokey}}" type="text" class="" placeholder="照片說明(用於行銷優化)" value="{{$Photo->title}}" onblur="editPics({{$Photo->nokey}})">
-			排序值：
-			<input type="number" id="pic_sort{{$Photo->nokey}}" name="pic_sort{{$Photo->nokey}}" class="" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Photo->sort}}" onblur="editPics({{$Photo->nokey}})" onkeyup="numcheck(this.id,this)" style="width:70px;">
+	<div style="max-width: 850px;max-height: 100px;height: 100px;padding: 10px;margin-top:10px;">
+		<div style="max-height: 100px;text-align: center;">
 			照片分類：
 			<select class="" id="ver" name="ver" style="width:140px;" onchange="changeCate({{$Photo->nokey}},this)">
 		  	  	<option value='1'@if($Photo->category==1) selected='' @endif>環境設施</option>
@@ -28,6 +24,11 @@
 			    <option value='4'@if($Photo->category==4) selected='' @endif>客房</option>
 			    <option value='-1'@if($Photo->category==-1) selected='' @endif>其他</option>
 		  	</select>
+			照片標題：
+			<input id="pic_title{{$Photo->nokey}}" name="pic_title{{$Photo->nokey}}" type="text" class="" placeholder="照片標題及說明" value="{{$Photo->title}}" onblur="editPics({{$Photo->nokey}})">
+			排序：
+			<input type="number" id="pic_sort{{$Photo->nokey}}" name="pic_sort{{$Photo->nokey}}" class="" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{$Photo->sort}}" onblur="editPics({{$Photo->nokey}})" onkeyup="numcheck(this.id,this)" style="width:70px;">
+			
 		  	<a href="javascript:delPic({{$Photo->nokey}})">刪除</a>
 		</div>
 	</div>
