@@ -100,6 +100,7 @@ class ServiceController extends Controller
             $is_group=1;
         }
         $service->parent = $request['parent'];
+        $service->upload = $request['upload'];
         $service->is_group = $is_group;
         $service->created_id = session()->get('manager_id');
         $service->created_name = session()->get('manager_name');
@@ -128,6 +129,7 @@ class ServiceController extends Controller
         //
         $service =Service::where('nokey',$request['nokey'])->firstOrFail();
         $service->service_name = $request['name'];
+        $service->upload = $request['upload'];
         $service->save();
 
         return 'ok';
