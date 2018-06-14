@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Awugo\Auth;
+namespace App\Awugo\HotelAuth;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Hotel_Comm extends Model
+class HotelServicePhotos extends Model
 {
     //資料表
-    protected $table ='hotel_comm_list';
+    protected $table ='hotel_service_upload';
     //主鍵
     protected $primaryKey = 'nokey';
     /**
@@ -16,7 +16,7 @@ class Hotel_Comm extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel_id', 'comm', 'write_id', 'write_name',
+        'hotel_service_id', 'photo', 'cost', 'period', 'comm', 'creator_id', 'creator_name', 'updated_at', 'created_at',
     ];
 
 
