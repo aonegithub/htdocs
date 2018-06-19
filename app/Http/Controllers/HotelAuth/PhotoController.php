@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
 use App\Awugo\Auth\HotelManagers;
 use App\Awugo\Auth\Hotel;
-use App\Awugo\Picture;
+use App\Awugo\HotelAuth\Picture;
 use Request;
 use Image;
 use View;
