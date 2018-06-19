@@ -71,7 +71,7 @@
 <!-- 新增設施服務介面 -->
 <div class="row" style="clear: both;width: 100%;" id="service_interface">
 	<div style="float:right;margin:5px;margin-left: 0px;">
-		<select class="form-control" id="add_group_sel" name="add_group_sel"@if($Group_Query=='-2') disabled=""  @endif  onchange="chg_group(this)">
+		<select class="form-control" id="add_group_sel" name="add_group_sel" onchange="chg_group(this)">
 		  <option value='-3'@if($Group_Query=='-3') selected=""  @endif>所有服務設施與群組</option>
 		  <option value='-2'@if($Group_Query=='-2') selected=""  @endif>新增為群組</option>
 		  @foreach($Service_Groups as $key => $group)
@@ -80,12 +80,11 @@
 		</select>
 	</div>
 	<div style="float:right;margin:5px;@if($Group_Query=='-3' || $Group_Query=='') display:none; @endif">
-		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder=" @if($Group_Query=='-2') 群組名稱 @else 設施名稱 @endif " required="required">
+		<input id="add_service_text" name="add_service_text" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="" placeholder=" @if($Group_Query=='-2') 新增群組名稱 @else 新增設施名稱 @endif " required="required">
 	</div>
 	<div style="float:right;margin:5px;@if($Group_Query=='-3' || $Group_Query=='') display:none; @endif">
 		<a href="javascript:add_service()" class="btn btn-primary">確定新增</a>
 		<a href="service" class="btn btn-primary">取消</a>
-		<span style="color:red;">*排序值之設定.僅適用於群組</span>
 	</div>
 
 </div>
