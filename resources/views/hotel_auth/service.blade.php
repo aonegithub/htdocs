@@ -28,9 +28,32 @@
     </div>
 @endif
 
-<div style="width: 98%;text-align: center;margin: auto;">
-	設施與服務預定區塊
-</div>
+<form action="service" method="POST">
+	{{ csrf_field() }}
+	<div style="width: 98%;margin: auto;">
+		<table width="100%">
+			@foreach($ServiceGroups as $i => $group)
+			<tr>
+				<td>
+					<div class="row service_group" style="display: block;margin:0px">{{$group->service_name}}</div>
+					<div class="row service_item" style="margin:0px;margin-bottom: 20px;">
+						@foreach($ServiceItems as $j => $item)
+							@if($item->parent == $group->nokey)
+							<div class="col-md-2">
+								<input type="checkbox" class="checkbox" value="{{$item->nokey}}" data-id="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" @if(in_array($item->nokey,$HotelServiceID)) checked="" @endif>
+								{{$item->service_name}}
+							</div>
+							@endif
+						@endforeach
+					</div>
+				</td>
+			</tr>
+			@endforeach
+		</table>
+	</div>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">儲存資料</button>
+</form>
 <!-- main -->
 
 @endsection
@@ -63,6 +86,14 @@
 }
 .selItemFunRow{
 	display:none;
+}
+
+.service_group{
+	font-weight:bold;
+	padding:10px;
+}
+.service_item{
+	
 }
 @endsection
 

@@ -101,7 +101,7 @@ class ServiceController extends Controller
             $is_group=1;
         }
         $service->parent = $request['parent'];
-        $service->upload = $request['upload'];
+        $service->upload = (!empty($request['upload']))?$request['upload']:0;
         $service->is_group = $is_group;
         $service->created_id = session()->get('manager_id');
         $service->created_name = session()->get('manager_name');
