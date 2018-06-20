@@ -65,9 +65,9 @@ class ServiceController extends Controller
         //取出該飯店服務設施已勾選，先刪除舊的
         $HotelService =HotelService::where('hotel_list_id',substr($hotel_id, 1));
         $HotelService->delete();
-        //刪除照片紀錄(無刪除檔)
-        $HotelServicePhoto =HotelServicePhotos::whereIN('hotel_service_id', $chk_service)->where('hotel_list_id', substr($hotel_id, 1));
-        $HotelServicePhoto->delete();
+        //刪除照片紀錄(無刪除檔)  2018-06-20 #不能刪除，如有重複的並已上傳的照片記錄，會導致誤刪
+        // $HotelServicePhoto =HotelServicePhotos::whereIN('hotel_service_id', $chk_service)->where('hotel_list_id', substr($hotel_id, 1));
+        // $HotelServicePhoto->delete();
         
         //寫入新勾選值
         foreach ($chk_service as $key => $service) {

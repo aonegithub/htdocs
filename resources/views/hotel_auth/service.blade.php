@@ -35,13 +35,16 @@
 			@foreach($ServiceGroups as $i => $group)
 			<tr>
 				<td>
-					<div class="row service_group" style="display: block;margin:0px">{{$group->service_name}}</div>
+					<div class="row service_group" style="display: block;margin:0px;color:#269547;">{{$group->service_name}}</div>
 					<div class="row service_item" style="margin:0px;margin-bottom: 20px;">
 						@foreach($ServiceItems as $j => $item)
 							@if($item->parent == $group->nokey)
-							<div class="col-md-2">
-								<input type="checkbox" class="checkbox" value="{{$item->nokey}}" data-id="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" @if(in_array($item->nokey,$HotelServiceID)) checked="" @endif>
+							<div class="col-md-2 service_item">
+								<input onchange="check_service(this)" type="checkbox" class="checkbox" value="{{$item->nokey}}" data-id="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" @if(in_array($item->nokey,$HotelServiceID)) checked="" @endif>
 								{{$item->service_name}}
+								@if($item->upload)
+								<span style="display: none;"><a href="javascript:alert('test')">上傳照片</a></span>
+								@endif
 							</div>
 							@endif
 						@endforeach
@@ -60,33 +63,6 @@
 
 @section('instyle')
 
-#photo_gallery > form > ul{
-	padding:0;
-	margin:0;
-	min-width: 1460px;
-}
-#photo_gallery > form > ul > li{
-	display:inline-block;
-	margin:19px;
-	margin-bottom: -10px;
-	max-width: 250px;
-    max-height: 250px;
-}
-#photo_category > ul{
-	padding:0;
-	margin:0;
-}
-#photo_category > ul > li{
-	display:inline-block;
-	margin:19px;
-	margin-top: 5px;
-}
-.sel_pic{
-	border: 3px solid #2E75B6;
-}
-.selItemFunRow{
-	display:none;
-}
 
 .service_group{
 	font-weight:bold;
@@ -95,155 +71,20 @@
 .service_item{
 	
 }
+.service_select > span > a{
+	color:#E5670D;
+}
 @endsection
 
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
-//驗證數字，專屬特地給IE享用
-function numcheck(id,time){
-	var re = /^[0-9]+$/;
-	if (!re.test(time.value)){
-		alert("只能輸入數字");
-	  	document.getElementById(id).value="0";
-	}else{
-		editPics();
-	}
-}
-//群組修改照片
-function groupChg(selID){
-	toCate =$('#'+selID).val();
-	var count = $('input:checkbox:checked[name="sel_pic"]').length;
-	if(count >0){
-		alert('開始移動照片，請稍後');
-	}
-	$('input:checkbox:checked[name="sel_pic"]').each(function(i) { 
-		key =$(this).data('id');
-		$.ajax({
-	        headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-	        type: "POST",
-	        url: 'photos_cate',
-    		data: {nokey:key,cate:toCate},
-	        success: function(data) {
-				//結束提示
-			    if (i+1 === count) {
-			    	alert('全數移動完成');
-			        window.location.reload();
-			    }
-	    	}
-	    });
-	});
-}
-//修改照片分類
-function changeCate(key,obj){
-	$.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: "POST",
-        url: 'photos_cate',
-        data: {nokey:key,cate:$(obj).val()},
-        success: function(data) {
-			window.location.reload();
-    	}
-    });
-}
-//修改照片資訊
-function editPics(){
-	var count = $('input:checkbox[name="sel_pic"]').length;
 
-	$('input:checkbox[name="sel_pic"]').each(function(i) { 
-		pTitle =$('#pic_title'+this.value).val();
-		pSort =$('#pic_sort'+this.value).val();
-		$.ajax({
-	        headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-	        type: "POST",
-	        url: 'photos_edit',
-	        data: {nokey:this.value,title:pTitle,sort:pSort},
-	        success: function(data) {
-
-	    	}
-	    });
-	});
-}
-//刪除勾選圖片
-function delPics(){
-	if(confirm('確定要刪除所勾選照片？')){
-		var count = $('input:checkbox:checked[name="sel_pic"]').length;
-		if(count >0){
-			alert('開始刪除，請稍後');
-		}
-		$('input:checkbox:checked[name="sel_pic"]').each(function(i) { 
-			$.ajax({
-		        headers: {
-		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		        },
-		        type: "POST",
-		        url: 'photos_del',
-		        data: {nokey:this.value},
-		        success: function(data) {
-					//結束提示
-				    if (i+1 === count) {
-				    	alert('全數刪除完成');
-				        window.location.reload();
-				    }
-		    	}
-		    });
-		});
-	}
-}
-//刪除圖片
-function delPic(key){
-	if(confirm('確定要刪除此照片？')){
-		$.ajax({
-	        headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-	        type: "POST",
-	        url: 'photos_del',
-	        data: {nokey:key},
-	        success: function(data) {
-	        	window.location.reload();
-	    	}
-	    });
-	}
-}
-//修正選擇圖片Label
-function fixLabel(id){
-	if($('#sel_pic'+id).prop("checked")){
-		$('#sel_pic'+id).prop("checked",false);
+//判斷是否勾選，勾選變藍字
+function check_service(obj){
+	if($(obj).prop("checked")){
+		$(obj).parent().addClass("service_select").find("span").show();
 	}else{
-		$('#sel_pic'+id).prop("checked",true);
-	}
-	selPic(id,$('#sel_pic'+id).prop("checked"));
-}
-//選取圖片外框
-function selPic(id,is_check){
-	$('#pic_div'+id).removeClass('sel_pic');
-	//is_chk =$('#sel_pic'+id).prop("checked");
-	//alert(is_chk);
-	if(is_check){
-		//$('#sel_pic'+id).prop('checked',true);
-		$('#pic_div'+id).addClass('sel_pic');
-		$('#pic_chk_yes'+id).show();
-		$('#pic_chk_no'+id).hide();
-	}else{
-		//$('#sel_pic'+id).prop('checked',false);
-		$('#pic_chk_no'+id).show();
-		$('#pic_chk_yes'+id).hide();
-	}
-	//selItemFunRow
-	var count = $('input:checkbox:checked[name="sel_pic"]').length;
-	flag_top =$("#photo_gallery > form > ul > li:first-of-type").offset().top
-	if(count >0){
-		$(".pic_flag").css('top',(flag_top+30));
-		$('.selItemFunRow').show();
-	}else{
-		$(".pic_flag").css('top',(flag_top-35));
-		$('.selItemFunRow').hide();
+		$(obj).parent().removeClass("service_select").find("span").hide();
 	}
 }
 
@@ -251,9 +92,9 @@ function selPic(id,is_check){
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
-flag_left =$("#photo_gallery > form > ul > li:first-of-type").offset().left+80;
-flag_top =$("#photo_gallery > form > ul > li:first-of-type").offset().top-5;
-$(".pic_flag").css('left',flag_left).css('top',flag_top);
+//將已勾選的設施服務加上藍字
+$(".service_item >input:checkbox:checked").parent().addClass("service_select").find("span").show();
+
 
 //啟動lightbox效果
 $(".fancybox").fancybox({
