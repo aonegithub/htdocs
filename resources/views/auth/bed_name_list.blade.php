@@ -160,8 +160,8 @@ function open_edit_interface(service_name, key, sort){
 }
 //新增設施服務或群組
 function add_service(){
-	if($('#add_service_text').val() ==''){
-		alert('請填寫房型名稱');
+	if($('#add_service_text').val() =='' ||$('#add_service_sort').val() ==''){
+		alert('請填寫房型名稱與排序');
 	}else{
 		$.ajax({
 	        headers: {

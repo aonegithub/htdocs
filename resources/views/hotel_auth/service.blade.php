@@ -40,11 +40,15 @@
 						@foreach($ServiceItems as $j => $item)
 							@if($item->parent == $group->nokey)
 							<div class="col-md-2 service_item">
-								<input onchange="check_service(this)" type="checkbox" class="checkbox" value="{{$item->nokey}}" data-id="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" @if(in_array($item->nokey,$HotelServiceID)) checked="" @endif>
-								{{$item->service_name}}
-								@if($item->upload)
-								<span style="display: none;"><a href="javascript:alert('test')">上傳照片</a></span>
-								@endif
+								<div class="input-group">
+									<div class="checkbox checkbox-primary" style="padding-top:5px;">
+										<input onchange="check_service(this)" type="checkbox" class="checkbox" value="{{$item->nokey}}" data-id="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" @if(in_array($item->nokey,$HotelServiceID)) checked="" @endif>
+										<label for="service{{$item->nokey}}">{{$item->service_name}}</label>
+										@if($item->upload)
+											<span style="display: none;"><a class="fancybox fancybox.iframe" data-type="iframe" data-src="service_photo/{{$item->nokey}}" href="service_photo/{{$item->nokey}}" data-toggle="lightbox" style="font-size: 0.8rem;">說明</a></span>
+										@endif
+									</div>
+								</div>
 							</div>
 							@endif
 						@endforeach
@@ -55,7 +59,7 @@
 		</table>
 	</div>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">儲存資料</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 95%;margin:auto">儲存資料</button>
 </form>
 <!-- main -->
 
@@ -71,7 +75,7 @@
 .service_item{
 	
 }
-.service_select > span > a{
+.service_select {
 	color:#E5670D;
 }
 @endsection
@@ -93,7 +97,7 @@ function check_service(obj){
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 //將已勾選的設施服務加上藍字
-$(".service_item >input:checkbox:checked").parent().addClass("service_select").find("span").show();
+$(".service_item > .input-group > .checkbox > input:checkbox:checked").parent().addClass("service_select").find("span").show();
 
 
 //啟動lightbox效果
@@ -108,7 +112,7 @@ $(".fancybox").fancybox({
     'fitToView' : false,  // use autoScale for v1.3.4
     afterClose  : function() { 
     	//關閉後自動重整
-        window.location.reload();
+        //window.location.reload();
     }
 });
 //停用完成跳出確認

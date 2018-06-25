@@ -47,6 +47,7 @@
   </thead>
   <tbody>
   	@foreach($Managers as $key => $Manager)
+  	@if($Manager->id !='oxo')
     <tr style="cursor: pointer;">
       <th scope="row" onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->id}}</th>
       <td onclick="window.location.href='./authority_edit/{{$Manager->nokey}}'">{{$Manager->name}}</td>
@@ -69,6 +70,7 @@
       </td>
       @endif
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>

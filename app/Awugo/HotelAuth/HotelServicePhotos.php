@@ -16,7 +16,7 @@ class HotelServicePhotos extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel_service_id', 'hotel_list_id', 'photo', 'cost', 'period', 'comm', 'creator_id', 'creator_name', 'updated_at', 'created_at',
+        'hotel_service_id', 'hotel_list_id', 'photo', 'cost', 'period', 'comm', 'creator_id', 'creator_name',
     ];
 
 

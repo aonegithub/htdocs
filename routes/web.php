@@ -119,7 +119,13 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 	// 服務與設施
 		Route::get('{hotel_id}/service', 'HotelAuth\ServiceController@main');				//設施列表
 		Route::post('{hotel_id}/service', 'HotelAuth\ServiceController@mainPost');			//修改設施
-		Route::post('{hotel_id}/service_photo', 'HotelAuth\ServiceController@photoPost');	//照片上傳
+		//設施照片上傳介面
+		Route::get('{hotel_id}/service_photo/{service_id}', 'HotelAuth\ServiceController@photoPlan');
+		Route::post('{hotel_id}/service_photo/{service_id}', 'HotelAuth\ServiceController@photoPlanPost');
+		Route::post('{hotel_id}/service_photo/{service_id}/del', 'HotelAuth\ServiceController@photoPlanDel');
+		//設施照片上傳處理
+		Route::post('{hotel_id}/service_photo_upload/{service_id}', 'HotelAuth\ServiceController@photoPlanUpload');
+		
 		Route::get('{hotel_id}/service_edit', 'HotelAuth\ServiceController@edit');			//設施資訊
 		Route::post('{hotel_id}/service_edit', 'HotelAuth\ServiceController@editPost');		//資訊編輯
 	});
