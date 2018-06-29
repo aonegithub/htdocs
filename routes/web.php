@@ -130,7 +130,9 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 		Route::post('{hotel_id}/service_edit', 'HotelAuth\ServiceController@editPost');		//資訊編輯
 
 	//客房設定
-		Route::get('{hotel_id}/room_set', 'HotelAuth\RoomSetController@main');				//客房設定
+		Route::get('{hotel_id}/room_set/{room_id}', 'HotelAuth\RoomSetController@main');			//客房設定
+		Route::post('{hotel_id}/room_set/{room_id}', 'HotelAuth\RoomSetController@mainPost');		//客房設定修改
+		Route::post('{hotel_id}/room_set_upload/{room_id}', 'HotelAuth\RoomSetController@photoUpload');		//客房設定修改
 	});
 });
 

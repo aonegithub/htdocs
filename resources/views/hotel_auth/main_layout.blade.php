@@ -153,7 +153,7 @@
 				<li id="hotel_subsys-main" class="btn"><a href="main">基本資料</a></li>
 				<li id="hotel_subsys-photos" class="btn"><a href="photos">照片上傳</a></li>
 				<li id="hotel_subsys-service" class="btn"><a href="service">設施與服務</a></li>
-				<li id="hotel_subsys-room" class="btn"><a href="room_set">客房設定</a></li>
+				<li id="hotel_subsys-room_set" class="btn"><a href="room_set">客房設定</a></li>
 			</ul>
 		</div>
 	</header>

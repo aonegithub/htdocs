@@ -4,10 +4,10 @@ namespace App\Awugo\Auth;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Room_Name extends Model
+class HotelBedList extends Model
 {
     //資料表
-    protected $table ='room_name_list';
+    protected $table ='hotel_bed_list';
     //主鍵
     protected $primaryKey = 'nokey';
     /**
@@ -16,7 +16,7 @@ class Room_Name extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'sort', 'upload', 'created_id','created_name',
+        'hotel_id', 'room_id', 'bed_id', 'count', 'creator_id', 'creator_name', 
     ];
 
     // *
