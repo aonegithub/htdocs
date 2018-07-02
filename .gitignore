@@ -16,4 +16,6 @@
 /public/photos/*/*.jpg
 /public/photos/service/*.jpg
 /public/photos/service/*/*.jpg
+/public/photos/room/*.jpg
+/public/photos/room/*/*.jpg
 /public/test_pic/*.jpg

@@ -53,12 +53,13 @@
     </div>
 
 
-<form action="{{$RoomSet->nokey}}" method="POST">
-	{{ csrf_field() }}
+
 	<table width="98%" style="margin: auto;">
 		<tr>
-			<td width="60%">
-          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:350px;" id="name" name="name">
+			<td width="60%" style="">
+        <form action="{{$RoomSet->nokey}}" method="POST" style="width:800px;">
+          {{ csrf_field() }}
+          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:350px;color: red;" id="name" name="name">
             <a href="javascript:toggle_name()">套用</a></div>   
           <div class="field_div"><div class="field_title" style="width: 80px;
     float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:350px;">
@@ -67,7 +68,7 @@
             @endforeach
             </select>
             數量：
-              <select name="count[]" id="count" style="width:50px;">
+              <select name="count[]" id="count" style="width:50px;" class="count_item">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -88,10 +89,10 @@
                 <ul id="bed_select" style="padding-left: 0px;">
                   
                 </ul>
-                <a href="javascript:add_bed()">增加床型</a>
+                <a id="addBedType" href="javascript:add_bed()" style="position:absolute;">增加床型</a>
           </div>
-          <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" style="width:100px;" onkeyup="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->／
-            <div class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;">
+          <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" class="num_column" onkeyup="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->
+            <div class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: 20px;">
               <input type="checkbox" class="checkbox" value="1" id="sale" name="sale" style="display: none;" onchange="chg_sale(this)" @if($RoomSet->sale) checked @endif>
               <label for="sale">低於標準住宿人數<span id="room_people">{{$RoomSet->min_people}}</span>人.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()" style="display:none;">按此勾選優惠人次</a></label>
             </div>
@@ -100,18 +101,19 @@
             <span class="field_title">優惠人次：</span>
             <ul id="sale_people" style="list-style: none;position: relative;top: -24px;">
             </ul>
+            <span style="color:red">*房價表可以另設定優惠人次之房價</span>
             <input type="text" name="sale_people_csv" id="sale_people_csv" style="display: none;">
           </div> 
           <div class="field_div">
-            <span class="field_title">總房間數：</span><input type="text"  style="width:100px;" id=room_count" name="room_count" value="@if($RoomSet!=null){{$RoomSet->room_count}}@endif">
-            <span class="field_title">開放間數：</span><input type="text"  style="width:100px;" id=room_open_count" name="room_open_count" value="@if($RoomSet!=null){{$RoomSet->room_open_count}}@endif">
-            <span class="field_title">面積：</span><input type="text"  style="width:100px;" id=room_area" name="room_area" value="@if($RoomSet!=null){{$RoomSet->room_area}}@endif">坪
+            <span class="field_title">總房間數：</span><input type="text" class="num_column" id=room_count" name="room_count" value="@if($RoomSet!=null){{$RoomSet->room_count}}@endif">
+            <span class="field_title">開放間數：</span><input type="text" class="num_column" id=room_open_count" name="room_open_count" value="@if($RoomSet!=null){{$RoomSet->room_open_count}}@endif">
+            <span class="field_title">面積：</span><input type="text" class="num_column" id=room_area" name="room_area" value="@if($RoomSet!=null){{$RoomSet->room_area}}@endif">坪
           </div>
           <div class="field_div"><span class="field_title">房間特色：</span><input type="text" style="width:90%;color: red;" id="room_feature" name="room_feature" value="@if($RoomSet!=null){{$RoomSet->room_feature}}@endif"></div>
           <!-- 勾選 -->
           @foreach($DeviceGroup as $key => $group)
             <div class="row service_item" style="margin:0px;margin-bottom: 20px;">
-              <span class="field_title" style="width:90%;">{{$group->service_name}}</span>
+              <span class="field_title" style="width: 100%;">{{$group->service_name}}：</span>
               @foreach($DeviceItem as $j => $item)
               @if($item->parent == $group->nokey)
               <div class="col-md-3 service_item">
@@ -127,39 +129,49 @@
             </div>
           @endforeach
           <!-- 勾選 -->
+          <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 900px;margin: auto;position: relative;
+    left: 300px;">儲存設定</button>
+          </form>
       </td>
-			<td width="40%" valign="top" style="background-color: green;">
-        <div id="photo_big" name="photo_big"></div>
+			<td width="40%" valign="top" style="">
+        <div id="photo_big" name="photo_big">
+          <div id="photo_focus" name="photo_focus" style="overflow: hidden;">
+            <img id="photp_view" width="650" src="/photos/room/800/@if($RoomPhotos==null){{$RoomPhotos[0]->photo}}@endif" alt="">
+          </div>
+          <div id="photo_opt" name="photo_opt" style="height:50px;margin-top:10px;">
+            排序：<input id="photo_opt_sort" class="num_column" name="photo_opt_sort" type="text" value="@if($RoomPhotos==null){{$RoomPhotos[0]->sort}}@endif" onblur="edit_sort(this)">
+            <input id="photo_opt_nokey" name="photo_opt_nokey" type="text" value="@if($RoomPhotos==null){{$RoomPhotos[0]->nokey}}@endif" style="display:none;">
+            <a href="javascript:void(0)" onclick="del_photo()" style="float:right;">刪除照片</a>
+            <form id="photo_form" name="photo_form" method="post" enctype="multipart/form-data" action="../room_set_upload/{{$RoomID}}" style="display: inline-block;
+    float: right;">
+              {{ csrf_field() }}
+              <input id="photo_browser" type="file" name="room_photo" onchange="autoUpload()" style="display:none">
+              <input type="button" value="上傳照片" style="margin-bottom: 10px;" onclick="openBrowser()">
+            </form>
+          </div>
+        </div>
         <div id="photo_list" name="photo_list">
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            @foreach($RoomPhotos as $key => $photo)
+            <li><img src="/photos/room/100/{{$photo->photo}}" data-sort='{{$photo->sort}}' data-name='{{$photo->photo}}' data-id='{{$photo->nokey}}' onclick="chg_photo_info(this)"></li>
+            @endforeach
           </ul>
         </div>
-        <div id="photo_btn" name="photo_btn">
-          <form id="photo_form" method="post" enctype="multipart/form-data" action="../room_set_upload/{{$RoomID}}">
-            <input id="photo_browser" type="file" name="service_photo" onchange="autoUpload()" style="display: none;">
-            <input type="button" value="上傳照片" style="margin-bottom: 10px;" onclick="openBrowser()">
-          </form>
+        <div id="photo_btn" name="photo_btn" style="text-align: right;">
+          
         </div>
       </td>
 		</tr>
 	</table>
-	<button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 95%;margin:auto">儲存設定</button>
-</form>
+	
 <!-- main -->
 
 @endsection
 
 @section('instyle')
+.num_column{
+  width:40px;
+}
 #photo_list >ul{
   padding:0px;
 }
@@ -169,13 +181,11 @@
   width:85px;
   height:85px;
   overflow:hidden;
-  background-color:blue;
   margin: 2px;
+  cursor:pointer;
 }
 #photo_big{
   width:650px;
-  height:650px;
-  background-color:red;
 }
 #sale_people{
   margin-left: 40px;
@@ -201,7 +211,7 @@
 	padding:10px;
 }
 .service_item{
-	
+	margin-left:65px;
 }
 .service_select {
 	color:#E5670D;
@@ -212,18 +222,62 @@
 @section('custom_script')
 //$('.checkbox :checked').parent().addClass("service_select");
 
+//刪除照片
+function del_photo(){
+  if(confirm('確定要刪除此照片？')){
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: '../room_photo_del',
+        data: {nokey:$('#photo_opt_nokey').val()},
+        success: function(data) {
+          window.location.href='{{$RoomSet->nokey}}';
+      }
+    });
+  }
+}
+
+//修改排序
+function edit_sort(obj){
+  $.ajax({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: "POST",
+      url: '../room_photo_edit',
+      data: {nokey:$('#photo_opt_nokey').val(),sort:$('#photo_opt_sort').val()},
+      success: function(data) {
+        window.location.href='{{$RoomSet->nokey}}';
+    }
+  });
+}
+
+//切換資訊
+function chg_photo_info(obj){
+  sort =$(obj).data('sort');
+  nokey =$(obj).data('id');
+  name =$(obj).data('name');
+  $("#photo_opt_sort").val(sort);
+  $("#photo_opt_nokey").val(nokey);
+  $("#photp_view").attr('src','/photos/room/800/'+name);
+}
+
 //開啟上傳視窗
 function openBrowser(){
   $('#photo_browser').click();
 }
 //自動提交上傳
 function autoUpload(){
+  //document.getElementById("photo_form").submit();
   $('#photo_form').submit();
 }
 
 //新增選擇床型
 function add_bed(){
   $("#bed_select").append("<li>"+$("#beds_select_clone").html()+"<img src='/pic/del.png' width='16' style='cursor:pointer;' onclick='del_bed(this)'></li>");
+  moveAddBed();
 }
 
 //刪除已選擇床型
@@ -232,6 +286,7 @@ function del_bed(obj){
   /*del_val =$(obj).parent().find('input').val()+',';
   replace_text =$("#bed_csv").val().replace(del_val, '');
   $("#bed_csv").val(replace_text);*/
+  moveAddBed();
 }
 
 //變化已填入人數
@@ -310,10 +365,28 @@ function restore_sale(){
   }
 }
 
+//移動新增床型元素至最後一個
+function moveAddBed(){
+  addBedLeft =$(".count_item:last").offset().left+($("#count").width()+30);
+  addBedTop =$(".count_item:last").offset().top;
+  $("#addBedType").css('left',addBedLeft).css('top',addBedTop);
+}
+
 @endsection
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+//新增床型預設位置
+addBedLeft =$("#count").offset().left+($("#count").width()+25);
+addBedTop =$("#count").offset().top;
+$("#addBedType").css('left',addBedLeft).css('top',addBedTop);
+
+$("#photo_list > ul > li").eq(0).find('img').click();
+$('#hotel_subsys-room_set > a').attr('href','../room_set');
+$('#hotel_subsys-service > a').attr('href','../service');
+$('#hotel_subsys-photos > a').attr('href','../photos');
+$('#hotel_subsys-main > a').attr('href','../main');
+
 //還原勾選優惠人數
 @if($RoomSet->sale)
   sale_csv ="{{substr($RoomSet->sale_people,0,-1)}}";
@@ -331,6 +404,8 @@ function restore_sale(){
 $("#bed_select").append("<li>"+$("#beds_select_clone").html()+"<img src='/pic/del.png' width='16' style='cursor:pointer;' onclick='del_bed(this)'></li>");
   @endif
 @endforeach
+//移動新增床型位置
+moveAddBed();
 @foreach($Beds_Type as $key => $bed)
 //還原設定值
 $("#bed_select li").eq({{$key-1}}).find('select option[value={{$bed->bed_id}}]').attr('selected','selected');
