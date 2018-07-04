@@ -59,22 +59,22 @@
 			<td width="60%" style="">
         <form action="{{$RoomSet->nokey}}" method="POST" style="width:800px;">
           {{ csrf_field() }}
-          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:350px;color: red;" id="name" name="name">
+          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:300px;color: red;" id="name" name="name">
             <a href="javascript:toggle_name()">套用</a>
             <span class="field_title" style="margin-left: 15px;">類型：</span>
-            <input name="room_type" type="radio" value='0' @if($RoomSet->room_type==0)checked=""@endif>一般
+            <input name="room_type" type="radio" value='0' @if($RoomSet->room_type==0)checked=""@endif>客房
             <input name="room_type" type="radio" value='1' @if($RoomSet->room_type==1)checked=""@endif>背包客
             <input name="room_type" type="radio" value='2' @if($RoomSet->room_type==2)checked=""@endif>包棟
             <input name="room_type" type="radio" value='3' @if($RoomSet->room_type==3)checked=""@endif>包層
             <input name="room_type" type="radio" value='4' @if($RoomSet->room_type==4)checked=""@endif>露營
           </div>   
           <div class="field_div"><div class="field_title" style="width: 80px;
-    float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:350px;">
+    float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:300px;">
             @foreach($Beds as $key => $bed)
               <option value="{{$bed->nokey}}">{{$bed->name}}</option>
             @endforeach
             </select>
-            數量：
+            <span class="field_title">數量：</span>
               <select name="count[]" id="count" style="width:50px;" class="count_item">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -99,12 +99,12 @@
                 <a id="addBedType" href="javascript:add_bed()" style="position:absolute;">增加床型</a>
           </div>
           <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" class="num_column" onblur="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->
-            <div class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: -10px;">
+            <div id="people_div" class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: -10px;">
               <input type="checkbox" class="checkbox" value="1" id="sale" name="sale" style="display: none;" onchange="chg_sale(this)" @if($RoomSet->sale) checked @endif>
               <label for="sale">低於標準住宿人數<span id="room_people">{{$RoomSet->min_people}}</span>人.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()">按此勾選優惠人次</a></label>
             </div>
           </div>  
-          <div class="field_div" id="sale_div" style="max-height: 30px;overflow: hidden;">
+          <div class="field_div" id="sale_div" style="max-height: 30px;overflow: hidden;display: none;">
             <span class="field_title">優惠人次：</span>
             <ul id="sale_people" style="list-style: none;position: relative;top: -24px;">
             </ul>
@@ -177,7 +177,7 @@
 @endsection
 
 @section('instyle')
-.checkbox label::before{
+#people_div label::before{
   display:none;
 }
 .num_column{
@@ -355,6 +355,12 @@ function chg_sale_people_ul(obj){
   }else{
     $(obj).parent().css('color','black');
   }
+  //
+  if($("#sale_people_ckb > li :checked").length==0){
+    $("#sale_div").hide();
+  }else{
+    $("#sale_div").show();
+  }
 }
 
 //套用名稱(執行後關閉視窗)
@@ -379,15 +385,18 @@ function check_service(obj){
 
 //還原勾選優惠人數
 function restore_sale(){
-  sale_csv ="{{substr($RoomSet->sale_people,0,-1)}}";
-  sale_array =sale_csv.split(',');
-  for(i=0; i<sale_array.length;i++){
-  $("#sale_people_ckb > li > input").each(function(){
-      if($(this).val() ==sale_array[i]){
-        $(this).prop("checked",true);
-        $(this).trigger("change");
-      }
-    });
+  if(init==0){
+    sale_csv ="{{substr($RoomSet->sale_people,0,-1)}}";
+    sale_array =sale_csv.split(',');
+    for(i=0; i<sale_array.length;i++){
+    $("#sale_people_ckb > li > input").each(function(){
+        if($(this).val() ==sale_array[i]){
+          $(this).prop("checked",true);
+          $(this).trigger("change");
+        }
+      });
+    }
+    init ++;
   }
 }
 
@@ -402,6 +411,9 @@ function moveAddBed(){
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
+
+init =0;  //初始標記
+
 //新增床型預設位置
 addBedLeft =$("#count").offset().left+($("#count").width()+25);
 addBedTop =$("#count").offset().top;

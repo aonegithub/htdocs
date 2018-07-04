@@ -26,11 +26,11 @@
         </div>
       </div>
     </div>
-    
+
 <div>
 <ul style="list-style: none;">
-  <li class="count_type"><a href="room_set">全部房型</a></li>
-  <li class="count_type"><a href="room_set?t=1">背包客</a></li>
+  <li class="count_type" style="width: 70px;"><a href="room_set">全部房型</a></li>
+  <li class="count_type" style="width: 70px;"><a href="room_set?t=1">背包客</a></li>
   <li class="count_type"><a href="room_set?p=1">1人</a></li>
   <li class="count_type"><a href="room_set?p=2">2人</a></li>
   <li class="count_type"><a href="room_set?p=3">3人</a></li>
@@ -43,7 +43,7 @@
   <li class="count_type"><a href="room_set?p=10">10人</a></li>
   <li class="count_type"><a href="room_set?p=11">11人</a></li>
   <li class="count_type"><a href="room_set?p=12">12人</a></li>
-  <li class="count_type"><a href="room_set?p=13">13人以上</a></li>
+  <li class="count_type" style="width: 70px;"><a href="room_set?p=13">13人以上</a></li>
   <li class="count_type"><a href="room_set?t=2">包棟</a></li>
   <li class="count_type"><a href="room_set?t=3">包層</a></li>
   <li class="count_type"><a href="room_set?t=4">露營</a></li>
@@ -110,7 +110,7 @@
 @section('instyle')
 .count_type{
   display: inline-block;
-  width:70px;
+  width:50px;
   text-align:center;
 }
 .main_table {
