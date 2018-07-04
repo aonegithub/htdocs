@@ -26,45 +26,48 @@
         </div>
       </div>
     </div>
-
-
-
+    
 <div>
 <ul style="list-style: none;">
-  <li style="display: inline-block;width:80px;">全部房型：</li>
-  <li class="count_type">背包客</li>
-  <li class="count_type">1人</li>
-  <li class="count_type">2人</li>
-  <li class="count_type">3人</li>
-  <li class="count_type">4人</li>
-  <li class="count_type">5人</li>
-  <li class="count_type">6人</li>
-  <li class="count_type">7人</li>
-  <li class="count_type">8人</li>
-  <li class="count_type">9人</li>
-  <li class="count_type">10人</li>
-  <li class="count_type">11人</li>
-  <li class="count_type">12人</li>
-  <li class="count_type">13人以上</li>
-  <li class="count_type">包棟</li>
-  <li class="count_type">包層</li>
-  <li class="count_type">露營</li>
+  <li class="count_type"><a href="room_set">全部房型</a></li>
+  <li class="count_type"><a href="room_set?t=1">背包客</a></li>
+  <li class="count_type"><a href="room_set?p=1">1人</a></li>
+  <li class="count_type"><a href="room_set?p=2">2人</a></li>
+  <li class="count_type"><a href="room_set?p=3">3人</a></li>
+  <li class="count_type"><a href="room_set?p=4">4人</a></li>
+  <li class="count_type"><a href="room_set?p=5">5人</a></li>
+  <li class="count_type"><a href="room_set?p=6">6人</a></li>
+  <li class="count_type"><a href="room_set?p=7">7人</a></li>
+  <li class="count_type"><a href="room_set?p=8">8人</a></li>
+  <li class="count_type"><a href="room_set?p=9">9人</a></li>
+  <li class="count_type"><a href="room_set?p=10">10人</a></li>
+  <li class="count_type"><a href="room_set?p=11">11人</a></li>
+  <li class="count_type"><a href="room_set?p=12">12人</a></li>
+  <li class="count_type"><a href="room_set?p=13">13人以上</a></li>
+  <li class="count_type"><a href="room_set?t=2">包棟</a></li>
+  <li class="count_type"><a href="room_set?t=3">包層</a></li>
+  <li class="count_type"><a href="room_set?t=4">露營</a></li>
 </ul>
 <div style="width:100px;float:right;top: -45px;position:relative;"><a href="./room_set/add">新增房型</a></div>
 </div>
 @foreach($RoomSet as $key => $room)
 <div>
   <table width="100%" class="main_table" border="0" cellspacing="0" cellpadding="0" style="">
-    <tbody><tr style="color:green;">
+    <tbody>
+    <tr>
       <td width="15%" height="150" rowspan="3" bgcolor="#FFFFFF" ><div align="center"><img src="/photos/room/250/{{$RoomPhotosArray[$key]}}" width="188" height="137"></div></td>
-      <td bgcolor="#FFFFFF" style="width: 300px;">房型名稱</td>
-      <td bgcolor="#FFFFFF" style="width: 500px;" >床型</td>
-      <td bgcolor="#FFFFFF" >住宿人數</td>
-      <td bgcolor="#FFFFFF" >總間數</td>
-      <td bgcolor="#FFFFFF" >開放間數</td>
-      <td bgcolor="#FFFFFF" >面積(坪)</td>
-      <td rowspan="2" bgcolor="#FFFFFF" valign="top" ><a href="room_set/{{$room->nokey}}">編輯</a></td>
-      <td rowspan="2" bgcolor="#FFFFFF" valign="top" ><a href="room_del/{{$room->nokey}}" onclick="return confirm('確定要刪除嗎？')">刪除</a></td>
+      <td bgcolor="#FBEEC7" align="center" style="width: 300px;">房型名稱</td>
+      <td bgcolor="#FBEEC7" align="center" style="width: 500px;" >床型</td>
+      <td bgcolor="#FBEEC7" align="center" >住宿人數</td>
+      <td bgcolor="#FBEEC7" align="center" >總間數</td>
+      <td bgcolor="#FBEEC7" align="center" >開放間數</td>
+      <td bgcolor="#FBEEC7" align="center" >面積(坪)</td>
+      <td rowspan="2" valign="top" align="center">
+        <a href="room_set/{{$room->nokey}}">編輯</a>
+        <br>
+        <br>
+        <a href="room_del/{{$room->nokey}}" onclick="return confirm('確定要刪除嗎？')">刪除</a>
+      </td>
     </tr>
     <tr>
       <td bgcolor="#FFFFFF" style="color:red"><div align="left">{{$room->name}}</div></td>
@@ -73,18 +76,18 @@
           {{$bed}} <br>
         @endforeach
       </td>
-      <td bgcolor="#FFFFFF" >{{$room->min_people}}</td>
-      <td bgcolor="#FFFFFF" >{{$room->room_count}}</td>
-      <td bgcolor="#FFFFFF" >{{$room->room_open_count}}</td>
-      <td bgcolor="#FFFFFF" >{{$room->room_area}}</td>
+      <td bgcolor="#FFFFFF" align="center" >{{$room->min_people}}</td>
+      <td bgcolor="#FFFFFF" align="center" >{{$room->room_count}}</td>
+      <td bgcolor="#FFFFFF" align="center" >{{$room->room_open_count}}</td>
+      <td bgcolor="#FFFFFF" align="center" >{{$room->room_area}}</td>
       </tr>
     <tr>
       <td colspan="8" bgcolor="#FFFFFF"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
         <tbody><tr>
-          <td style="border: 0px;">房間特色：{{$room->room_feature}}</td>
+          <td style="border: 0px;"><span style="color:#269547;font-weight: bold;">房間特色：</span>{{$room->room_feature}}</td>
         </tr>
         <tr>
-          <td style="border: 0px;">房內設施：
+          <td style="border: 0px;"><span style="color:#269547;font-weight: bold;">房內設施：</span>
             @foreach($DeviceArray[$key] as $kk => $device)
                 @foreach($Device as $k => $dv)
                   @if($dv->nokey ==$device)
@@ -108,7 +111,7 @@
 .count_type{
   display: inline-block;
   width:70px;
-  background-color:#c9fcb3;
+  text-align:center;
 }
 .main_table {
     width:98%;

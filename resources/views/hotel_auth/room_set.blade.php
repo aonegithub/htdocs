@@ -60,7 +60,14 @@
         <form action="{{$RoomSet->nokey}}" method="POST" style="width:800px;">
           {{ csrf_field() }}
           <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:350px;color: red;" id="name" name="name">
-            <a href="javascript:toggle_name()">套用</a></div>   
+            <a href="javascript:toggle_name()">套用</a>
+            <span class="field_title" style="margin-left: 15px;">類型：</span>
+            <input name="room_type" type="radio" value='0' @if($RoomSet->room_type==0)checked=""@endif>一般
+            <input name="room_type" type="radio" value='1' @if($RoomSet->room_type==1)checked=""@endif>背包客
+            <input name="room_type" type="radio" value='2' @if($RoomSet->room_type==2)checked=""@endif>包棟
+            <input name="room_type" type="radio" value='3' @if($RoomSet->room_type==3)checked=""@endif>包層
+            <input name="room_type" type="radio" value='4' @if($RoomSet->room_type==4)checked=""@endif>露營
+          </div>   
           <div class="field_div"><div class="field_title" style="width: 80px;
     float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:350px;">
             @foreach($Beds as $key => $bed)
@@ -91,17 +98,16 @@
                 </ul>
                 <a id="addBedType" href="javascript:add_bed()" style="position:absolute;">增加床型</a>
           </div>
-          <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" class="num_column" onkeyup="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->
-            <div class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: 20px;">
+          <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" class="num_column" onblur="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->
+            <div class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: -10px;">
               <input type="checkbox" class="checkbox" value="1" id="sale" name="sale" style="display: none;" onchange="chg_sale(this)" @if($RoomSet->sale) checked @endif>
-              <label for="sale">低於標準住宿人數<span id="room_people">{{$RoomSet->min_people}}</span>人.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()" style="display:none;">按此勾選優惠人次</a></label>
+              <label for="sale">低於標準住宿人數<span id="room_people">{{$RoomSet->min_people}}</span>人.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()">按此勾選優惠人次</a></label>
             </div>
           </div>  
-          <div class="field_div" id="sale_div" style="display:none">
+          <div class="field_div" id="sale_div" style="max-height: 30px;overflow: hidden;">
             <span class="field_title">優惠人次：</span>
             <ul id="sale_people" style="list-style: none;position: relative;top: -24px;">
             </ul>
-            <span style="color:red">*房價表可以另設定優惠人次之房價</span>
             <input type="text" name="sale_people_csv" id="sale_people_csv" style="display: none;">
           </div> 
           <div class="field_div">
@@ -112,20 +118,22 @@
           <div class="field_div"><span class="field_title">房間特色：</span><input type="text" style="width:90%;color: red;" id="room_feature" name="room_feature" value="@if($RoomSet!=null){{$RoomSet->room_feature}}@endif"></div>
           <!-- 勾選 -->
           @foreach($DeviceGroup as $key => $group)
-            <div class="row service_item" style="margin:0px;margin-bottom: 20px;">
+            <div class="service_item" style="margin:0px;margin-bottom: 20px;">
               <span class="field_title" style="width: 100%;">{{$group->service_name}}：</span>
-              @foreach($DeviceItem as $j => $item)
-              @if($item->parent == $group->nokey)
-              <div class="col-md-3 service_item">
-                <div class="input-group">
-                  <div class="checkbox checkbox-primary" style="padding-top:5px;">
-                    <input onchange="check_service(this)" type="checkbox" class="checkbox" value="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" style="display: none;" @if(in_array($item->nokey,$RoomDevice)) checked="" @endif>
-                    <label for="service{{$item->nokey}}">{{$item->service_name}}</label>
+              <div class="row" style="padding-left: 100px;">
+                @foreach($DeviceItem as $j => $item)
+                @if($item->parent == $group->nokey)
+                <div class="col-md-3 service_item" style="padding:0px;">
+                  <div class="input-group">
+                    <div class="checkbox checkbox-primary" style="padding-top:5px;">
+                      <input onchange="check_service(this)" type="checkbox" class="checkbox" value="{{$item->nokey}}" id="service{{$item->nokey}}" name="service[]" style="display: none;" @if(in_array($item->nokey,$RoomDevice)) checked="" @endif>
+                      <label for="service{{$item->nokey}}">{{$item->service_name}}</label>
+                    </div>
                   </div>
                 </div>
+                @endif
+                @endforeach
               </div>
-              @endif
-              @endforeach
             </div>
           @endforeach
           <!-- 勾選 -->
@@ -135,8 +143,8 @@
       </td>
 			<td width="40%" valign="top" style="">
         <div id="photo_big" name="photo_big">
-          <div id="photo_focus" name="photo_focus" style="overflow: hidden;">
-            <img id="photp_view" width="650" src="/photos/room/800/@if($RoomPhotos==null){{$RoomPhotos[0]->photo}}@endif" alt="">
+          <div id="photo_focus" name="photo_focus" style="overflow: hidden;background-color: #999;width: 650px;height: 487px;">
+            <img id="photp_view" width="650" height="487" src="/photos/room/800/@if($RoomPhotos==null){{$RoomPhotos[0]->photo}}@endif" alt="">
           </div>
           <div id="photo_opt" name="photo_opt" style="height:50px;margin-top:10px;">
             排序：<input id="photo_opt_sort" class="num_column" name="photo_opt_sort" type="text" value="@if($RoomPhotos==null){{$RoomPhotos[0]->sort}}@endif" onblur="edit_sort(this)">
@@ -153,7 +161,7 @@
         <div id="photo_list" name="photo_list">
           <ul>
             @foreach($RoomPhotos as $key => $photo)
-            <li><img src="/photos/room/100/{{$photo->photo}}" data-sort='{{$photo->sort}}' data-name='{{$photo->photo}}' data-id='{{$photo->nokey}}' onclick="chg_photo_info(this)"></li>
+            <li><img src="/photos/room/100/{{$photo->photo}}" data-sort='{{$photo->sort}}' data-name='{{$photo->photo}}' data-id='{{$photo->nokey}}' onclick="chg_photo_info(this)" width="100" height="75"></li>
             @endforeach
           </ul>
         </div>
@@ -169,6 +177,9 @@
 @endsection
 
 @section('instyle')
+.checkbox label::before{
+  display:none;
+}
 .num_column{
   width:40px;
 }
@@ -211,7 +222,7 @@
 	padding:10px;
 }
 .service_item{
-	margin-left:65px;
+	/*margin-left:65px;*/
 }
 .service_select {
 	color:#E5670D;
@@ -291,17 +302,25 @@ function del_bed(obj){
 
 //變化已填入人數
 function chg_room_people(obj){
+  $("#sale").prop("checked",false);
+  $("#sale_people > li").remove();
   $("#room_people").empty().text($(obj).val());
+  //
+  opt_count =parseInt($("#min_people").val())-1;
+  $("#sale_people_ckb").empty();
+  for(;opt_count>0;opt_count--){
+    $("#sale_people_ckb").append("<li><input class='ckb' onchange=\"chg_sale_people_ul(this)\" type=\"checkbox\" value=\""+ opt_count +"\">"+ opt_count +"人</li>");
+  }  
 }
 
 //勾選紐切換
 function chg_sale(obj){
   if($(obj).prop('checked')){
-    $("#people_sel_link").show();
-    $("#sale_div").show();
+    //$("#people_sel_link").show();
+    //$("#sale_div").show();
   }else{
-    $("#people_sel_link").hide();
-    $("#sale_div").hide();
+    //$("#people_sel_link").hide();
+    //$("#sale_div").hide();
   }
 }
 
@@ -329,6 +348,13 @@ function chg_sale_people_ul(obj){
     sel_str +=$(this).val()+',';
   });
   $("#sale_people_csv").val(sel_str);
+  //
+  $("#sale").prop("checked",true);
+  if($(obj).prop("checked")){
+    $(obj).parent().css('color','blue');
+  }else{
+    $(obj).parent().css('color','black');
+  }
 }
 
 //套用名稱(執行後關閉視窗)

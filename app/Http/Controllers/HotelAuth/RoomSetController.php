@@ -21,13 +21,29 @@ use Validator;
 use Debugbar;
 use Carbon;
 use File;
+use Request as RQ;
 
 class RoomSetController extends Controller
 {
     // 客房設定清單
     public function list($country, $hotel_id){
+        $people_q =RQ::input('p');              //人數
+        $type_q =RQ::input('t');                //類型
+        $RoomSet =null;
+        if($people_q !=null){
+            if($people_q =='13'){
+                $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->where('hotel_room_set.min_people','>=', $people_q)->get();
+            }else{
+                $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->where('hotel_room_set.min_people', $people_q)->get();
+            }
+        }
+        if($type_q !=null){
+            $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->where('hotel_room_set.room_type', $type_q)->get();
+        }
         //取出現有設定
-        $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->get();
+        if($people_q==null && $type_q==null){
+            $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->get();
+        }
         $RoomPhotosArray =array();
         $DeviceArray =array();
         $RoomBedsArray =array();
@@ -108,7 +124,7 @@ class RoomSetController extends Controller
         //取出房間設備資料-元素
         $DeviceItem =Room_Installation::where('is_group',0)->get();
         // 取出房間名稱
-        $RoomNames =Room_Name::all();
+        $RoomNames =Room_Name::OrderBy('sort','desc')->get();
         //取出現有設定
         $RoomSet =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('nokey', $room_id)->first();
         //$RoomSet->bed .=',';
@@ -196,6 +212,7 @@ class RoomSetController extends Controller
         $RoomSet->room_count =$request['room_count'];
         $RoomSet->room_open_count =$request['room_open_count'];
         $RoomSet->room_area =$request['room_area'];
+        $RoomSet->room_type =$request['room_type'];
         $RoomSet->room_feature =$request['room_feature'];
         $RoomSet->creator_id =$created_id;
         $RoomSet->creator_name =$created_name;
