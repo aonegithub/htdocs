@@ -127,7 +127,7 @@
 					<li>合約書</li>
 					<li>awugo<->飯店留言</li>
 					<li>員工X</li>
-					<li><a href="logout" onclick="return confirm('確定要登出?')">登出</a></li>
+					<li><a href="/tw/auth/{{Request::route()->parameters()['hotel_id']}}/logout" onclick="return confirm('確定要登出?')" id="logout_btn" name="logout_btn">登出</a></li>
 				</ul>
 			</div>
 		</div>

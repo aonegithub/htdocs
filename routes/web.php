@@ -133,8 +133,9 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 		Route::get('{hotel_id}/room_set', 'HotelAuth\RoomSetController@list');			//客房設定清單
 		Route::get('{hotel_id}/room_del/{room_id}', 'HotelAuth\RoomSetController@delRoom');		//客房刪除
 		Route::get('{hotel_id}/room_set/{room_id}', 'HotelAuth\RoomSetController@main');			//客房設定
-		Route::post('{hotel_id}/room_set/{room_id}', 'HotelAuth\RoomSetController@mainPost');		//客房設定修改
-		Route::post('{hotel_id}/room_set_upload/{room_id}', 'HotelAuth\RoomSetController@photoPlanUpload');		//客房照片上傳
+		Route::post('{hotel_id}/room_set/{room_id}', 'HotelAuth\RoomSetController@mainPost');	//客房設定修改
+		//客房照片上傳
+		Route::post('{hotel_id}/room_set_upload/{room_id}', 'HotelAuth\RoomSetController@photoPlanUpload');
 		Route::post('{hotel_id}/room_photo_edit', 'HotelAuth\RoomSetController@roomPhotoEdit');	
 		Route::post('{hotel_id}/room_photo_del', 'HotelAuth\RoomSetController@roomPhotoDel');	
 	});

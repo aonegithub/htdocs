@@ -5,6 +5,7 @@
 @section('sub_fun', 'room_set')
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
+@section('hotel_id', $Hotel->nokey)
 
 @section('content')
 
@@ -29,24 +30,24 @@
 
 <div>
 <ul style="list-style: none;">
-  <li class="count_type" style="width: 70px;"><a href="room_set">全部房型</a></li>
-  <li class="count_type" style="width: 70px;"><a href="room_set?t=1">背包客</a></li>
-  <li class="count_type"><a href="room_set?p=1">1人</a></li>
-  <li class="count_type"><a href="room_set?p=2">2人</a></li>
-  <li class="count_type"><a href="room_set?p=3">3人</a></li>
-  <li class="count_type"><a href="room_set?p=4">4人</a></li>
-  <li class="count_type"><a href="room_set?p=5">5人</a></li>
-  <li class="count_type"><a href="room_set?p=6">6人</a></li>
-  <li class="count_type"><a href="room_set?p=7">7人</a></li>
-  <li class="count_type"><a href="room_set?p=8">8人</a></li>
-  <li class="count_type"><a href="room_set?p=9">9人</a></li>
-  <li class="count_type"><a href="room_set?p=10">10人</a></li>
-  <li class="count_type"><a href="room_set?p=11">11人</a></li>
-  <li class="count_type"><a href="room_set?p=12">12人</a></li>
-  <li class="count_type" style="width: 70px;"><a href="room_set?p=13">13人以上</a></li>
-  <li class="count_type"><a href="room_set?t=2">包棟</a></li>
-  <li class="count_type"><a href="room_set?t=3">包層</a></li>
-  <li class="count_type"><a href="room_set?t=4">露營</a></li>
+  <li class="count_type" style="width: 70px;"><a href="room_set"@if($PeopleQ==''&&$TypeQ=='') style="color:red"@endif>全部房型</a></li>
+  @if(in_array(1,$RoomTypeDistinctArray))<li class="count_type" style="width: 70px;"><a href="room_set?t=1"@if($TypeQ=='1') style="color:red" @endif>背包客</a></li>@endif
+  @if(in_array(1,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=1"@if($PeopleQ=='1') style="color:red" @endif>1人</a></li>@endif
+  @if(in_array(2,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=2"@if($PeopleQ=='2') style="color:red" @endif>2人</a></li>@endif
+  @if(in_array(3,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=3"@if($PeopleQ=='3') style="color:red" @endif>3人</a></li>@endif
+  @if(in_array(4,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=4"@if($PeopleQ=='4') style="color:red" @endif>4人</a></li>@endif
+  @if(in_array(5,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=5"@if($PeopleQ=='5') style="color:red" @endif>5人</a></li>@endif
+  @if(in_array(6,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=6"@if($PeopleQ=='6') style="color:red" @endif>6人</a></li>@endif
+  @if(in_array(7,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=7"@if($PeopleQ=='7') style="color:red" @endif>7人</a></li>@endif
+  @if(in_array(8,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=8"@if($PeopleQ=='8') style="color:red" @endif>8人</a></li>@endif
+  @if(in_array(9,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=9"@if($PeopleQ=='9') style="color:red" @endif>9人</a></li>@endif
+  @if(in_array(10,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=10"@if($PeopleQ=='10') style="color:red" @endif>10人</a></li>@endif
+  @if(in_array(11,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=11"@if($PeopleQ=='11') style="color:red" @endif>11人</a></li>@endif
+  @if(in_array(12,$PeopleDistinctArray))<li class="count_type"><a href="room_set?p=12"@if($PeopleQ=='12') style="color:red" @endif>12人</a></li>@endif
+  @if($MaxPeopleCount >0)<li class="count_type" style="width: 70px;"><a href="room_set?p=13"@if($PeopleQ=='13') style="color:red" @endif>13人以上</a></li>@endif
+  @if(in_array(2,$RoomTypeDistinctArray))<li class="count_type"><a href="room_set?t=2"@if($TypeQ=='2') style="color:red" @endif>包棟</a></li>@endif
+  @if(in_array(3,$RoomTypeDistinctArray))<li class="count_type"><a href="room_set?t=3"@if($TypeQ=='3') style="color:red" @endif>包層</a></li>@endif
+  @if(in_array(4,$RoomTypeDistinctArray))<li class="count_type"><a href="room_set?t=4"@if($TypeQ=='4') style="color:red" @endif>露營</a></li>@endif
 </ul>
 <div style="width:100px;float:right;top: -45px;position:relative;"><a href="./room_set/add">新增房型</a></div>
 </div>
@@ -110,7 +111,7 @@
 @section('instyle')
 .count_type{
   display: inline-block;
-  width:50px;
+  width:45px;
   text-align:center;
 }
 .main_table {

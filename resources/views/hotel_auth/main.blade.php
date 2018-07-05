@@ -4,6 +4,7 @@
 @section('title', $Title)
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
+@section('hotel_id', $Hotel->nokey)
 @section('sub_fun', 'main')
 
 @section('content')

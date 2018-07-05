@@ -5,6 +5,7 @@
 @section('sub_fun', 'room_set')
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
+@section('hotel_id', $Hotel->nokey)
 
 @section('content')
 
@@ -57,19 +58,22 @@
 	<table width="98%" style="margin: auto;">
 		<tr>
 			<td width="60%" style="">
-        <form action="{{$RoomSet->nokey}}" method="POST" style="width:800px;">
+        <form action="{{$RoomSet->nokey}}" method="POST" style="width:800px;" onsubmit="return valid(this);">
           {{ csrf_field() }}
-          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:300px;color: red;" id="name" name="name">
+          <div class="field_div"><span class="field_title">房型名稱：</span><input type="text" value="@if($RoomSet!=null){{$RoomSet->name}}@endif" style="width:350px;color: red;" id="name" name="name">
             <a href="javascript:toggle_name()">套用</a>
             <span class="field_title" style="margin-left: 15px;">類型：</span>
-            <input name="room_type" type="radio" value='0' @if($RoomSet->room_type==0)checked=""@endif>客房
-            <input name="room_type" type="radio" value='1' @if($RoomSet->room_type==1)checked=""@endif>背包客
-            <input name="room_type" type="radio" value='2' @if($RoomSet->room_type==2)checked=""@endif>包棟
-            <input name="room_type" type="radio" value='3' @if($RoomSet->room_type==3)checked=""@endif>包層
-            <input name="room_type" type="radio" value='4' @if($RoomSet->room_type==4)checked=""@endif>露營
+            <select name="room_type" id="room_type" style="width:150px;">
+              <option value="-1">請選擇類型</option>
+              <option value="0"@if($RoomSet->room_type==0)selected=""@endif>客房</option>
+              <option value="1"@if($RoomSet->room_type==1)selected=""@endif>背包客</option>
+              <option value="2"@if($RoomSet->room_type==2)selected=""@endif>包棟</option>
+              <option value="3"@if($RoomSet->room_type==3)selected=""@endif>包層</option>
+              <option value="4"@if($RoomSet->room_type==4)selected=""@endif>露營</option>
+            </select>
           </div>   
           <div class="field_div"><div class="field_title" style="width: 80px;
-    float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:300px;">
+    float: left;">床型選擇：</div><div id="beds_select_clone"><select name="beds[]" id="beds" style="width:350px;">
             @foreach($Beds as $key => $bed)
               <option value="{{$bed->nokey}}">{{$bed->name}}</option>
             @endforeach
@@ -101,7 +105,7 @@
           <div class="field_div"><span class="field_title">標準住宿：</span><input type="text" class="num_column" onblur="chg_room_people(this)" id="min_people" name="min_people" value="@if($RoomSet!=null){{$RoomSet->min_people}}@endif">人<!--／最多<input type="text"  style="width:150px;" id="max_people" name="max_people" value="@if($RoomSet!=null){{$RoomSet->max_people}}@endif">人-->
             <div id="people_div" class="checkbox checkbox-primary" style="padding-top:5px;display: inline-block;margin-left: -10px;">
               <input type="checkbox" class="checkbox" value="1" id="sale" name="sale" style="display: none;" onchange="chg_sale(this)" @if($RoomSet->sale) checked @endif>
-              <label for="sale">低於標準住宿人數<span id="room_people">{{$RoomSet->min_people}}</span>人.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()">按此勾選優惠人次</a></label>
+              <label for="sale">低於標準住宿人數<span id="room_people" style="display:none;">{{$RoomSet->min_people}}</span>.可按住宿人數遞減提供優惠價格<a id="people_sel_link" href="javascript:people_sel()" style="margin-left: 10px;">按此勾選優惠人次</a></label>
             </div>
           </div>  
           <div class="field_div" id="sale_div" style="max-height: 30px;overflow: hidden;display: none;">
@@ -111,14 +115,14 @@
             <input type="text" name="sale_people_csv" id="sale_people_csv" style="display: none;">
           </div> 
           <div class="field_div">
-            <span class="field_title">總房間數：</span><input type="text" class="num_column" id=room_count" name="room_count" value="@if($RoomSet!=null){{$RoomSet->room_count}}@endif">
-            <span class="field_title">開放間數：</span><input type="text" class="num_column" id=room_open_count" name="room_open_count" value="@if($RoomSet!=null){{$RoomSet->room_open_count}}@endif">
-            <span class="field_title">面積：</span><input type="text" class="num_column" id=room_area" name="room_area" value="@if($RoomSet!=null){{$RoomSet->room_area}}@endif">坪
+            <span class="field_title">總房間數：</span><input type="text" class="num_column" id="room_count" name="room_count" value="@if($RoomSet!=null){{$RoomSet->room_count}}@endif">
+            <span class="field_title">開放間數：</span><input type="text" class="num_column" id="room_open_count" name="room_open_count" value="@if($RoomSet!=null){{$RoomSet->room_open_count}}@endif">
+            <span class="field_title">面積：</span><input type="text" class="num_column" id="room_area" name="room_area" value="@if($RoomSet!=null){{$RoomSet->room_area}}@endif">坪
           </div>
           <div class="field_div"><span class="field_title">房間特色：</span><input type="text" style="width:90%;color: red;" id="room_feature" name="room_feature" value="@if($RoomSet!=null){{$RoomSet->room_feature}}@endif"></div>
           <!-- 勾選 -->
           @foreach($DeviceGroup as $key => $group)
-            <div class="service_item" style="margin:0px;margin-bottom: 20px;">
+            <div class="service_item" style="margin:0px;">
               <span class="field_title" style="width: 100%;">{{$group->service_name}}：</span>
               <div class="row" style="padding-left: 100px;">
                 @foreach($DeviceItem as $j => $item)
@@ -143,13 +147,13 @@
       </td>
 			<td width="40%" valign="top" style="">
         <div id="photo_big" name="photo_big">
-          <div id="photo_focus" name="photo_focus" style="overflow: hidden;background-color: #999;width: 650px;height: 487px;">
+          <div id="photo_focus" name="photo_focus" style="overflow: hidden;background-color: #dadada;width: 650px;height: 487px;">
             <img id="photp_view" width="650" height="487" src="/photos/room/800/@if($RoomPhotos==null){{$RoomPhotos[0]->photo}}@endif" alt="">
           </div>
           <div id="photo_opt" name="photo_opt" style="height:50px;margin-top:10px;">
             排序：<input id="photo_opt_sort" class="num_column" name="photo_opt_sort" type="text" value="@if($RoomPhotos==null){{$RoomPhotos[0]->sort}}@endif" onblur="edit_sort(this)">
             <input id="photo_opt_nokey" name="photo_opt_nokey" type="text" value="@if($RoomPhotos==null){{$RoomPhotos[0]->nokey}}@endif" style="display:none;">
-            <a href="javascript:void(0)" onclick="del_photo()" style="float:right;">刪除照片</a>
+            <a href="javascript:void(0)" onclick="del_photo()" style="float:right;margin-left:30px;">刪除照片</a>
             <form id="photo_form" name="photo_form" method="post" enctype="multipart/form-data" action="../room_set_upload/{{$RoomID}}" style="display: inline-block;
     float: right;">
               {{ csrf_field() }}
@@ -232,6 +236,38 @@
 <!-- js獨立區塊腳本 -->
 @section('custom_script')
 //$('.checkbox :checked').parent().addClass("service_select");
+
+//驗證表單送出
+function valid(form){
+  var valid_str ='';
+  if($('#name').val()==''){
+    valid_str +='房型名稱未填\n';
+    $('#name').css('border', '2px solid red');
+  }
+  if($('#room_type').val()=='-1'){
+    valid_str +='房型類型未選\n';
+    $('#room_type').css('border', '2px solid red');
+  }
+  if($('#min_people').val()=='0'){
+    valid_str +='標準住宿人數未輸入\n';
+    $('#min_people').css('border', '2px solid red');
+  }
+  if($('#room_count').val()=='0'){
+    valid_str +='總房間數不能為0\n';
+    $('#room_count').css('border', '2px solid red');
+  }
+  if($('#room_open_count').val()=='0'){
+    valid_str +='開放間數不能為零\n';
+    $('#room_open_count').css('border', '2px solid red');
+  }
+  if(valid_str !=''){
+    alert(valid_str);
+    $('html,body').animate({ scrollTop: 0 }, 2000, 'easeOutExpo');
+    return false;
+  }
+  
+  return true;
+}
 
 //刪除照片
 function del_photo(){
@@ -351,9 +387,9 @@ function chg_sale_people_ul(obj){
   //
   $("#sale").prop("checked",true);
   if($(obj).prop("checked")){
-    $(obj).parent().css('color','blue');
+    $(obj).parent().css('color','red').css('font-weight','bold');
   }else{
-    $(obj).parent().css('color','black');
+    $(obj).parent().css('color','black').css('font-weight','normal');
   }
   //
   if($("#sale_people_ckb > li :checked").length==0){
@@ -419,11 +455,13 @@ addBedLeft =$("#count").offset().left+($("#count").width()+25);
 addBedTop =$("#count").offset().top;
 $("#addBedType").css('left',addBedLeft).css('top',addBedTop);
 
+//修正連結位置
 $("#photo_list > ul > li").eq(0).find('img').click();
 $('#hotel_subsys-room_set > a').attr('href','../room_set');
 $('#hotel_subsys-service > a').attr('href','../service');
 $('#hotel_subsys-photos > a').attr('href','../photos');
 $('#hotel_subsys-main > a').attr('href','../main');
+$('#logout_btn').attr('href','/tw/auth/h{{$Hotel->nokey}}');
 
 //還原勾選優惠人數
 @if($RoomSet->sale)

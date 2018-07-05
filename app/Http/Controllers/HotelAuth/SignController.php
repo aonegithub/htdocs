@@ -69,6 +69,8 @@ class SignController extends Controller
                 session()->put('hotel_manager_auth', $Manager['auth']);
                 session()->put('hotel_country', $country);
                 session()->put('hotel_id', $hotel_id);
+
+                // exit;
             }else{
                 throw (new ModelNotFoundException);
             }

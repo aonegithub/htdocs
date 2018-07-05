@@ -69,7 +69,13 @@ class RoomSetController extends Controller
             }
         }
 
-        // dd($RoomBedsArray);
+        // 取得不重複房間類型
+        $RoomTypeDistinctArray =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->groupBy('room_type')->pluck('room_type')->toArray();
+        // 取得不重複房間住宿人數
+        $PeopleDistinctArray =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->groupBy('min_people')->pluck('min_people')->toArray();
+        // 大於住宿人數13
+        $MaxPeopleCount =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('min_people','>=', 13)->count();
+        // print_r($PeopleDistinctArray);
         // exit;
         //取出設施
         $Device =Room_Installation::where('is_group',0)->get();
@@ -89,6 +95,11 @@ class RoomSetController extends Controller
             'DeviceArray' =>$DeviceArray,
             'Beds' =>$Beds,
             'RoomBeds' =>$RoomBedsArray,
+            'RoomTypeDistinctArray' =>$RoomTypeDistinctArray,
+            'PeopleDistinctArray' =>$PeopleDistinctArray,
+            'MaxPeopleCount' =>$MaxPeopleCount,
+            'PeopleQ' =>$people_q,
+            'TypeQ' =>$type_q,
             'Country' => $country,
         ];
         return view('hotel_auth.room_set_list',$binding);
@@ -178,8 +189,10 @@ class RoomSetController extends Controller
         //勾選設施
         $chk_service =(!empty($request['service']))?$request['service']:'';
         $chk_str ='';
-        foreach ($chk_service as $key => $service) {
-            $chk_str .=$service.',';
+        if($chk_service !=''){
+            foreach ($chk_service as $key => $service) {
+                $chk_str .=$service.',';
+            }
         }
 
         //收集床型
