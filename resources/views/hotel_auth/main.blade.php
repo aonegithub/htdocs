@@ -5,6 +5,7 @@
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
 @section('hotel_id', $Hotel->nokey)
+@section('main_fun', 0)
 @section('sub_fun', 'main')
 
 @section('content')
@@ -261,6 +262,15 @@
             <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">飯店簡介</span>
         </div>
         <textarea class="form-control" id="introduction" placeholder="飯店完整介紹文案，用於協助飯店行銷文字" name="introduction" style="height: 100px;">{{$Hotel->introduction}}</textarea>
+    </div>
+</div>
+<!-- ** -->
+<div class="row" style="margin-top:10px;">
+    <div class="input-group input-group col-md-12">
+        <div class="input-group-prepend">
+            <span class="input-group-text input-group-custom" id="inputGroup-sizing-sm">訂房須知</span>
+        </div>
+        <textarea class="form-control" id="notice" placeholder="" name="notice" style="height: 300px;">{{$Hotel->notice}}</textarea>
     </div>
 </div>
 <!-- ** -->

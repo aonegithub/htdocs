@@ -3,6 +3,7 @@
 <!-- 標題 -->
 @section('title', $Title)
 @section('sub_fun', 'room_set')
+@section('main_fun', 0)
 <!-- 飯店名稱 -->
 @section('hotel_name', $Hotel->name)
 @section('hotel_id', $Hotel->nokey)

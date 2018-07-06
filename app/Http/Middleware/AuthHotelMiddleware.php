@@ -24,6 +24,14 @@ class AuthHotelMiddleware
         if(is_null(session()->get('hotel_manager_id')) || is_null(session()->get('hotel_id')) || is_null($hotel_id)){
             return redirect()->to(session()->get('manager_country').'/auth/'.$hotel_id);
         }
+        // 比對session hotel id與存取hotel id是否相同
+        if($hotel_id !=session()->get('hotel_id')){
+            session()->flush();
+
+            session()->put('hotel_country', 'tw');
+            session()->put('manager_country', 'tw');
+            return redirect()->to('/'. $country .'/auth/'.$hotel_id);
+        }
         // echo $hotel_id;
         //     exit;
         // 驗證非總管理過來、總管理身分、飯店管理員身分都導向404

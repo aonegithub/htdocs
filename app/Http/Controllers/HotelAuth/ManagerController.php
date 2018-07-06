@@ -80,6 +80,7 @@ class ManagerController extends Controller
         $Hotel->traffic_info =$request['traffic_info'];
         $Hotel->mapx =$request['mapx'];
         $Hotel->mapy =$request['mapy'];
+        $Hotel->notice =$request['notice'];
 
         $Hotel->save();
 

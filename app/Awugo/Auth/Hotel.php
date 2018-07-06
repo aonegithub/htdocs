@@ -29,7 +29,7 @@ class Hotel extends Model
         'd_enable','ab_url','login_name','login_com','login_job','login_tel','login_mobile',
         'login_email','login_id','login_passwd','login_addr_level1','login_addr_level2',
         'login_addr_level3','login_addr_level4','login_is_group','login_group_name',
-        'login_group_url','login_group_count','expire', 'booking_day', 'cooperation', 'd_display_tel', 'sort', 'holiday', 'created_manager_id', 'created_manager_name',
+        'login_group_url','login_group_count','expire', 'booking_day', 'cooperation', 'd_display_tel', 'sort', 'holiday', 'notice', 'created_manager_id', 'created_manager_name',
     ];
 
     public function getManager(){

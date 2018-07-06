@@ -133,7 +133,7 @@
 		</div>
 		<div id="sys_btn">
 			<ul class="container_padding">
-				<li class="btn btn-warning"><a href="#">飯店資料</a></li>
+				<li class="btn btn-info"><a href="#">飯店資料</a></li>
 				<li class="btn btn-info"><a href="#">房價表</a></li>
 				<li class="btn btn-info"><a href="#">最新資料</a></li>
 				<li class="btn btn-info"><a href="#">訂房紀錄</a></li>
@@ -224,6 +224,8 @@
     		$('#menu_manage_layout').css('left',mLeft).css('top',mTop);
     	}
     	$(function(){
+    		//顯示主選單選取項目
+    		$("#sys_btn > ul > li").eq(@yield('main_fun')).removeClass('btn-info').addClass('btn-warning');
     		//調整選單管理位置
     		setMenuManagePosition();
     		$('#top_nav_item_menu').hover(function(){
