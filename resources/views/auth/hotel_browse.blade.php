@@ -335,6 +335,11 @@
 			        <span class="form-control" style="border: 0px;">好客民宿
 			        </span>
 		        @endif
+
+		        @if($Hotel->illegal_homestay==1)
+			        <span class="form-control" style="border: 0px;">非法旅宿
+			        </span>
+		        @endif
 		  	
 		</div>
 		<!-- ** -->

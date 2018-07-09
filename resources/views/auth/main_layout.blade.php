@@ -189,6 +189,7 @@
     <script type="text/javascript">
     	@yield('custom_script')
     	$(function(){
+    		
     		@yield('custom_ready_script')
     		//判斷頁面導航紐按下樣式
     		//color: #ED1A23;background-color: #ffffff;border-color: #ffffff;

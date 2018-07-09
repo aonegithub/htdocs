@@ -133,27 +133,32 @@
 		</div>
 		<div id="sys_btn">
 			<ul class="container_padding">
-				<li class="btn btn-info"><a href="#">飯店資料</a></li>
-				<li class="btn btn-info"><a href="#">房價表</a></li>
-				<li class="btn btn-info"><a href="#">最新資料</a></li>
-				<li class="btn btn-info"><a href="#">訂房紀錄</a></li>
-				<li class="btn btn-info"><a href="#">費用管理</a></li>
-				<li class="btn btn-info"><a href="#">訂單留言</a></li>
-				<li class="btn btn-info"><a href="#">客戶評鑑</a></li>
-				<li class="btn btn-info"><a href="#">訪客留言</a></li>
-				<li class="btn btn-info"><a href="#">最新消息</a></li>
-				<li class="btn btn-info"><a href="#">網路相簿</a></li>
-				<li class="btn btn-info"><a href="#">活動剪影</a></li>
-				<li class="btn btn-info"><a href="#">影音分享</a></li>
-				<li class="btn btn-info"><a href="#">媒體報導</a></li>
+				<li class="btn btn-info" id="hotel_profile"><a href="main">飯店資料</a></li>
+				<li class="btn btn-info" id="room_price"><a href="price">房價表</a></li>
+				<li class="btn btn-info" id="dashboard"><a href="#">最新資料</a></li>
+				<li class="btn btn-info" id="booking_log"><a href="#">訂房紀錄</a></li>
+				<li class="btn btn-info" id="account"><a href="#">費用管理</a></li>
+				<li class="btn btn-info" id="booking_msg"><a href="#">訂單留言</a></li>
+				<li class="btn btn-info" id="score"><a href="#">客戶評鑑</a></li>
+				<li class="btn btn-info" id="guestbook"><a href="#">訪客留言</a></li>
+				<li class="btn btn-info" id="news"><a href="#">最新消息</a></li>
+				<li class="btn btn-info" id="album"><a href="#">網路相簿</a></li>
+				<li class="btn btn-info" id="activity_photo"><a href="#">活動剪影</a></li>
+				<li class="btn btn-info" id="video_share"><a href="#">影音分享</a></li>
+				<li class="btn btn-info" id="report"><a href="#">媒體報導</a></li>
 			</ul>
 		</div>
 		<div id="subsys_btn" style="margin-bottom: 5px;margin-top: -4px;">
-			<ul id="hotel_subsys_ul" class="container_padding" style="margin-bottom: 0px;margin-top: 0px;">
+			<ul id="hotel_subsys_ul" class="container_padding" style="margin-bottom: 0px;margin-top: 0px;display:none;">
 				<li id="hotel_subsys-main" class="btn"><a href="main">基本資料</a></li>
 				<li id="hotel_subsys-photos" class="btn"><a href="photos">照片上傳</a></li>
 				<li id="hotel_subsys-service" class="btn"><a href="service">設施與服務</a></li>
 				<li id="hotel_subsys-room_set" class="btn"><a href="room_set">客房設定</a></li>
+			</ul>
+			<ul id="hotel_subsys_ul" class="container_padding" style="margin-bottom: 0px;margin-top: 0px;display:none;">
+				<li id="hotel_subsys-price" class="btn"><a href="price">全部房價</a></li>
+				<li id="hotel_subsys-price_normal" class="btn"><a href="price_normal">一般房價</a></li>
+				<li id="hotel_subsys-price_group" class="btn"><a href="price_group">套裝方案</a></li>
 			</ul>
 		</div>
 	</header>
@@ -226,6 +231,7 @@
     	$(function(){
     		//顯示主選單選取項目
     		$("#sys_btn > ul > li").eq(@yield('main_fun')).removeClass('btn-info').addClass('btn-warning');
+    		$("#subsys_btn > ul").eq(@yield('main_fun')).show();
     		//調整選單管理位置
     		setMenuManagePosition();
     		$('#top_nav_item_menu').hover(function(){
@@ -235,7 +241,7 @@
     			$('#menu_manage_layout').slideUp(1000,'easeInOutElastic');
     		});
     		//子選單亮按鈕 @yield('sub_fun')
-    		$('#hotel_subsys_ul li').removeClass('btn-warning');
+    		$('#subsys_btn ul li').removeClass('btn-warning');
     		$("#hotel_subsys-@yield('sub_fun')").addClass('btn-warning');
     		@yield('custom_ready_script')
     	});

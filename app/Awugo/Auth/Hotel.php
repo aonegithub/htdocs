@@ -18,7 +18,7 @@ class Hotel extends Model
     protected $fillable = [
         'contract_no','name', 'url', 'area_level1', 'area_level2', 'area_level3', 'area_level4', 'address', 'mapx', 'mapy',
         'tel1', 'tel2', 'fax1', 'fax2', 'email1','email2','app_line','app_wechat','license_hotel',
-        'license_homestay','lincense_hospitable','type_scale','type_level','type_room','invoice',
+        'license_homestay','lincense_hospitable', 'illegal_homestay','type_scale','type_level','type_room','invoice',
         'reg_name','reg_no','credit_card','bank_name','bank_code','bank_account',
         'bank_account_name','point', 'introduction', 'traffic_info','version','state','deposit','control','fees_c','fees_c_bonus',
         'fees_ab','fees_ab_bonus','fees_d','fees_d_bonus','fees_sale','fees_sale_bonus','fees_roll',

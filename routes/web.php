@@ -138,6 +138,10 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 		Route::post('{hotel_id}/room_set_upload/{room_id}', 'HotelAuth\RoomSetController@photoPlanUpload');
 		Route::post('{hotel_id}/room_photo_edit', 'HotelAuth\RoomSetController@roomPhotoEdit');	
 		Route::post('{hotel_id}/room_photo_del', 'HotelAuth\RoomSetController@roomPhotoDel');	
+
+	//房價表
+		Route::get('{hotel_id}/price', 'HotelAuth\PriceSetController@price');						//全部房價
+		Route::get('{hotel_id}/price_normal', 'HotelAuth\PriceSetController@price_normal');			//一般房價
 	});
 });
 

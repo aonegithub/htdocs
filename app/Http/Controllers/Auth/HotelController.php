@@ -142,7 +142,7 @@ class HotelController extends Controller
         $hotel->area_level3=$request['area_level3'];                    //所在區域層級3
         $hotel->zip_code=$request['zip_code'];                          //飯店郵遞區號
         $hotel->address=$request['address'];                            //剩餘地址
-        $hotel->notice="訂房須知\r\n\r\n1.本交易價格均已內含營業稅及服務費。\r\n\r\n2.更改入住日期：\r\n　(1)訂房後如欲更改訂房日期，請聯絡飯店訂房中心協助處理，惟限於入住日前7天（不含入住當日）更改，不另收手續費。\r\n如未於期限完成更改資料，則維持原訂房資料，旅客不得異議。\r\n\r\n(2)同一筆訂單限更改一次，且更改後的訂單恕不接受退房，否則視同取消訂房，不保留訂房費用。\r\n(3)如更改後訂單金額大於原訂單金額，旅客需現場另行支付差額；如更改後金額小於原訂單金額，恕不退還差額。\r\n\r\n取消訂房說明： \r\n於預定住宿日14日前解約，訂金扣除100元手續費，其餘退還；\r\n於預定住宿日10~13日前解約，退還70%已付定金；\r\n於預定住宿日7~9日前解約，退還50%已付定金；\r\n於預定住宿日4~6日前解約，退還40%已付訂金；\r\n於預定住宿日2~3日前解約，退還30%已付訂金；\r\n於預定住宿日1日前解約，退還20%已付訂金；\r\n於預定住宿日當日到達或怠於通知者，不退還旅客已付全部訂金。\r\n※春節與連續假期為保障其他旅客權益，訂房完成後無法取消退款。\r\n※若因天然災害等不可抗拒因素（如地震、颱風等，以飯店所在地縣市政府公告為準）無法如期前往住宿，請於原訂住宿日起3日（含當日）\r\n內與飯店之訂房中心連絡改期（限展延三個月內消費）。如欲辦理退房依照〔取消訂房〕之規定辦理。"
+        $hotel->notice="訂房須知\r\n\r\n1.本交易價格均已內含營業稅及服務費。\r\n\r\n2.更改入住日期：\r\n　(1)訂房後如欲更改訂房日期，請聯絡飯店訂房中心協助處理，惟限於入住日前7天（不含入住當日）更改，不另收手續費。\r\n如未於期限完成更改資料，則維持原訂房資料，旅客不得異議。\r\n\r\n(2)同一筆訂單限更改一次，且更改後的訂單恕不接受退房，否則視同取消訂房，不保留訂房費用。\r\n(3)如更改後訂單金額大於原訂單金額，旅客需現場另行支付差額；如更改後金額小於原訂單金額，恕不退還差額。\r\n\r\n取消訂房說明： \r\n於預定住宿日14日前解約，訂金扣除100元手續費，其餘退還；\r\n於預定住宿日10~13日前解約，退還70%已付定金；\r\n於預定住宿日7~9日前解約，退還50%已付定金；\r\n於預定住宿日4~6日前解約，退還40%已付訂金；\r\n於預定住宿日2~3日前解約，退還30%已付訂金；\r\n於預定住宿日1日前解約，退還20%已付訂金；\r\n於預定住宿日當日到達或怠於通知者，不退還旅客已付全部訂金。\r\n※春節與連續假期為保障其他旅客權益，訂房完成後無法取消退款。\r\n※若因天然災害等不可抗拒因素（如地震、颱風等，以飯店所在地縣市政府公告為準）無法如期前往住宿，請於原訂住宿日起3日（含當日）\r\n內與飯店之訂房中心連絡改期（限展延三個月內消費）。如欲辦理退房依照〔取消訂房〕之規定辦理。";
         //C版手續費
         $hotel->fees_c=(!empty($request['fees_c']))?$request['fees_c']:0;                 
         //C版紅利             
@@ -168,7 +168,9 @@ class HotelController extends Controller
         //合法民宿勾選狀態
         $hotel->license_homestay=(!empty($request['license_homestay']))?$request['license_homestay']:0;
         //好客民宿勾選狀態
-        $hotel->license_hospitable=(!empty($request['license_hospitable']))?$request['license_hospitable']:0;         
+        $hotel->license_hospitable=(!empty($request['license_hospitable']))?$request['license_hospitable']:0;
+        //非法民宿勾選狀態
+        $hotel->illegal_homestay=(!empty($request['illegal_homestay']))?$request['illegal_homestay']:0;         
         $hotel->tel1=$request['tel1'];                                  //飯店電話
         $hotel->tel2=$request['tel2'];                                  //飯店電話(備用)
         $hotel->fax1=$request['fax1'];                                  //飯店傳真
@@ -375,7 +377,9 @@ class HotelController extends Controller
         //合法民宿勾選狀態
         $hotel->license_homestay=(!empty($request['license_homestay']))?$request['license_homestay']:0;
         //好客民宿勾選狀態
-        $hotel->license_hospitable=(!empty($request['license_hospitable']))?$request['license_hospitable']:0;         
+        $hotel->license_hospitable=(!empty($request['license_hospitable']))?$request['license_hospitable']:0;
+        //非法民宿勾選狀態
+        $hotel->illegal_homestay=(!empty($request['illegal_homestay']))?$request['illegal_homestay']:0;         
         $hotel->tel1=$request['tel1'];                                  //飯店電話
         $hotel->tel2=$request['tel2'];                                  //飯店電話(備用)
         $hotel->fax1=$request['fax1'];                                  //飯店傳真

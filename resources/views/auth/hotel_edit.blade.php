@@ -368,6 +368,11 @@
 		        <label for="license_hospitable">好客民宿
 		        </label>
 		  	</div>
+		  	<div class="checkbox checkbox-primary">
+		        <input id="illegal_homestay" name="illegal_homestay" type="checkbox" value="1"@if($Hotel->illegal_homestay==1) checked="checked" @endif>
+		        <label for="illegal_homestay">非法旅宿
+		        </label>
+		  	</div>
 		</div>
 		<!-- ** -->
 		<div class="input-group input-group-sm col-md-3" style="max-width: 312px;">
