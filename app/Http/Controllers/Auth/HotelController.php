@@ -30,6 +30,7 @@ class HotelController extends Controller
         $state_q =Request::input('state');              //狀態
         $ver_q =Request::input('ver');                  //版本
         $country_q =Request::input('country');          //國家
+        $legal_q =Request::input('legal');              //合法
         $area2_q =Request::input('area2');              //縣市
         $area3_q =Request::input('area3');              //區域
         $ctrl_q =Request::input('ctrl');                //控管
@@ -37,11 +38,14 @@ class HotelController extends Controller
         $room_count_q =Request::input('room_count');    //房間
         $holiday_q =Request::input('holiday');          //連假房價
         $search_q =trim(Request::input('search'));      //關鍵字
-        $queryString =['state'=>$state_q,'ver'=>$ver_q,'country'=>$country_q,'area2'=>$area2_q,'area3'=>$area3_q,'ctrl'=>$ctrl_q,'c_type'=>$c_type_q,'room_count'=>$room_count_q,'holiday'=>$holiday_q,'search'=>$search_q];
+        $queryString =['state'=>$state_q,'ver'=>$ver_q,'country'=>$country_q,'area2'=>$area2_q,'area3'=>$area3_q,'ctrl'=>$ctrl_q,'c_type'=>$c_type_q,'room_count'=>$room_count_q,'holiday'=>$holiday_q,'search'=>$search_q,'legal'=>$legal_q];
         // 資料庫用
         $state_s =($state_q==null ||$state_q=='-1')?'%':$state_q;                           //狀態
         $ver_s =($ver_q==null ||$ver_q=='-1')?'%':$ver_q;                                   //版本
         $country_s =($country_q==null ||$country_q=='-1')?'%':$country_q;                   //國家
+        $illegal_s =($legal_q=='-1')?'%':$legal_q;                                          //非法
+        $illegal_s =($legal_q=='1')?'0':$illegal_s;
+        $illegal_s =($legal_q=='2')?'1':$illegal_s;
         $area2_s =($area2_q==null ||$area2_q=='-1')?'%':$area2_q;                           //縣市
         $area3_s =($area3_q==null ||$area3_q=='-1')?'%':$area3_q;                           //區域
         $ctrl_s =($ctrl_q==null ||$ctrl_q=='-1')?'%':$ctrl_q;                               //控管
@@ -70,7 +74,7 @@ class HotelController extends Controller
         // ->select('hotel_list.*' ,'manager_list.name as m_name', 'manager_list.department')
         // ->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
         // $Hotel = DB::table('hotel_list')->leftJoin('manager_list', 'manager_list.id', '=', 'hotel_list.created_manager_id')->OrderBy('state','asc')->OrderBy('hotel_list.nokey','desc')->paginate($page_row);
-        $Hotel = Hotel::where('hotel_list.state','LIKE',$state_s)->where('hotel_list.version','LIKE',$ver_s)->where('hotel_list.area_level1','LIKE',$country_s)->where('hotel_list.area_level2','LIKE',$area2_s)->where('hotel_list.area_level3','LIKE',$area3_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.cooperation','LIKE',$c_type_s)->where('hotel_list.holiday','LIKE',$holiday_s)->whereBetween('hotel_list.type_room',$room_arr)->where('hotel_list.name','LIKE','%'.$search_s.'%')->leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')->select('hotel_list.nokey','hotel_list.name','hotel_list.state','hotel_list.invoice_type','hotel_list.version','hotel_list.fees_c','hotel_list.fees_c_bonus','hotel_list.type_room','hotel_list.cooperation','hotel_list.control', 'hotel_list.deposit')->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
+        $Hotel = Hotel::where('hotel_list.state','LIKE',$state_s)->where('hotel_list.version','LIKE',$ver_s)->where('hotel_list.illegal_homestay','LIKE',$illegal_s)->where('hotel_list.area_level2','LIKE',$area2_s)->where('hotel_list.area_level3','LIKE',$area3_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.control','LIKE',$ctrl_s)->where('hotel_list.cooperation','LIKE',$c_type_s)->where('hotel_list.holiday','LIKE',$holiday_s)->whereBetween('hotel_list.type_room',$room_arr)->where('hotel_list.name','LIKE','%'.$search_s.'%')->leftJoin('manager_list','hotel_list.created_manager_id', '=', 'manager_list.id')->select('hotel_list.nokey','hotel_list.name','hotel_list.state','hotel_list.invoice_type','hotel_list.version','hotel_list.fees_c','hotel_list.fees_c_bonus','hotel_list.type_room','hotel_list.cooperation','hotel_list.control', 'hotel_list.deposit')->OrderBy('hotel_list.nokey','desc')->paginate($page_row)->appends($queryString);
         
         //帶入縣市
         //二級清單
@@ -312,7 +316,6 @@ class HotelController extends Controller
                 }else{
                     $Contact_Array[$i][$j] = $contact_arr[($j+($i*$contact_column_count))];
                 }
-                
             }
         }
         // print_r($Contact_Array);

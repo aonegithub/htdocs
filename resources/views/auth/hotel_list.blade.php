@@ -57,9 +57,10 @@
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
-		<select class="form-control" id="country" name="country">
-		  <option value='-1'@if($QueryArray['country']=='-1') selected="" @endif>國家</option>
-		  <option value='1'@if($QueryArray['country']=='1') selected="" @endif>台灣</option>
+		<select class="form-control" id="legal" name="legal">
+		  <option value='-1'@if($QueryArray['legal']=='-1') selected="" @endif>是否合法</option>
+		  <option value='1'@if($QueryArray['legal']=='1') selected="" @endif>合法</option>
+		  <option value='2'@if($QueryArray['legal']=='2') selected="" @endif>非法</option>
 		</select>
 	</div>
 	<div class="col-md-1 search-padding">
@@ -243,6 +244,7 @@ function updateQueryStringParameter(uri, key, value) {
 		qString +='?state='+$('#state :selected').val();			//狀態
 		qString +='&ver='+$('#ver :selected').val();				//版本
 		qString +='&country='+$('#country :selected').val();		//國家
+		qString +='&legal='+$('#legal :selected').val();			//合法性
 		qString +='&area2='+$('#area2 :selected').val();			//縣市
 		qString +='&area3='+$('#area3 :selected').val();			//鄉鎮區域
 		qString +='&ctrl='+$('#ctrl :selected').val();				//控管

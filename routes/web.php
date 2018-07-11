@@ -142,6 +142,7 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 	//房價表
 		Route::get('{hotel_id}/price', 'HotelAuth\PriceSetController@price');						//全部房價
 		Route::get('{hotel_id}/price_normal', 'HotelAuth\PriceSetController@price_normal');			//一般房價
+		Route::post('{hotel_id}/price_normal', 'HotelAuth\PriceSetController@price_normal_post');	//一般接收
 	});
 });
 

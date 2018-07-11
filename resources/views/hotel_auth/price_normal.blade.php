@@ -14,6 +14,8 @@
 @endif
 
 <div class="row" style="width: 98%;margin-left: 1%;display:inline-block;">
+	<form action="price_normal" method="POST">
+		{{ csrf_field() }}
 	<div style="float:left;width:580px;">
 		選擇房型：
 		<select name="room_list" id="room_list" style="width: 250px;">
@@ -38,119 +40,48 @@
 				<td></td>
 				<td></td>
 			</tr>
-			@foreach($RoomSaleArray as $key => $sale)
-			<tr class="cloneTr">
-				<td>{{$sale}}</td>
-				<td><input name="weekday[]" id="weekday[]" type="text" value="1500"></td>
-				<td><input name="friday[]" id="friday[]" type="text" value="1500"></td>
-				<td><input name="saturday[]" id="saturday[]" type="text" value="1500"></td>
-				<td><input name="sunday[]" id="sunday[]" type="text" value="1500"></td>
+			@foreach($PriceNormal as $key => $normal)
+			<tr @if(count($RoomSaleArray)>=($key+1))class="cloneTr"@endif>
+				<td>{{$normal->people}}<input name="sale_people[]" id="sale_people[]" type="text" value="{{$normal->people}}" style="display:none;"></td>
+				<td><input name="weekday[]" id="weekday[]" type="text" value="{{$normal->weekday}}"></td>
+				<td><input name="friday[]" id="friday[]" type="text" value="{{$normal->friday}}"></td>
+				<td><input name="saturday[]" id="saturday[]" type="text" value="{{$normal->saturday}}"></td>
+				<td><input name="sunday[]" id="sunday[]" type="text" value="{{$normal->sunday}}"></td>
 				<td>
-					<input type="radio" data-ser="{{$sale}}0" id="price_year{{$sale}}0" name="price_year{{$sale}}0" checked="">適用全年度
-					<input type="radio" data-ser="{{$sale}}0" id="price_year{{$sale}}0" name="price_year{{$sale}}0">適用區間
-					<select data-ser="{{$sale}}0" id="price_time_month_start[]" name="price_time_month_start[]">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
+					<input type="radio" data-ser="{{$normal->people}}{{$normal->merge}}" id="price_year{{$normal->people}}{{$normal->merge}}" name="price_year{{$normal->people}}{{$normal->merge}}" value="0" @if($normal->is_year==0)checked=""@endif>適用全年度
+					<input type="radio" value="1" @if($normal->is_year==1)checked=""@endif data-ser="{{$normal->people}}{{$normal->merge}}" id="price_year{{$normal->people}}{{$normal->merge}}" name="price_year{{$normal->people}}{{$normal->merge}}">適用區間
+					<select data-ser="{{$normal->people}}{{$normal->merge}}" id="price_time_month_start[]" name="price_time_month_start[]">
+						@for($i=1;$i<=12;$i++)
+						<option value="{{$i}}" @if(substr($normal->start,5,2)==str_pad($i,2,'0',STR_PAD_LEFT))selected=""@endif>{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+						@endfor
 					</select>月
-					<select data-ser="{{$sale}}0" id="price_time_day_start[]" name="price_time_day_start[]">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
+					<select data-ser="{{$normal->people}}{{$normal->merge}}" id="price_time_day_start[]" name="price_time_day_start[]">
+						@for($i=1;$i<=31;$i++)
+						<option value="{{$i}}" @if(substr($normal->start,8,2)==str_pad($i,2,'0',STR_PAD_LEFT))selected=""@endif>{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+						@endfor
 					</select>日
 					至
-					<select data-ser="{{$sale}}0" id="price_time_month_end[]" name="price_time_month_end[]">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
+					<select data-ser="{{$normal->people}}{{$normal->merge}}" id="price_time_month_end[]" name="price_time_month_end[]">
+						@for($i=1;$i<=12;$i++)
+						<option value="{{$i}}" @if(substr($normal->end,5,2)==str_pad($i,2,'0',STR_PAD_LEFT))selected=""@endif>{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+						@endfor
 					</select>月
-					<select id="price_time_day_start[]" name="price_time_day_start[]">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
+					<select id="price_time_day_start[]" name="price_time_day_end[]">
+						@for($i=1;$i<=31;$i++)
+						<option value="{{$i}}" @if(substr($normal->end,8,2)==str_pad($i,2,'0',STR_PAD_LEFT))selected=""@endif>{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+						@endfor
 					</select>日
 				</td>
-				<td>編輯</td>
-				<td>刪除</td>
+				<td></td>
+				<td></td>
 			</tr>
 			@endforeach
 		</table>
-		<input type="text" value="0" name="totalPriceSet" id="totalPriceSet">
+		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet">
+		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople">
+		<button type="submit">儲存</button>
 	</div>
+	</form>
 </div>
 <!-- main -->
 
@@ -166,7 +97,7 @@
 
 
 //複製區間房價表格(除單選紐，其餘改用陣列)
-trNo1 =0;
+trNo1 ={{$MergeLastNo}};
 function clonePrice(){
 	trNo1++;
 	tr_clone =$(".cloneTr").clone().removeClass("cloneTr");
@@ -177,7 +108,7 @@ function clonePrice(){
 	@endforeach
 	//
 	$("#price_table").append(tr_clone);
-	$("#totalPriceSet").val(trNo1);
+	$("#totalPriceSet").val((trNo1+1));
 }
 
 

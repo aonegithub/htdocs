@@ -14,6 +14,7 @@ use App\Awugo\Auth\Bed_Name;
 use App\Awugo\Auth\HotelBedList;
 use App\Awugo\HotelAuth\HotelRoomSet;
 use App\Awugo\HotelAuth\HotelRoomPhoto;
+use App\Awugo\HotelAuth\HotelPriceNormal;
 use Image;
 use View;
 use DB;
@@ -232,6 +233,35 @@ class RoomSetController extends Controller
         $RoomSet->hotel_id =substr($hotel_id, 1);
 
         $RoomSet->save();
+        // 生成第一批房價先刪除後新增
+        $PriceNormal =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_id);
+            $PriceNormal->delete();
+        //新增
+        $people_array =explode(',',substr($request['sale_people_csv'], 0, -1));
+        $people_price =0;
+        // exit;
+        for ($i=0;$i<count($people_array);$i++) {
+            $people_price =$people_array[$i];
+            if($people_array[$i]==''){
+                $people_price =$request['min_people'];
+            }
+            //新增房價新資料
+            $PriceNormal =new HotelPriceNormal;
+            $PriceNormal->hotel_id =substr($hotel_id, 1);
+            $PriceNormal->room_id =$room_id;
+            $PriceNormal->merge =0;
+            $PriceNormal->people =$people_price;
+            $PriceNormal->weekday =0;
+            $PriceNormal->friday =0;
+            $PriceNormal->saturday =0;
+            $PriceNormal->sunday =0;
+            $PriceNormal->is_year =0;
+            $PriceNormal->start =date("Y").":01:01";
+            $PriceNormal->end =date("Y").":01:31";
+            $PriceNormal->creator_id =session()->get('manager_id');
+            $PriceNormal->creator_name =session()->get('manager_name');
+            $PriceNormal->save();
+        }
         //
         return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/room_set/".$room_id);
     }
