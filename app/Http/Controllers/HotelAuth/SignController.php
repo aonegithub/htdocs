@@ -32,7 +32,7 @@ class SignController extends Controller
         // DB::enableQueryLog();
         // exit;
     	$input = request()->all();
-        // 驗證規則
+        // 
         $rules =[
             //帳號
             'inputID'=>[
@@ -45,24 +45,24 @@ class SignController extends Controller
                 'min:3',
             ],
         ];
-        // 驗證登入資料
+        // 
         $validator =Validator::make($input, $rules);
-        //驗證失敗
+        //
         if($validator->fails()){
             return redirect('/'. $country .'/auth/'.$hotel_id)->withErrors($validator)->withInput();
         }
-        // 加密密碼用於比對
+        // 
         // $input['inputPassword'] = Hash::make($input['inputPassword']);
         try {
           $Manager =HotelManagers::where('id',$input['inputID'])->where('hotel_list_id',substr($hotel_id, 1))->where('enable',1)->firstOrFail()->toArray();
             //判斷是否為管理者
             $Manager['if_manager'] =Hash::check($input['inputPassword'], $Manager['passwd']);
             if($Manager['if_manager'] && $Manager['enable']=='1'){
-                // 更新最後登入時間
+                // 
                 $Manager_update =HotelManagers::where('id',$input['inputID'])->firstOrFail();
                 $Manager_update->updated_at =date ("Y-m-d H:i:s");
                 $Manager_update->save();
-                //寫入登入資訊
+                //
                 session()->put('hotel_manager_id', $input['inputID']);
                 session()->put('hotel_manager_nokey', $Manager['nokey']);
                 session()->put('hotel_manager_name', $Manager['name']);
@@ -80,7 +80,7 @@ class SignController extends Controller
         }
         
         //session()->flush();
-        // 比對加密密碼
+        // 
         //echo Hash::make($input['inputPassword']);
         // var_dump($Manager);
         // exit;
@@ -97,12 +97,7 @@ class SignController extends Controller
     // 登出口
     public function logout($country,$hotel_id){
         session()->flush();
-        /**
-         * Bug fixed
-         * 再次寫入國家代碼，主要原因是會導致少了代碼登入路徑導回會漏參數 
-         * 2018-05-03 
-         * by A-One
-         */
+        
         session()->put('hotel_country', $country);
         session()->put('manager_country', $country);
     	return redirect()->to('/'. $country .'/auth/'.$hotel_id);

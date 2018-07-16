@@ -21,10 +21,9 @@ class ServiceController extends Controller
 {
     private $menu_item_code =44;
     private $menu_item_text ='設施與服務';
-    // private $auth_array =explode(',', session()->get('manager_auth'));
 // 服務管理預設清單
     public function main(Request $request,$country){
-        $auth_key =$this->menu_item_code; //權限碼
+        $auth_key =$this->menu_item_code; //
         //讀取管理者資訊
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
@@ -32,22 +31,22 @@ class ServiceController extends Controller
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
             return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
             //exit;
         }
-        //每頁筆數
+        //
 
         $page_row = 30;
 
         //
-        $group_q =Request::input('group');            //群組查詢
+        $group_q =Request::input('group');            //
         $group_s1 =($group_q !='-1')?$group_q:'%';
-        $group_s2 =($group_q =='-2')?'-1':'%';         //如果為群組瀏覽模式
-        $group_s3 =($group_q =='-3')?'-1':'%';         //如果為群組瀏覽模式
+        $group_s2 =($group_q =='-2')?'-1':'%';         //
+        $group_s3 =($group_q =='-3')?'-1':'%';         //
         $queryString =['group'=>$group_q];
         //讀取設施與服務(群組)
         $Service_Groups =Service::where('service_list.is_group','1')->select('service_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `service_list` as sl WHERE sl.`parent`=`service_list`.`nokey`) as `child_count`'))->get();
@@ -63,7 +62,7 @@ class ServiceController extends Controller
         //
         $binding =[
             'Title' => $this->menu_item_text,
-            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+            'Nav_ID' => $this->menu_item_code,  //  
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Country' => $country,
@@ -75,15 +74,15 @@ class ServiceController extends Controller
     }
 // 新增服務 ajax
     public function addPost(Request $request,$country){
-        $auth_key =45; //權限碼
-        //讀取管理者資訊
+        $auth_key =45; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
@@ -94,7 +93,7 @@ class ServiceController extends Controller
         //
         $service =new Service;
         $service->service_name = $request['name'];
-        //C版手續費
+        //
         $request['parent']=(!empty($request['parent']))?$request['parent']:'-1';  
         $is_group=0;
         if($request['parent']=='-1'){
@@ -109,17 +108,17 @@ class ServiceController extends Controller
 
         return 'ok';
     }
-// 編輯服務 ajax
+// 編輯服務 
     public function editPost(Request $request,$country){
-        $auth_key =46; //權限碼
-        //讀取管理者資訊
+        $auth_key =46; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
@@ -136,17 +135,17 @@ class ServiceController extends Controller
 
         return 'ok';
     }
-// 刪除服務 ajax
+// 刪除服務 
     public function delPost(Request $request,$country){
-        $auth_key =47; //權限碼
-        //讀取管理者資訊
+        $auth_key =47; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];

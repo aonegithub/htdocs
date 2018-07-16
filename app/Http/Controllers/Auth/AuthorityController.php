@@ -18,7 +18,7 @@ class AuthorityController extends Controller
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 權限管理員清單
     public function main($country){
-        $auth_key ='33'; //管理員瀏覽權限碼
+        $auth_key ='33'; //
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
@@ -26,7 +26,7 @@ class AuthorityController extends Controller
             $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
             ];
             return redirect('/'. $country .'/auth/manager/main')->withErrors($errors)->withInput();
@@ -38,7 +38,7 @@ class AuthorityController extends Controller
 
         $binding =[
             'Title' => $this->menu_item_text,
-            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+            'Nav_ID' => $this->menu_item_code,  //  
             'Managers' => $Manager_pagerow,
             'Auths' => $auth_array,
             'Country' => $country,
@@ -55,19 +55,19 @@ class AuthorityController extends Controller
             $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
             ];
             return redirect('/'. $country .'/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
-        //取上層權限
+        //
         $Authority_root =Authority::where('auth_parent','-1')->get();
-        //取下層權限
+        //
         $Authority_sub =Authority::where('auth_parent','<>',"-1")->get();
         $binding =[
             'Title' => $this->menu_item_text,
-            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號 
+            'Nav_ID' => $this->menu_item_code,  // 
             'Auth_root' => $Authority_root,
             'Auth_sub' => $Authority_sub,
             'Auths' => $auth_array,
@@ -82,38 +82,38 @@ class AuthorityController extends Controller
         $request =request()->all();
         //修改規則驗證
         $rules =[
-            //登入帳號
+            //
             'inputID'=>[
                 'required',
                 'min:3',
             ],
-            //密碼
+            //
             'exampleInputPassword1'=>[
                 'required',
                 'same:exampleInputPassword2',
                 'min:3',
             ],
-            //使用人
+            //
             'inputUserID'=>[
                 'required',
                 'min:2',
             ],
-            //部門
+            //
             'inputDepartment'=>[
                 'required',
                 'min:2',
             ],
         ];
-        // 驗證修改資料
+        // 
         $validator =Validator::make($request, $rules);
-        //驗證失敗
+        //
         if($validator->fails()){
             return redirect('/'. $country .'/auth/manager/authority_add')->withErrors($validator)->withInput();
         }
 
         $Manager = new Managers;
 
-        //判斷權限都沒勾選的狀態下給予空值，避免判斷失常
+        //
         if(!isset($request['auth_chk'])){
             $request['auth_chk'] ="";
             $Manager->auth =$request['auth_chk'];
@@ -137,7 +137,7 @@ class AuthorityController extends Controller
 // 權限管理編輯頁
     public function edit($country, $manager_nokey){
         // DB::enableQueryLog();
-        $auth_key ='35'; //飯店瀏覽權限碼
+        $auth_key ='35'; //
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
@@ -145,18 +145,18 @@ class AuthorityController extends Controller
             $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
             return redirect('/'. $country .'/auth/manager/authority_list')->withErrors($errors)->withInput();
             //exit;
         }
-        //取上層權限
+        //
         $Authority_root =Authority::where('auth_parent','-1')->get();
-        //取下層權限
+        //
         $Authority_sub =Authority::where('auth_parent','<>',"-1")->get();
-        //取管理者權限資料
+        //
         $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
         $Manager_auth =explode(',', $Manager->auth);
         // var_dump(DB::getQueryLog());
@@ -179,44 +179,44 @@ class AuthorityController extends Controller
     public function editAuth($country, $manager_nokey){
         // DB::enableQueryLog();
         $request =request()->all();
-        //修改規則驗證
+        //
         $rules =[
-            //密碼
+            //
             'exampleInputPassword1'=>[
                 'required',
                 'same:exampleInputPassword2',
                 'min:3',
             ],
-            //使用人
+            //
             'inputUserID'=>[
                 'required',
                 'min:2',
             ],
-            //部門
+            //
             'inputDepartment'=>[
                 'required',
                 'min:2',
             ],
         ];
-        // 無勾選密碼則不驗證密碼
+        // 
         if(!isset($request['editPW'])){
             unset($rules['exampleInputPassword1']);
         }
-        // 驗證修改資料
+        // 
         $validator =Validator::make($request, $rules);
-        //驗證失敗
+        //
         if($validator->fails()){
             return redirect('/'. $country .'/auth/manager/authority_edit/$manager_nokey')->withErrors($validator)->withInput();
         }
         $Manager =Managers::where('nokey',$manager_nokey)->firstOrFail();
-        //判斷權限都沒勾選的狀態下給予空值，避免判斷失常
+        //
         if(!isset($request['auth_chk'])){
             $request['auth_chk'] ="";
             $Manager->auth =$request['auth_chk'];
         }else{
             $Manager->auth =implode(',',$request['auth_chk']);
         }
-        // 勾選修改密碼才動密碼
+        // 
         if(isset($request['editPW'])){
             $Manager->passwd = Hash::make($request['exampleInputPassword1']);
         }
@@ -236,19 +236,7 @@ class AuthorityController extends Controller
 // (清單)權限管理員啟動管理 Ajax
     public function enable($manager_key){
         $auth_key ='35'; //管理員編輯權限碼
-        //var_dump($auth_array);
-        // $auth_array =explode(',', session()->get('manager_auth'));
-        // if(!in_array($auth_key,$auth_array)){
-        //     $errors =['權限不足返回'];
-        //     $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
-        //     $binding =[
-        //         'Title' => $this->menu_item_text,
-        //         'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
-        //         'Manager' => $Manager,
-        //     ];
-        //     // return view('auth.main',$binding)->withErrors($errors);
-        //     //exit;
-        // }
+
         $request =request()->all();
         $enable =$request['enable'];
         $Manager =Managers::where('nokey',$manager_key)->firstOrFail();

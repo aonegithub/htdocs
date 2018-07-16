@@ -113,7 +113,7 @@
             <span class="field_title">優惠人次：</span>
             <ul id="sale_people" style="list-style: none;position: relative;top: -24px;">
             </ul>
-            <input type="text" name="sale_people_csv" id="sale_people_csv" style="display: none;">
+            <input type="text" name="sale_people_csv" id="sale_people_csv" style="">
           </div> 
           <div class="field_div">
             <span class="field_title">總房間數：</span><input type="text" class="num_column" id="room_count" name="room_count" value="@if($RoomSet!=null){{$RoomSet->room_count}}@endif">
@@ -266,7 +266,11 @@ function valid(form){
     $('html,body').animate({ scrollTop: 0 }, 2000, 'easeOutExpo');
     return false;
   }
-  
+  if($('#sale_people_csv').val().indexOf($('#min_people').val())==-1){
+    $('#sale_people_csv').val($('#sale_people_csv').val()+$('#min_people').val()+',');
+  }
+  //alert($('#sale_people_csv').val());
+  //return false;
   return true;
 }
 
@@ -463,6 +467,8 @@ $('#hotel_subsys-service > a').attr('href','../service');
 $('#hotel_subsys-photos > a').attr('href','../photos');
 $('#hotel_subsys-main > a').attr('href','../main');
 $('#logout_btn').attr('href','/tw/auth/h{{$Hotel->nokey}}');
+$('#hotel_profile > a').attr('href','../main');
+$('#room_price > a').attr('href','../price');
 
 //還原勾選優惠人數
 @if($RoomSet->sale)
@@ -471,7 +477,9 @@ $('#logout_btn').attr('href','/tw/auth/h{{$Hotel->nokey}}');
   $("#people_sel_link").show();
   $("#sale_div").show();
   for(i=0; i<sale_array.length;i++){
-    $("#sale_people").append("<li>"+ sale_array[i] +"人｜</li>");
+    if(sale_array[i] != $("#min_people").val()){
+      $("#sale_people").append("<li>"+ sale_array[i] +"人｜</li>");
+    }
   }
   $("#sale_people_csv").val(sale_csv+',');
 @endif

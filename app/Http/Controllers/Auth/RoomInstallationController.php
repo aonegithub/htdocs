@@ -32,23 +32,23 @@ class RoomInstallationController extends Controller
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
             return redirect('/'. $country .'/auth/manager/hotel_list')->withErrors($errors)->withInput();
             //exit;
         }
-        //每頁筆數
+        //
         $page_row = 20;
         //
-        $group_q =Request::input('group');            //群組查詢
+        $group_q =Request::input('group');            //
         $group_s1 =($group_q !='-1')?$group_q:'%';
-        $group_s2 =($group_q =='-2')?'-1':'%';         //如果為群組瀏覽模式
+        $group_s2 =($group_q =='-2')?'-1':'%';         //
         $queryString =['group'=>$group_q];
-        //讀取客房設施(群組)
+        //
         $Room_Installation_Groups =Room_Installation::where('room_installation_list.is_group','1')->select('room_installation_list.*',DB::raw('(SELECT count(sl.`nokey`) FROM `room_installation_list` as sl WHERE sl.`parent`=`room_installation_list`.`nokey`) as `child_count`'))->get();
-        //讀取客房設施(項目)
+        //
         $Room_Installation_Items ='';
         if($group_q =='-2'){
             $Room_Installation_Items =Room_Installation::where('room_installation_list.parent','LIKE',$group_s2)->leftjoin('room_installation_list as sl','sl.nokey', '=', 'room_installation_list.parent')->select('room_installation_list.*', 'sl.service_name as sl_name')->OrderBy('room_installation_list.parent','desc')->paginate($page_row)->appends($queryString);
@@ -75,15 +75,15 @@ class RoomInstallationController extends Controller
     }
 // 新增服務 ajax
     public function addPost(Request $request,$country){
-        $auth_key =49; //權限碼
-        //讀取管理者資訊
+        $auth_key =49; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
@@ -111,15 +111,15 @@ class RoomInstallationController extends Controller
     }
 // 編輯服務 ajax
     public function editPost(Request $request,$country){
-        $auth_key =50; //權限碼
-        //讀取管理者資訊
+        $auth_key =50; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
@@ -137,15 +137,15 @@ class RoomInstallationController extends Controller
     }
 // 刪除服務 ajax
     public function delPost(Request $request,$country){
-        $auth_key =51; //權限碼
-        //讀取管理者資訊
+        $auth_key =51; //
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
             $errors =['權限不足返回'];
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];

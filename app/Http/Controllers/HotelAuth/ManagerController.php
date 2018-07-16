@@ -17,13 +17,13 @@ class ManagerController extends Controller
     public function main($country, $hotel_id){
         // exit;
         $Manager =HotelManagers::where('id',session()->get('hotel_manager_id'))->firstOrFail()->toArray();
-        // 取出飯店檔案
+        // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
-        //二級清單
-        $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //二級區域
-        //帶入已選行政區域(飯店地址)
-        $Addr_level3 =Areas::where('area_parent',$Hotel->area_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //三級區域
-        //切分帳號權限
+        //
+        $Areas_level2 =Areas::where('area_level','2')->where('area_code', '=', session()->get('manager_country'))->get(); //
+        //
+        $Addr_level3 =Areas::where('area_parent',$Hotel->area_level2)->where('area_code', '=', session()->get('manager_country'))->get(); //
+        //
         $auth_array =explode(',', session()->get('hotel_manager_auth'));
         $binding =[
             'Title' => '最新消息',
@@ -42,14 +42,14 @@ class ManagerController extends Controller
     // 飯店管理基本資料POST
     public function mainPost($country, $hotel_id){
         $request =request()->all();
-        // 取出飯店檔案
+        // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
         $Hotel->name =$request['name'];
-        //合法旅館勾選狀態
+        //
         $Hotel->license_hotel=(!empty($request['license_hotel']))?$request['license_hotel']:0;
-        //合法民宿勾選狀態
+        //
         $Hotel->license_homestay=(!empty($request['license_homestay']))?$request['license_homestay']:0;
-        //好客民宿勾選狀態
+        //
         $Hotel->license_hospitable=(!empty($request['license_hospitable']))?$request['license_hospitable']:0;         
         $Hotel->url =$request['url'];
         $Hotel->type_scale =$request['type_scale'];

@@ -19,19 +19,19 @@ class AreaController extends Controller
     // private $auth_array =explode(',', session()->get('manager_auth'));
 // 地區管理預設清單
     public function main($country){
-        //切分帳號權限
+        //
         $auth_array =explode(',', session()->get('manager_auth'));
-        //管理者基本資訊
+        //
         $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
-        //國家清單
-        $Countries =Areas::where('area_level','1')->where('area_code', '=', session()->get('manager_country'))->get(); //國家
-        //二級清單
+        //
+        $Countries =Areas::where('area_level','1')->where('area_code', '=', session()->get('manager_country'))->get(); //
+        //
         $Areas_level2 =Areas::where('area_level','2')->where('area_parent', '=', $Countries->toArray()[0]['nokey'])->get(); //二級區域
         // echo $Countries->toArray()[0]['noekey'];
         // exit;
         $binding =[
             'Title' => $this->menu_item_text,
-            'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+            'Nav_ID' => $this->menu_item_code,  //  
             'Manager' => $Manager,
             'Auths' => $auth_array,
             'Country' => $country,
@@ -44,19 +44,19 @@ class AreaController extends Controller
     public function getZipCode(){
         $request =request()->all();
         $nokey =$request['nokey'];
-        //傳入索引
+        //
         return Areas::where('nokey',$nokey)->get(['zip_code'])->toArray();
     }
 // 取得子區域
     public function getSubArea(){
         $request =request()->all();
         $level =$request['level'];
-        //傳入的是上級區域碼
+        //
         return Areas::where('area_parent',$level)->get()->toArray();
     }
 // 地區新增介面
     public function add(){
-        $auth_key ='40'; //新增管理員權限碼
+        $auth_key ='40'; //
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
@@ -64,7 +64,7 @@ class AreaController extends Controller
             $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
                 'Country' => $country,
             ];
@@ -90,7 +90,7 @@ class AreaController extends Controller
 // 地區修改介面
     public function edit($area_nokey){
         // DB::enableQueryLog();
-        $auth_key ='41'; //飯店瀏覽權限碼
+        $auth_key ='41'; //
         //var_dump($auth_array);
         $auth_array =explode(',', session()->get('manager_auth'));
         if(!in_array($auth_key,$auth_array)){
@@ -98,7 +98,7 @@ class AreaController extends Controller
             $Manager =Managers::where('id',session()->get('manager_id'))->firstOrFail()->toArray();
             $binding =[
                 'Title' => $this->menu_item_text,
-                'Nav_ID' => $this->menu_item_code,  //功能按鈕編號  
+                'Nav_ID' => $this->menu_item_code,  //  
                 'Manager' => $Manager,
             ];
             return redirect('/auth/manager/area_list')->withErrors($errors)->withInput();

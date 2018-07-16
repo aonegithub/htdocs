@@ -26,10 +26,10 @@ use Request as RQ;
 
 class RoomSetController extends Controller
 {
-    // 客房設定清單
+    //
     public function list($country, $hotel_id){
-        $people_q =RQ::input('p');              //人數
-        $type_q =RQ::input('t');                //類型
+        $people_q =RQ::input('p');              //
+        $type_q =RQ::input('t');                //
         $RoomSet =null;
         if($people_q !=null){
             if($people_q =='13'){
@@ -41,7 +41,7 @@ class RoomSetController extends Controller
         if($type_q !=null){
             $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->where('hotel_room_set.room_type', $type_q)->get();
         }
-        //取出現有設定
+        //
         if($people_q==null && $type_q==null){
             $RoomSet =HotelRoomSet::where('hotel_room_set.hotel_id', substr($hotel_id, 1))->get();
         }
@@ -56,7 +56,7 @@ class RoomSetController extends Controller
                 array_push($RoomPhotosArray,'');
             }
             $DeviceArray[$key] =explode(',',$room->room_device);
-            //取出已選房型
+            //
             $BedsSet =HotelBedList::leftJoin('bed_name_list', 'hotel_bed_list.bed_id', '=', 'bed_name_list.nokey')->where('hotel_bed_list.hotel_id', substr($hotel_id, 1))->where('hotel_bed_list.room_id',$room->nokey);
             if($BedsSet->count() >0){
                 foreach ($BedsSet->get(['bed_name_list.name as bed_ch', 'hotel_bed_list.count as bed_count']) as $k => $beds) {
@@ -70,24 +70,24 @@ class RoomSetController extends Controller
             }
         }
 
-        // 取得不重複房間類型
+        // 
         $RoomTypeDistinctArray =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->groupBy('room_type')->pluck('room_type')->toArray();
-        // 取得不重複房間住宿人數
+        // 
         $PeopleDistinctArray =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->groupBy('min_people')->pluck('min_people')->toArray();
-        // 大於住宿人數13
+        // 
         $MaxPeopleCount =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('min_people','>=', 13)->count();
         // print_r($PeopleDistinctArray);
         // exit;
-        //取出設施
+        //
         $Device =Room_Installation::where('is_group',0)->get();
-        //取出床型
+        //
         $Beds =Bed_Name::get();
-        // 取出飯店檔案
+        // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
 
         $binding =[
             'Title' => '客房清單',
-            'Nav_ID' => 10,  //功能按鈕編號  
+            'Nav_ID' => 10,  //  
             'Hotel_ID' => $hotel_id,
             'Hotel' =>$Hotel,
             'RoomSet' =>$RoomSet,
@@ -105,9 +105,9 @@ class RoomSetController extends Controller
         ];
         return view('hotel_auth.room_set_list',$binding);
     }
-	// 客房設定介面
+	
     public function main($country, $hotel_id, $room_id){
-        // 新增房型
+        
         if($room_id =='add'){
             $addSet =new HotelRoomSet;
             $addSet->hotel_id =substr($hotel_id, 1);
@@ -129,15 +129,15 @@ class RoomSetController extends Controller
         }
         // exit;
         // 
-        // 取出飯店檔案
+        // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
-        //取出房間設備資料-群組
+        //
         $DeviceGroup =Room_Installation::where('is_group',1)->get();
-        //取出房間設備資料-元素
+        //
         $DeviceItem =Room_Installation::where('is_group',0)->get();
-        // 取出房間名稱
+        // 
         $RoomNames =Room_Name::OrderBy('sort','desc')->get();
-        //取出現有設定
+        //
         $RoomSet =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('nokey', $room_id)->first();
         //$RoomSet->bed .=',';
         $RoomDevice =array();
@@ -145,17 +145,17 @@ class RoomSetController extends Controller
             $RoomDevice =explode(',', $RoomSet->room_device);
         }
         //
-        //取出床型
+        //
         $Beds =Bed_Name::OrderBy('sort','desc')->get();
-        //讀取床資訊
+        //
         $Beds_Type =HotelBedList::where('room_id',$room_id)->get();
-        // 取出房間照片
+        // 
         $RoomPhotos =HotelRoomPhoto::where('room_id',$room_id)->OrderBy('sort','desc')->get();
         // print_r();
         // exit;
         $binding =[
             'Title' => '客房設定',
-            'Nav_ID' => 10,  //功能按鈕編號  
+            'Nav_ID' => 10,  //
             'Hotel_ID' => $hotel_id,
             'Hotel' =>$Hotel,
             'RoomID' =>$room_id,
@@ -172,9 +172,9 @@ class RoomSetController extends Controller
     	return view('hotel_auth.room_set',$binding);
     }
 
-    // 客房設定介面
+    //
     public function mainPost($country, $hotel_id, $room_id){
-        //取得勾選值
+        //
         $request =request()->all();
         $created_id=session()->get('hotel_manager_id');
         $created_name=session()->get('hotel_manager_name');
@@ -187,7 +187,7 @@ class RoomSetController extends Controller
         }
         
         //exit;
-        //勾選設施
+        //
         $chk_service =(!empty($request['service']))?$request['service']:'';
         $chk_str ='';
         if($chk_service !=''){
@@ -196,13 +196,13 @@ class RoomSetController extends Controller
             }
         }
 
-        //收集床型
+        //
         $beds_array =(!empty($request['beds']))?$request['beds']:'';
         $beds_csv =implode(',', $beds_array);
-        //收集數量
+        //
         $count_array =(!empty($request['count']))?$request['count']:'';
         $count_csv =implode(',', $count_array);
-        // 清除舊床型資料
+        // 
         $old_bed =HotelBedList::where('room_id',$room_id);
         $old_bed->delete();
         foreach ($beds_array as $key => $id) {
@@ -233,10 +233,10 @@ class RoomSetController extends Controller
         $RoomSet->hotel_id =substr($hotel_id, 1);
 
         $RoomSet->save();
-        // 生成第一批房價先刪除後新增
+        // 
         $PriceNormal =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_id);
             $PriceNormal->delete();
-        //新增
+        //
         $people_array =explode(',',substr($request['sale_people_csv'], 0, -1));
         $people_price =0;
         // exit;
@@ -245,17 +245,17 @@ class RoomSetController extends Controller
             if($people_array[$i]==''){
                 $people_price =$request['min_people'];
             }
-            //新增房價新資料
+            //
             $PriceNormal =new HotelPriceNormal;
             $PriceNormal->hotel_id =substr($hotel_id, 1);
             $PriceNormal->room_id =$room_id;
             $PriceNormal->merge =0;
             $PriceNormal->people =$people_price;
-            $PriceNormal->weekday =0;
-            $PriceNormal->friday =0;
-            $PriceNormal->saturday =0;
-            $PriceNormal->sunday =0;
-            $PriceNormal->is_year =0;
+            // $PriceNormal->weekday ='';
+            // $PriceNormal->friday ='';
+            // $PriceNormal->saturday ='';
+            // $PriceNormal->sunday ='';
+            $PriceNormal->is_year =1;
             $PriceNormal->start =date("Y").":01:01";
             $PriceNormal->end =date("Y").":01:31";
             $PriceNormal->creator_id =session()->get('manager_id');
@@ -266,14 +266,14 @@ class RoomSetController extends Controller
         return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/room_set/".$room_id);
     }
 
-    //修改照片排序
+    //
     public function roomPhotoDel($country, $hotel_id){
         $request =request()->all();
         $RoomPhoto =HotelRoomPhoto::where('hotel_id',substr($hotel_id,1))->where('nokey',$request['nokey'])->first();
         $RoomPhoto->delete();
         return redirect()->back();
     }
-    //修改照片排序
+    //
     public function roomPhotoEdit($country, $hotel_id){
         $request =request()->all();
         $RoomPhoto =HotelRoomPhoto::where('hotel_id',substr($hotel_id,1))->where('nokey',$request['nokey'])->first();
@@ -282,7 +282,7 @@ class RoomSetController extends Controller
 
         return redirect()->back();
     }
-    //刪除房間設定
+    //
     public function delRoom($country, $hotel_id, $room_id){
         $Room =HotelRoomSet::where('nokey', $room_id)->first();
         $Room->delete();
@@ -290,7 +290,7 @@ class RoomSetController extends Controller
         return redirect()->back();
     }
 
-    //照片上傳處理
+    //
     public function photoPlanUpload(Request $request, $country, $hotel_id, $room_id){
         app('debugbar')->enable();
         ini_set('memory_limit', '256M');
@@ -299,7 +299,7 @@ class RoomSetController extends Controller
         $hotel_id =substr(session()->get('hotel_id'),1);
         $created_id=session()->get('hotel_manager_id');
         $created_name=session()->get('hotel_manager_name');
-        //判斷是否已有照片，如有就是取代
+        //
         // $photo_record =HotelServicePhotos::where('hotel_list_id',$hotel_id)->where('hotel_service_id',$service_id)->count();
         //
         $photos = $request->file('room_photo');
@@ -324,33 +324,33 @@ class RoomSetController extends Controller
         // }
         $sub_name =$photo->getClientOriginalExtension();
         // $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
-        // 直立照片
+        // 
         if($height >$width){
             $ss1_dir =85;$s1_dir =null;
             $ss2_dir =250;$s2_dir =null;
             $ss3_dir =600;$s3_dir =null;
         }else{
-        // 橫立照片
-            //各尺寸縮圖資料夾
+        //
+            //
             $s1_dir =100;$ss1_dir =null;
             $s2_dir =250;$ss2_dir =null;
             $s3_dir =800;$ss3_dir =null;
         }
-        //縮圖1  60
+        //
         Image::make($photo)
             ->resize($s1_dir, $ss1_dir, function ($constraints) {
                 $constraints->aspectRatio();
             })
             ->save($photos_path . '/100/' . $save_name);
             // $photo->move($photos_path. '/'.$s1_dir.'/', $save_name);
-        //縮圖2  250
+        //
         Image::make($photo)
             ->resize($s2_dir, $ss2_dir, function ($constraints) {
                 $constraints->aspectRatio();
             })
             ->save($photos_path . '/250/' . $save_name);
             // $photo->move($photos_path. '/'.$s2_dir.'/', $save_name);
-        //縮圖3  800
+        //
         Image::make($photo)
             ->resize($s3_dir, $ss3_dir, function ($constraints) {
                 $constraints->aspectRatio();
